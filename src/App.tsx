@@ -5,7 +5,7 @@ import {View, StyleSheet, Text} from 'react-native';
 const App = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}> My First React Native</Text>
+      <Text style={styles.title}>Login</Text>
     </View>
   );
 };

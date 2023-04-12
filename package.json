@@ -11,6 +11,7 @@
   "dependencies": {
     "@aws-amplify/ui-react": "^4.5.1",
     "@react-navigation/native": "^6.1.6",
+    "@react-navigation/native-stack": "^6.9.12",
     "aws-amplify": "^5.0.24",
     "aws-amplify-react-native": "^7.0.2",
     "expo": "~48.0.10",
