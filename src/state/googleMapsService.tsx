@@ -1,0 +1,1 @@
+//API 호출용 파일(Google Map API와 통합하기 위한 파일)

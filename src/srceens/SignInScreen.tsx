@@ -1,10 +1,16 @@
-import { StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { Button, StyleSheet, Text, View } from "react-native";
 import PropTypes from 'prop-types';
 
-const SignInScreen = () => {
+interface SignInScreenProps {
+    navigation: any;
+}
+
+const SignInScreen: React.FC<SignInScreenProps> = ({navigation}: SignInScreenProps) => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>SignInScreen</Text>
+            <Button title="signup" onPress={() => navigation.navigate('Home')} />
         </View>
     );
 };
