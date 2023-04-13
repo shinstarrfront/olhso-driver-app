@@ -1,23 +1,19 @@
-import  {StyleSheet, Text, View, Button}  from "react-native";
-import PropTypes from 'prop-types';
-import styled from 'styled-components/native';
+import React from 'react';
+import { View, Text, Button, StyleSheet} from 'react-native';
+
+
 
 interface LogInScreen {
-
+    
 };
-const StyledButton = styled(Button)`
-  height: 40px;
-  width: 200px;
-  margin-top: 16px;
-`;
 
 
-const LogInScreen = () => {
+const LogInScreen: React.FC<LogInScreenProps> = () => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>OLHSO</Text>
-            <StyledButton title="Phone Number LogIn" onPress={()=>{}}/>
-            <StyledButton title="Connect to Service Center" onPress={()=>{}}/>
+            <Button style={styles.btn1} title="Phone Number LogIn" onPress={()=>{}}/>
+            <Button style={styles.btn2} title="Connect to Service Center" onPress={()=>{}}/>
         </View>
     );
 };
@@ -35,6 +31,12 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 30,
     },
+    btn1: {
+        backgroundColor: 'grey'
+    },
+    btn2: {
+
+    }
 });
 
 export default LogInScreen;

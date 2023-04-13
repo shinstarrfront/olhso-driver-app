@@ -19,7 +19,7 @@ const AppStack = () => {
           name="LogIn"
           component={LogInScreen}
           options={({ navigation }) => ({
-            headerShown: true,
+            headerShown: false,
             initialParams: {
               navigation,
             },
