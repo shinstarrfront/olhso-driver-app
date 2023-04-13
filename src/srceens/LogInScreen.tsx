@@ -2,20 +2,20 @@ import React from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 import PropTypes from 'prop-types';
 
-interface SignInScreenProps {
+interface LogInScreenProps {
     navigation: any;
 }
 
-const SignInScreen: React.FC<SignInScreenProps> = ({navigation}: SignInScreenProps) => {
+const LogInScreen: React.FC<LogInScreenProps> = ({navigation}: LogInScreenProps) => {
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>SignInScreen</Text>
-            <Button title="signup" onPress={() => navigation.navigate('Home')} />
+            <Text style={styles.title}>LogInScreen</Text>
+            <Button title="login" onPress={() => navigation.navigate('Home')} />
         </View>
     );
 };
 
-SignInScreen.propTypes = {
+LogInScreen.propTypes = {
 
 };
 
@@ -30,4 +30,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default SignInScreen;
+export default LogInScreen;
