@@ -1,16 +1,23 @@
-import React from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import  {StyleSheet, Text, View, Button}  from "react-native";
 import PropTypes from 'prop-types';
+import styled from 'styled-components/native';
 
-interface LogInScreenProps {
-    navigation: any;
-}
+interface LogInScreen {
 
-const LogInScreen: React.FC<LogInScreenProps> = ({navigation}: LogInScreenProps) => {
+};
+const StyledButton = styled(Button)`
+  height: 40px;
+  width: 200px;
+  margin-top: 16px;
+`;
+
+
+const LogInScreen = () => {
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>LogInScreen</Text>
-            <Button title="login" onPress={() => navigation.navigate('Home')} />
+            <Text style={styles.title}>OLHSO</Text>
+            <StyledButton title="Phone Number LogIn" onPress={()=>{}}/>
+            <StyledButton title="Connect to Service Center" onPress={()=>{}}/>
         </View>
     );
 };
