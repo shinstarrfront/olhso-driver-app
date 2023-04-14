@@ -84,19 +84,8 @@ return (
   );
 };
 
-const styles = StyleSheet.create<{
-  container: ViewStyle;
-  title: TextStyle;
-  btn1: ViewStyle;
-  btn2: ViewStyle;
-  buttonText1: TextStyle;
-  buttonText2: TextStyle;
-  modalContainer: ViewStyle;
-  modalContent: ViewStyle;
-  modalText: TextStyle;
-  modalCloseBtn: ViewStyle;
-  modalCloseBtnText: TextStyle;
-}>({
+
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -104,7 +93,7 @@ const styles = StyleSheet.create<{
   },
   title: {
     fontSize: 50,
-    FontFace: 'bold',
+    fontWeight: 'bold',
     position: 'absolute',
     top: Dimensions.get('window').height / 3.5
   },
@@ -147,7 +136,34 @@ const styles = StyleSheet.create<{
     marginBottom: 10,
     fontWeight: 'bold'
   },
-  
-);
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  modalText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  modalCloseBtn: {
+    backgroundColor: 'blue',
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 10,
+  },
+  modalCloseBtnText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+});
 
 export default LogInScreen;
