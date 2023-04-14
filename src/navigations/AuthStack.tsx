@@ -4,6 +4,7 @@ import LogInScreen from '../srceens/LogInScreen';
 
 interface AuthStackParamList {
   LogIn: any;
+  [key: string]: any;
 }
 
 const Stack = createNativeStackNavigator<AuthStackParamList>();
