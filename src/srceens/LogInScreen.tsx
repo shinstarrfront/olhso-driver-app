@@ -12,47 +12,17 @@ import {
     Modal,
     Linking,
 } from 'react-native';
-import Communications from 'react-native-communications';
+import { Auth } from 'aws-amplify';
 
 interface LogInScreenProps {}
 
 
 const LogInScreen: React.FC<LogInScreenProps> = () => {
-  const [modalVisible, setModalVisible] = useState(false);
-
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [verificationCode, setVerificationCode] = useState('');
   const handleBtn1Press = (event: GestureResponderEvent) => {
     // handle button 1 press
   };
-
-  // const handleCallPress = (event: GestureResponderEvent) => {
-  //   // handle button 2 press
-  //  const phoneNumber = '+821039598640';
-  //  Communications.phonecall(phoneNumber, true);
-  // };
-
-
-
-//   return (
-//     <View 
-//     style={styles.container}>
-//       <Text 
-//       style={styles.title}>OLHSO</Text>
-//       <TouchableOpacity 
-//       style={styles.btn1} 
-//       onPress={handleBtn1Press}>
-//         <Text 
-//         style={styles.buttonText1}>Phone Number LogIn</Text>
-//       </TouchableOpacity>
-//       <TouchableHighlight 
-//       style={styles.btn2} 
-//       onPress={handleBtn2Press}>
-//         <Text 
-//         style={styles.buttonText2}>Connect to Service Center</Text>
-//       </TouchableHighlight>
-//     </View>
-//   );
-// };
-
 
 return (
     <View style={styles.container}>
@@ -65,26 +35,6 @@ return (
       onPress={() => {Linking.openURL('tel:01039598640');}}>
         <Text style={styles.buttonText2}>Connect to Service Center</Text>
       </TouchableOpacity>
-
-      {/* <Modal
-        animationType="fade"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalText}>Service Center</Text>
-            <TouchableOpacity
-              style={styles.modalCloseBtn}
-              onPress={() => setModalVisible(false)}
-            >
-              <Text style={styles.modalCloseBtnText}>Close</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal> */}
-
     </View>
   );
 };
@@ -107,7 +57,7 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 10,
     borderRadius: 30,
-    width: 400, 
+    width: 330, 
     position: 'absolute',
     top: Dimensions.get('window').height / 1.5,
     borderColor: 'black',
@@ -118,7 +68,7 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 10,
     borderRadius: 30,
-    width: 400,
+    width: 330,
     position: 'absolute',
     top: Dimensions.get('window').height / 1.3,
     borderColor: 'black',
