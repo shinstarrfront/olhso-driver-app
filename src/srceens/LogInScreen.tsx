@@ -9,9 +9,10 @@ import {
     Dimensions,
     ViewStyle,
     TextStyle,
-    Linking,
     Modal,
+    Linking,
 } from 'react-native';
+import Communications from 'react-native-communications';
 
 interface LogInScreenProps {}
 
@@ -23,10 +24,11 @@ const LogInScreen: React.FC<LogInScreenProps> = () => {
     // handle button 1 press
   };
 
-  const handleBtn2Press = (event: GestureResponderEvent) => {
-    // handle button 2 press
-    setModalVisible(true);
-  };
+  // const handleCallPress = (event: GestureResponderEvent) => {
+  //   // handle button 2 press
+  //  const phoneNumber = '+821039598640';
+  //  Communications.phonecall(phoneNumber, true);
+  // };
 
 
 
@@ -58,11 +60,13 @@ return (
       <TouchableOpacity style={styles.btn1} onPress={handleBtn1Press}>
         <Text style={styles.buttonText1}>Phone Number LogIn</Text>
       </TouchableOpacity>
-      <TouchableHighlight style={styles.btn2} onPress={handleBtn2Press}>
+      <TouchableOpacity
+      style={styles.btn2} 
+      onPress={() => {Linking.openURL('tel:01039598640');}}>
         <Text style={styles.buttonText2}>Connect to Service Center</Text>
-      </TouchableHighlight>
+      </TouchableOpacity>
 
-      <Modal
+      {/* <Modal
         animationType="fade"
         transparent={true}
         visible={modalVisible}
@@ -70,7 +74,7 @@ return (
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalText}>Modal Content</Text>
+            <Text style={styles.modalText}>Service Center</Text>
             <TouchableOpacity
               style={styles.modalCloseBtn}
               onPress={() => setModalVisible(false)}
@@ -79,7 +83,8 @@ return (
             </TouchableOpacity>
           </View>
         </View>
-      </Modal>
+      </Modal> */}
+
     </View>
   );
 };
@@ -147,17 +152,22 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 10,
     alignItems: 'center',
+    width: Dimensions.get('window').width / 1.5,
+    height: Dimensions.get('window').height / 4,
   },
   modalText: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 20,
+    position: 'absolute',
+    top: Dimensions.get('window').height / 22,
   },
   modalCloseBtn: {
-    backgroundColor: 'blue',
+    backgroundColor: 'red',
     padding: 10,
     borderRadius: 5,
     marginTop: 10,
+    top: Dimensions.get('window').height / 7,
   },
   modalCloseBtnText: {
     color: 'white',

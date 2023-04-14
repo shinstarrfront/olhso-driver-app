@@ -14,10 +14,9 @@ const Stack = createNativeStackNavigator<AppStackParamList>();
 const AppStack = () => {
     return (
       <Stack.Navigator>
+        <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen
-          name="LogIn"
-          component={LogInScreen}
+        <Stack.Screen name="LogIn" component={LogInScreen}
           options={({ navigation }) => ({
             headerShown: false,
             initialParams: {
@@ -25,6 +24,7 @@ const AppStack = () => {
             },
           })}
         />
+        </Stack.Group>
       </Stack.Navigator>
     );
   };
