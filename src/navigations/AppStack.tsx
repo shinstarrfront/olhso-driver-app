@@ -2,7 +2,8 @@
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '../srceens/HomeScreen';
-import LogInScreen from "../srceens/LogInScreen"
+import LogInScreen from "../srceens/LogInScreen";
+import PhoneLoginScreen from "../srceens/PhoneLoginScreen";
 
 interface AppStackParamList extends Record<string, object | any> {
     Home: any;
@@ -24,6 +25,7 @@ const AppStack = () => {
             },
           })}
         />
+        <Stack.Screen name="PhoneLogin" component={PhoneLoginScreen} />
         </Stack.Group>
       </Stack.Navigator>
     );
