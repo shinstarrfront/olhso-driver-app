@@ -13,7 +13,6 @@
     "@aws-amplify/ui-react-native": "^1.2.14",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/native": "^6.1.6",
-    "@react-navigation/native-stack": "^6.9.12",
     "@react-navigation/stack": "^6.3.16",
     "@types/styled-components": "^5.1.26",
     "@types/styled-components-react-native": "^5.2.1",

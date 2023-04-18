@@ -1,6 +1,7 @@
 // navigations/AppStack.js
 
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator } from '@react-navigation/stack';
+import { AnyStyledComponent } from 'styled-components';
 import HomeScreen from '../srceens/HomeScreen';
 import LogInScreen from "../srceens/LogInScreen";
 import PhoneLoginScreen from "../srceens/PhoneLoginScreen";
@@ -8,15 +9,17 @@ import PhoneLoginScreen from "../srceens/PhoneLoginScreen";
 interface AppStackParamList extends Record<string, object | any> {
     Home: any;
     LogIn: any;
+    PhoneLogIn: any;
   }
   
-const Stack = createNativeStackNavigator<AppStackParamList>();
+const Stack = createStackNavigator<AppStackParamList>();
 
 const AppStack = () => {
     return (
       <Stack.Navigator>
-        <Stack.Group screenOptions={{ presentation: 'modal' }}>
+        <Stack.Group>
         <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="PhoneLogIn" component={PhoneLoginScreen} />
         <Stack.Screen name="LogIn" component={LogInScreen}
           options={({ navigation }) => ({
             headerShown: false,
@@ -25,7 +28,7 @@ const AppStack = () => {
             },
           })}
         />
-        <Stack.Screen name="PhoneLogin" component={PhoneLoginScreen} />
+      
         </Stack.Group>
       </Stack.Navigator>
     );

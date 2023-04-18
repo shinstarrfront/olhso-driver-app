@@ -13,6 +13,8 @@ import {
     Linking,
 } from 'react-native';
 import { Auth } from 'aws-amplify';
+import { useNavigation } from '@react-navigation/native';
+import PhoneLoginScreen from './PhoneLoginScreen';
 
 interface LogInScreenProps {}
 
@@ -20,14 +22,16 @@ interface LogInScreenProps {}
 const LogInScreen: React.FC<LogInScreenProps> = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [verificationCode, setVerificationCode] = useState('');
-  const handleBtn1Press = (event: GestureResponderEvent) => {
-    // handle button 1 press
-  };
+  const navigation = useNavigation();
+
+  const handlePhoneNumberLogin = () => {
+    navigation.navigate('PhoneLoginScreen' as never)
+  }
 
 return (
     <View style={styles.container}>
       <Text style={styles.title}>OLHSO</Text>
-      <TouchableOpacity style={styles.btn1} onPress={handleBtn1Press}>
+      <TouchableOpacity style={styles.btn1} onPress={handlePhoneNumberLogin}>
         <Text style={styles.buttonText1}>Phone Number LogIn</Text>
       </TouchableOpacity>
       <TouchableOpacity

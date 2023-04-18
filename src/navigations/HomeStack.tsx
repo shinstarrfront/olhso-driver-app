@@ -1,20 +1,20 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import LogInScreen from '../srceens/LogInScreen';
+import HomeScreen from '../srceens/HomeScreen';
 
 
-interface AuthStackParamList {
-  LogIn: any;
+interface HomeStackParamList {
+  Map: any;
   [key: string]: any;
 }
 
-const Stack = createStackNavigator<AuthStackParamList>();
+const Stack = createStackNavigator<HomeStackParamList>();
 
-const AuthStack = () => {
+const HomeStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen 
-      name="LogIn"
-      component={LogInScreen}
+      name="Home"
+      component={HomeScreen}
       options={({ navigation }) => ({
         headerShown: false,
       })}
@@ -23,4 +23,4 @@ const AuthStack = () => {
   );
 };
 
-export default AuthStack;
+export default HomeStack;
