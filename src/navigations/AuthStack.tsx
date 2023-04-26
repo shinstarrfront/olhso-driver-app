@@ -32,6 +32,13 @@ const AuthStack = () => {
     headerShown: false,
   })}
   />
+  <Stack.Screen 
+    name="PhoneLogIn"
+    component={HomeScreen}
+    options={({ navigation }) => ({
+    headerShown: true,
+  })}
+  />
 </Stack.Navigator>
   );
 };

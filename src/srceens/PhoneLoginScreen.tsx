@@ -1,9 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View } from "react-native";
 
-interface PhoneLoginScreenProps {}
 
-const PhoneLoginScreen: React.FC<PhoneLoginScreenProps> = () => {
+interface PhoneLoginScreenProps {
+    navigation: any;
+}
+
+const PhoneLoginScreen: React.FC<PhoneLoginScreenProps> = ({navigation}) => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>PhoneNumber Login Screen</Text>

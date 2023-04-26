@@ -12,26 +12,18 @@ import {
     Modal,
     Linking,
 } from 'react-native';
-import { Auth } from 'aws-amplify';
-import { useNavigation } from '@react-navigation/native';
-import PhoneLoginScreen from './PhoneLoginScreen';
+import { Auth } from 'aws-amplify'
 
-interface LogInScreenProps {}
+interface LogInScreenProps {
+  navigation: any;
+}
 
 
-const StartScreen: React.FC<LogInScreenProps> = () => {
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [verificationCode, setVerificationCode] = useState('');
-  const navigation = useNavigation();
-
-  const handlePhoneNumberLogin = () => {
-    navigation.navigate('PhoneLoginScreen' as never)
-  }
-
+const StartScreen: React.FC<LogInScreenProps> = ({ navigation }) => {
 return (
     <View style={styles.container}>
       <Text style={styles.title}>OLHSO</Text>
-      <TouchableOpacity style={styles.btn1} onPress={handlePhoneNumberLogin}>
+      <TouchableOpacity style={styles.btn1} onPress={() => navigation.navigate('PhoneLogIn')}>
         <Text style={styles.buttonText1}>Phone Number LogIn</Text>
       </TouchableOpacity>
       <TouchableOpacity
