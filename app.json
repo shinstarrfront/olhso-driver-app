@@ -16,7 +16,8 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.olhso.driver.app"
+      "bundleIdentifier": "com.olhso.driver.app",
+      "ios.config.googleMaps.apiKey": "AIzaSyBa6cetNev5KZ6SHSGdvRGng1UuGU8WiBc"
     },
     "android": {
       "adaptiveIcon": {
@@ -24,7 +25,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.olhso.driver.app",
-      "android.config.googleMaps.apiKey": "AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY"
+      "android.config.googleMaps.apiKey": "AIzaSyAtCy4yw-ALxEVSfO7RdwxcE8UbGIEiMt0"
     },
     "web": {
       "favicon": "./assets/favicon.png"
