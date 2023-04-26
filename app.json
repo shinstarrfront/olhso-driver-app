@@ -15,14 +15,16 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.olhso.driver.app"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.olhso.driver.app"
+      "package": "com.olhso.driver.app",
+      "android.config.googleMaps.apiKey": "AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY"
     },
     "web": {
       "favicon": "./assets/favicon.png"
