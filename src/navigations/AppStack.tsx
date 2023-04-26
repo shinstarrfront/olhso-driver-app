@@ -1,7 +1,5 @@
 // navigations/AppStack.js
-
 import { createStackNavigator } from '@react-navigation/stack';
-import { AnyStyledComponent } from 'styled-components';
 import HomeScreen from '../srceens/HomeScreen';
 import StartScreen from "../srceens/StartScreen";
 import PhoneLoginScreen from "../srceens/PhoneLoginScreen";
@@ -16,13 +14,14 @@ const Stack = createStackNavigator<AppStackParamList>();
 
 const AppStack = () => {
     return (
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Group>
         <Stack.Screen name="Start" component={StartScreen}/>
         <Stack.Screen name="PhoneLogIn" component={PhoneLoginScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
         </Stack.Group>
       </Stack.Navigator>
+
     );
   };
 

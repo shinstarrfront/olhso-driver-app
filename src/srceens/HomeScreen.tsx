@@ -1,11 +1,34 @@
 import * as React from 'react';
 import { StyleSheet, Text, View } from "react-native";
-import PropTypes from 'prop-types';
+import MapView from 'react-native-maps';
+import { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+
 
 const HomeScreen = () => {
     return (
         <View style={styles.container}>
-            <Text style={styles.title}></Text>
+             <MapView 
+          style={styles.map}
+          initialRegion={{
+              latitude: 37.50736766932199,
+              longitude: -122.26005668254102,
+              latitudeDelta: 0.01,
+              longitudeDelta: 0.01,
+            }}
+          provider={PROVIDER_GOOGLE}
+          > 
+          <Marker
+            coordinate={{
+            latitude: 37.50736766932199,
+            longitude: -122.26005668254102,
+          }}
+            pinColor="#2D63E2"
+            title="하이"
+            description="테스트"
+          />
+          
+      
+        </MapView>
         </View>
     );
 };
@@ -23,6 +46,10 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 30,
     },
+    map: {
+        width: "100%",
+        height: "100%"
+    }
 });
 
 export default HomeScreen;

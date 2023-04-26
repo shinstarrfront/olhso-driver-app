@@ -16,19 +16,23 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.olhso.driver.app",
-      "ios.config.googleMaps.apiKey": "AIzaSyBa6cetNev5KZ6SHSGdvRGng1UuGU8WiBc"
+      "bundleIdentifier": "com.olhso.driver.app"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.olhso.driver.app",
-      "android.config.googleMaps.apiKey": "AIzaSyAtCy4yw-ALxEVSfO7RdwxcE8UbGIEiMt0"
+      "package": "com.olhso.driver.app"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "androidStatusBar": {
+      "backgroundColor": "#ffffff"
+    },
+    "extra": {
+      "googleMapsApiKey": "REACT_APP_GOOGLE_MAP_API_KEY"
     }
   }
 }
