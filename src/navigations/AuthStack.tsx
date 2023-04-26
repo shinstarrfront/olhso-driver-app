@@ -1,6 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import StartScreen from '../srceens/StartScreen';
 import HomeScreen from '../srceens/HomeScreen';
+import PhoneLoginScreen from '../srceens/PhoneLoginScreen';
 
 interface AuthStackParamList {
   LogIn: any;
@@ -34,10 +35,12 @@ const AuthStack = () => {
   />
   <Stack.Screen 
     name="PhoneLogIn"
-    component={HomeScreen}
-    options={({ navigation }) => ({
-    headerShown: true,
-  })}
+    component={PhoneLoginScreen}
+        options={{ 
+          title: '', // hides the screen title in the header
+          headerBackTitle: '', // sets the back button label to an empty string
+          headerBackTitleVisible: false // hides the back button label on iOS
+        }} 
   />
 </Stack.Navigator>
   );

@@ -19,7 +19,9 @@ const AppStack = () => {
       <Stack.Screen
         name="Start"
         component={StartScreen}
-        options={{ headerShown: false }}
+        options={({ navigation }) => ({
+          headerShown: false,
+          })}
       />
       <Stack.Screen
         name="PhoneLogIn"
@@ -27,13 +29,15 @@ const AppStack = () => {
         options={{ 
           title: '', // hides the screen title in the header
           headerBackTitle: '', // sets the back button label to an empty string
-          headerBackTitleVisible: false // hides the back button label
+          headerBackTitleVisible: false // hides the back button label on iOS
         }} 
       />
       <Stack.Screen
         name="Home"
         component={HomeScreen}
-        options={{ headerShown: false }}
+        options={({ navigation }) => ({
+          headerShown: false,
+          })}
       />
     </Stack.Navigator>
   );
