@@ -11,6 +11,7 @@
   "dependencies": {
     "@aws-amplify/ui-react": "^4.5.1",
     "@aws-amplify/ui-react-native": "^1.2.14",
+    "@react-native-async-storage/async-storage": "^1.18.1",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/stack": "^6.3.16",

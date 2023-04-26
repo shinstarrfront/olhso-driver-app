@@ -10,8 +10,8 @@ const GoogleMap = () => {
           <MapView 
           style={styles.map}
           initialRegion={{
-              latitude: 37.00000,
-              longitude: 126.00000,
+              latitude: 37.50736766932199,
+              longitude: -122.26005668254102,
               latitudeDelta: 0.01,
               longitudeDelta: 0.01,
             }}
@@ -19,8 +19,8 @@ const GoogleMap = () => {
           > 
           <Marker
             coordinate={{
-            latitude: 37.00000,
-            longitude: 126.00000,
+            latitude: 37.50736766932199,
+            longitude: -122.26005668254102,
           }}
             pinColor="#2D63E2"
             title="하이"

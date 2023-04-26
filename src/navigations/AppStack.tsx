@@ -3,12 +3,12 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import { AnyStyledComponent } from 'styled-components';
 import HomeScreen from '../srceens/HomeScreen';
-import LogInScreen from "../srceens/LogInScreen";
+import StartScreen from "../srceens/StartScreen";
 import PhoneLoginScreen from "../srceens/PhoneLoginScreen";
 
 interface AppStackParamList extends Record<string, object | any> {
     Home: any;
-    LogIn: any;
+    Start: any;
     PhoneLogIn: any;
   }
   
@@ -18,17 +18,9 @@ const AppStack = () => {
     return (
       <Stack.Navigator>
         <Stack.Group>
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Start" component={StartScreen}/>
         <Stack.Screen name="PhoneLogIn" component={PhoneLoginScreen} />
-        <Stack.Screen name="LogIn" component={LogInScreen}
-          options={({ navigation }) => ({
-            headerShown: false,
-            initialParams: {
-              navigation,
-            },
-          })}
-        />
-      
+        <Stack.Screen name="Home" component={HomeScreen} />
         </Stack.Group>
       </Stack.Navigator>
     );

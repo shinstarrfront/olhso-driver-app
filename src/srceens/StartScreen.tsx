@@ -19,7 +19,7 @@ import PhoneLoginScreen from './PhoneLoginScreen';
 interface LogInScreenProps {}
 
 
-const LogInScreen: React.FC<LogInScreenProps> = () => {
+const StartScreen: React.FC<LogInScreenProps> = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [verificationCode, setVerificationCode] = useState('');
   const navigation = useNavigation();
@@ -130,4 +130,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LogInScreen;
+export default StartScreen;

@@ -5,10 +5,10 @@ import AppStack from './navigations/AppStack';
 import AuthStack from './navigations/AuthStack';
 
 const App = () => {
-  const isAuthenticated = false; // Set to true if user is authenticated
+  const isAuthenticated = false; 
 
   return (
-    <NavigationContainer>
+    <NavigationContainer key="navigation">
       {/* {isAuthenticated ? <AppStack /> : <AuthStack />} */}
       {isAuthenticated ? <AuthStack /> : <AppStack />}
     </NavigationContainer>
