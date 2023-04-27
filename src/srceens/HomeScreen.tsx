@@ -12,8 +12,8 @@ const HomeScreen = () => {
           initialRegion={{
               latitude: 37.50736766932199,
               longitude: -122.26005668254102,
-              latitudeDelta: 0.01,
-              longitudeDelta: 0.01,
+              latitudeDelta: 0.1, //확대 레벨 조정
+              longitudeDelta: 0.1, //확대 레밸 조정
             }}
           provider={PROVIDER_GOOGLE}
           > 
@@ -23,8 +23,8 @@ const HomeScreen = () => {
             longitude: -122.26005668254102,
           }}
             pinColor="#2D63E2"
-            title="하이"
-            description="테스트"
+            title="Hi there"
+            description="This my test"
           />
           
       

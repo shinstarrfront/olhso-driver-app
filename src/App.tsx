@@ -3,6 +3,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import AppStack from './navigations/AppStack';
 import AuthStack from './navigations/AuthStack';
+import HomeStack from './navigations/HomeStack';
 
 const App = () => {
   const isAuthenticated = false; 
@@ -10,7 +11,7 @@ const App = () => {
   return (
     <NavigationContainer key="navigation">
       {/* {isAuthenticated ? <AppStack /> : <AuthStack />} */}
-<AppStack  />
+      <HomeStack />
     </NavigationContainer>
   );
 };
