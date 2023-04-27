@@ -45,9 +45,7 @@ const HomeScreen = () => {
         />
       </MapView>
       <Animated.View style={[styles.nonModal, { height: animation }]}>
-        <TouchableOpacity onPress={onButtonPress} style={styles.button}>
-          <Text style={styles.buttonText}>Expand</Text>
-        </TouchableOpacity>
+        <TouchableOpacity onPress={onButtonPress} style={[styles.button, { marginTop: 5 }]} />
       </Animated.View>
     </View>
   );
@@ -77,13 +75,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button: {
-    backgroundColor: '#0088cc',
-    padding: 10,
+    backgroundColor: 'lightgray',
+    padding: 3,
+    margin: 5,
     borderRadius: 5,
-  },
-  buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
+    width: 90,
+    position: 'absolute',
+    top: 10,
   }
 });
 
