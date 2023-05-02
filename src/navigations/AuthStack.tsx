@@ -59,6 +59,56 @@ const AuthStack = () => {
     headerBackTitleVisible: false // hides the back button label on iOS
   })}
   />
+   <Stack.Screen
+        name="TruckInfoEdit"
+        component={TruckInfoEditScreen}
+        options={({ navigation }) => ({
+          headerShown: true,
+          title: 'Truck info', 
+          headerBackTitle: '', 
+          headerBackTitleVisible: false
+        })}
+        />
+        <Stack.Screen
+        name="EditProfile"
+        component={EditProfileScreen}
+        options={({ navigation }) => ({
+          headerShown: true,
+          title: 'Edit Profile', 
+          headerBackTitle: '', 
+          headerBackTitleVisible: false
+        })}
+        />
+         <Stack.Screen
+        name="Orders"
+        component={OrdersScreen}
+        options={({ navigation }) => ({
+          headerShown: true,
+          title: 'Orders', 
+          headerBackTitle: '', 
+          headerBackTitleVisible: false
+        })}
+        />
+        <Stack.Screen
+        name="ServiceGuidance"
+        component={ServiceGuidanceScreen}
+        options={({ navigation }) => ({
+          headerShown: true,
+          title: 'Service Policy Guidance', 
+          headerBackTitle: '', 
+          headerBackTitleVisible: false
+        })}
+        />
+        <Stack.Screen
+        name="LeavingWork"
+        component={LeavingWorkScreen}
+        options={({ navigation }) => ({
+          headerShown: false,
+          title: '', 
+          headerBackTitle: '', 
+          headerBackTitleVisible: false
+        })}
+        />
 </Stack.Navigator>
   );
 };

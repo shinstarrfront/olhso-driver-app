@@ -5,7 +5,7 @@ import { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { Dimensions } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-
+import { DrawerNavigator } from '@react-navigation/drawer';
 
 const HomeScreen = () => {
   const [nonModalHeight, setNonModalHeight] = React.useState(Dimensions.get('window').height / 3);
