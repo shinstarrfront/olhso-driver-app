@@ -1,9 +1,15 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Text } from 'react-native';
-import HomeScreen from '../srceens/HomeScreen';
 import StartScreen from '../srceens/StartScreen';
+import HomeScreen from '../srceens/HomeScreen';
 import PhoneLoginScreen from '../srceens/PhoneLoginScreen';
+import TruckInfoScreen from '../srceens/TruckInfoScreen';
+import TruckInfoEditScreen from '../srceens/TruckInfoEditScreen';
+import EditProfileScreen from '../srceens/EditProfileScreen';
+import LeavingWorkScreen from '../srceens/LeavingWorkScreen';
+import OrdersScreen from '../srceens/OrdersScreen';
+import ServiceGuidanceScreen from '../srceens/ServiceGuidanceScreen';
 
 interface AppStackParamList extends Record<string, object | any> {
   Home: any;
@@ -39,6 +45,66 @@ const AppStack = () => {
           headerShown: false,
           })}
       />
+      <Stack.Screen
+        name="TruckInfo"
+        component={TruckInfoScreen}
+        options={({ navigation }) => ({
+          headerShown: true,
+          title: 'Truck info', 
+          headerBackTitle: '', 
+          headerBackTitleVisible: false
+        })}
+        />
+        <Stack.Screen
+        name="TruckInfoEdit"
+        component={TruckInfoEditScreen}
+        options={({ navigation }) => ({
+          headerShown: true,
+          title: 'Truck info', 
+          headerBackTitle: '', 
+          headerBackTitleVisible: false
+        })}
+        />
+        <Stack.Screen
+        name="EditProfile"
+        component={EditProfileScreen}
+        options={({ navigation }) => ({
+          headerShown: true,
+          title: 'Edit Profile', 
+          headerBackTitle: '', 
+          headerBackTitleVisible: false
+        })}
+        />
+         <Stack.Screen
+        name="Orders"
+        component={OrdersScreen}
+        options={({ navigation }) => ({
+          headerShown: true,
+          title: 'Orders', 
+          headerBackTitle: '', 
+          headerBackTitleVisible: false
+        })}
+        />
+        <Stack.Screen
+        name="ServiceGuidance"
+        component={ServiceGuidanceScreen}
+        options={({ navigation }) => ({
+          headerShown: true,
+          title: 'Service Policy Guidance', 
+          headerBackTitle: '', 
+          headerBackTitleVisible: false
+        })}
+        />
+        <Stack.Screen
+        name="LeavingWork"
+        component={LeavingWorkScreen}
+        options={({ navigation }) => ({
+          headerShown: false,
+          title: '', 
+          headerBackTitle: '', 
+          headerBackTitleVisible: false
+        })}
+        />
     </Stack.Navigator>
   );
 };

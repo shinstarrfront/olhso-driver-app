@@ -6,12 +6,15 @@ import { Dimensions } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
+
 const HomeScreen = () => {
   const [nonModalHeight, setNonModalHeight] = React.useState(Dimensions.get('window').height / 3);
   const animation = React.useRef(new Animated.Value(Dimensions.get('window').height / 3)).current;
 
+
   const onButtonPress = () => {
     const newHeight = nonModalHeight === Dimensions.get('window').height / 3 ? Dimensions.get('window').height * 0.9 : Dimensions.get('window').height / 3;
+
 
     Animated.timing(animation, {
       toValue: newHeight,
@@ -73,7 +76,8 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
-  },
+  }
+    ,
   button: {
     backgroundColor: 'lightgray',
     padding: 3,
@@ -83,6 +87,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 10,
   }
+  
 });
 
 export default HomeScreen;
