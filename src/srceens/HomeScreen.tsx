@@ -5,13 +5,13 @@ import { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { Dimensions } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { DrawerNavigator } from '@react-navigation/drawer';
+
 
 const HomeScreen = () => {
   const [nonModalHeight, setNonModalHeight] = React.useState(Dimensions.get('window').height / 3);
   const animation = React.useRef(new Animated.Value(Dimensions.get('window').height / 3)).current;
 
-
+  
   const onButtonPress = () => {
     const newHeight = nonModalHeight === Dimensions.get('window').height / 3 ? Dimensions.get('window').height * 0.9 : Dimensions.get('window').height / 3;
 
@@ -27,6 +27,8 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
+     
+
       <MapView //구글 지도 띄우기 
         style={styles.map}
         initialRegion={{
