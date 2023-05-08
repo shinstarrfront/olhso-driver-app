@@ -27,7 +27,8 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-     
+      <TouchableOpacity style={[styles.circleButton1, { left: 0 }]} />
+      <TouchableOpacity style={[styles.circleButton2, { right: 0 }]} />
 
       <MapView //구글 지도 띄우기 
         style={styles.map}
@@ -78,8 +79,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
-  }
-    ,
+  },
   button: {
     backgroundColor: 'lightgray',
     padding: 3,
@@ -88,8 +88,25 @@ const styles = StyleSheet.create({
     width: 90,
     position: 'absolute',
     top: 10,
-  }
-  
+  },
+  circleButton1: {
+    position: 'absolute',
+    top: 30,
+    left: 10,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: 'red',
+  },
+  circleButton2: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: 'gray',
+  },
 });
 
 export default HomeScreen;

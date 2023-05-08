@@ -24,12 +24,12 @@ return (
     <View style={styles.container}>
       <Text style={styles.title}>OLHSO</Text>
       <TouchableOpacity style={styles.btn1} onPress={() => navigation.navigate('PhoneLogIn')}>
-        <Text style={styles.buttonText1}>Phone Number LogIn</Text>
+        <Text style={styles.buttonText1}>Sign in</Text>
       </TouchableOpacity>
       <TouchableOpacity
       style={styles.btn2} 
       onPress={() => {Linking.openURL('tel:01039598640');}}>
-        <Text style={styles.buttonText2}>Connect to Service Center</Text>
+        <Text style={styles.buttonText2}>Get Help</Text>
       </TouchableOpacity>
     </View>
   );
@@ -41,46 +41,48 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor:'#ED6A2C'
   },
   title: {
     fontSize: 50,
     fontWeight: 'bold',
     position: 'absolute',
-    top: Dimensions.get('window').height / 3.5
+    top: Dimensions.get('window').height / 3.5,
+    color: 'white',
   },
   btn1: {
-    backgroundColor: 'grey',
+    backgroundColor: '#FFFFFF',
+    color: 'black',
     padding: 10,
     margin: 10,
     borderRadius: 30,
     width: 330, 
     position: 'absolute',
     top: Dimensions.get('window').height / 1.5,
-    borderColor: 'black',
     borderWidth: 1,
+    borderColor: 'white',
   },
   btn2: {
-    backgroundColor: 'white',
+    backgroundColor:'#ED6A2C',
     padding: 10,
     margin: 10,
     borderRadius: 30,
     width: 330,
     position: 'absolute',
     top: Dimensions.get('window').height / 1.3,
-    borderColor: 'black',
+    borderColor: 'white',
     borderWidth: 1,
-
   },
   buttonText1: {
-    color: 'white',
-    fontSize: 16,
+    color: 'black',
+    fontSize: '16',
     textAlign: 'center',
     marginTop: 10,
     marginBottom: 10,
     fontWeight: 'bold'
   },
   buttonText2: {
-    color: 'black',
+    color: '#FFFFFF',
     fontSize: 16,
     textAlign: 'center',
     marginTop: 10,

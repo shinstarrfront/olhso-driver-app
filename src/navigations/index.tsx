@@ -8,8 +8,8 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       <AuthStack />
-      <AppStack />
-      <HomeStack />
+      {/* <AppStack /> */}
+      {/* <HomeStack />  */}
     </NavigationContainer>
   );
 };

@@ -52,7 +52,7 @@ const AppStack = () => {
           headerShown: true,
           title: 'Truck info', 
           headerBackTitle: '', 
-          headerBackTitleVisible: false
+          headerBackTitleVisible: true
         })}
         />
         <Stack.Screen
@@ -62,7 +62,7 @@ const AppStack = () => {
           headerShown: true,
           title: 'Truck info', 
           headerBackTitle: '', 
-          headerBackTitleVisible: false
+          headerBackTitleVisible: true
         })}
         />
         <Stack.Screen

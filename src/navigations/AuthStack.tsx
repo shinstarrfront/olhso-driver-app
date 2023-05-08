@@ -26,21 +26,14 @@ const AuthStack = () => {
         headerTitle: ''
     }}
 >
- <Stack.Screen 
+<Stack.Screen 
     name="Start" 
     component={StartScreen}
     options={({ navigation }) => ({
     headerShown: false,
     })}
     />
-  <Stack.Screen 
-    name="Home"
-    component={HomeScreen}
-    options={({ navigation }) => ({
-    headerShown: false,
-  })}
-  />
-  <Stack.Screen 
+<Stack.Screen 
     name="PhoneLogIn"
     component={PhoneLoginScreen}
         options={{ 
@@ -49,16 +42,23 @@ const AuthStack = () => {
           headerBackTitleVisible: false // hides the back button label on iOS
         }} 
   />
+  <Stack.Screen 
+    name="Home"
+    component={HomeScreen}
+    options={({ navigation }) => ({
+    headerShown: false,
+  })}
+  />
   <Stack.Screen
   name="TruckInfo"
   component={TruckInfoScreen}
   options={({ navigation }) => ({
     headerShown: true,
-    title: 'Truck info', // hides the screen title in the header
-    headerBackTitle: '', // sets the back button label to an empty string
-    headerBackTitleVisible: false // hides the back button label on iOS
+    title: 'Truck info', 
+    headerBackTitle: '', 
+    headerBackTitleVisible: true
   })}
-  />
+  /> 
    <Stack.Screen
         name="TruckInfoEdit"
         component={TruckInfoEditScreen}
@@ -66,7 +66,7 @@ const AuthStack = () => {
           headerShown: true,
           title: 'Truck info', 
           headerBackTitle: '', 
-          headerBackTitleVisible: false
+          headerBackTitleVisible: true
         })}
         />
         <Stack.Screen
