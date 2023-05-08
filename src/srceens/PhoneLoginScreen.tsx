@@ -1,28 +1,64 @@
-import React from 'react';
+import * as React from 'react';
+import { useContext } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from "react-native";
-
+import { SignInContext } from '../contexts/SignInContext';
+import { AuthContext } from '../contexts/AuthContext';
+import { Amplify, Auth } from 'aws-amplify'
+import CryptoJS from 'crypto-js';
 
 interface PhoneLoginScreenProps {
-    navigation: any;
+    navigation: any; 
+    accessToken: any;
 }
 
+const CLIENT_ID = process.env.REACT_APP_CLIENT_ID || '';
+const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET || '';
+
+Amplify.configure({
+    Auth: {
+      region: 'us-west-2',
+      userPoolId: 'uus-west-2_UZwUaizX7',
+      userPoolWebClientId: '2i53te99k4gvkam856n6entaeq',
+      identityPoolId: 'us-west-2:e3f65917-26d4-411e-af9e-3a08fbb92c98'
+    }
+  });
+
+function createSecretHash(username: string, clientId: string, clientSecret: string) {
+    const hash = CryptoJS.HmacSHA256(username + clientId, clientSecret);
+    return hash.toString(CryptoJS.enc.Base64);
+  }
+  
+  interface CognitoUser {
+    idToken: any;
+  }
+
 const PhoneLoginScreen: React.FC<PhoneLoginScreenProps> = ({navigation}) => {
+    const { phoneNumber, setPhoneNumber, password, setPassword } = React.useContext(SignInContext);
+    const { setIdToken, setAccessToken } = useContext(AuthContext); 
+    
+    //signin 요청
+    const signIn = async() => {
+        try{
+
+        }
+        catch(error){
+            console.log("error", error);
+        }
+    };
+
     return (
         <View style={styles.container}>
           <Text style={styles.title1}>Let me know your</Text>
           <Text style={styles.title2}>phone number</Text>
-          {/* <Text style={styles.inputtitle1}>phone number</Text> */}
           <TouchableOpacity style={styles.phonenumber}>
             <TextInput style={styles.inputphonenumber} placeholder="Enter your phone number"  />
           </TouchableOpacity>
           <TouchableOpacity style={styles.code}>
           </TouchableOpacity>
-          {/* <Text style={styles.inputtitle2}>password</Text> */}
           <TouchableOpacity style={styles.password}>
             <TextInput style={styles.passwordplaceholder} placeholder="Password"  />
           </TouchableOpacity>
-          {/* <Text style={styles.inputtitle3}>Confirm Password</Text> */}
-          <TouchableOpacity style={styles.signinbtn}  >
+          <TouchableOpacity style={styles.signinbtn} onPress={signIn}>
             <Text style={styles.signinbtnfont}>Sign In</Text>
           </TouchableOpacity>
         </View>

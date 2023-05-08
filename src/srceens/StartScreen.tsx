@@ -13,6 +13,7 @@ import {
     Linking,
 } from 'react-native';
 import { Auth } from 'aws-amplify'
+import styled from 'styled-components';
 
 interface LogInScreenProps {
   navigation: any;
