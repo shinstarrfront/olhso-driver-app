@@ -6,15 +6,34 @@ import { Dimensions } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import io from 'socket.io-client';
+import { useEffect, useState } from 'react';
 
 const HomeScreen = () => {
   const [nonModalHeight, setNonModalHeight] = React.useState(Dimensions.get('window').height / 3);
   const animation = React.useRef(new Animated.Value(Dimensions.get('window').height / 3)).current;
+  const [orders, setOrders] = useState([]);
 
-  
+  useEffect(() => {
+    // socket.io-client 생성
+    const socket = io('http://localhost:8080', { transports: ['websocket'] });
+
+    // Truck & Drive NameSpace에 속한 TruckID 룸에 입장하고 enterRoom 이벤트 발생
+    socket.emit('enterRoom', { roomName: 'TruckID', nameSpace: 'Truck & Drive' });
+
+    // orderList 이벤트를 구독
+    socket.on('orderList', (data) => {
+      console.log('orderList event received: ', data);
+    });
+
+    return () => {
+      // 컴포넌트가 unmount될 때? 퇴근할때 소켓 연결 종료해야한다
+      socket.disconnect();
+    };
+  }, []);
+
+  //모달 위로 올리기 함수
   const onButtonPress = () => {
     const newHeight = nonModalHeight === Dimensions.get('window').height / 3 ? Dimensions.get('window').height * 0.9 : Dimensions.get('window').height / 3;
-
 
     Animated.timing(animation, {
       toValue: newHeight,
@@ -24,6 +43,9 @@ const HomeScreen = () => {
 
     setNonModalHeight(newHeight);
   };
+
+
+
 
   return (
     <View style={styles.container}>
@@ -51,8 +73,17 @@ const HomeScreen = () => {
         />
       </MapView>
       <Animated.View style={[styles.nonModal, { height: animation }]}>
-        <TouchableOpacity onPress={onButtonPress} style={[styles.button, { marginTop: 5 }]} />
-      </Animated.View>
+         <TouchableOpacity onPress={onButtonPress} style={[styles.button, { marginTop: 5 }]} />
+         {orders && (
+         <View>
+         <Text>Order List:</Text>
+         {orders.map((order) => (
+        <Text key={order}>{order}</Text>
+      ))}
+    </View>
+  )}
+</Animated.View>
+
     </View>
   );
 };
