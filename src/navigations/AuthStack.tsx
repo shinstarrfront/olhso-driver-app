@@ -8,7 +8,7 @@ import EditProfileScreen from '../srceens/EditProfileScreen';
 import LeavingWorkScreen from '../srceens/LeavingWorkScreen';
 import OrdersScreen from '../srceens/OrdersScreen';
 import ServiceGuidanceScreen from '../srceens/ServiceGuidanceScreen';
-
+import ChangePasswordScreen from '../srceens/ChangePasswordScreen';
 
 interface AuthStackParamList {
   LogIn: any;
@@ -33,6 +33,7 @@ const AuthStack = () => {
     headerShown: false,
     })}
     />
+    
 <Stack.Screen 
     name="PhoneLogIn"
     component={PhoneLoginScreen}
@@ -47,6 +48,13 @@ const AuthStack = () => {
     component={HomeScreen}
     options={({ navigation }) => ({
     headerShown: false,
+  })}
+  />
+   <Stack.Screen 
+    name="ChangePassword"
+    component={ChangePasswordScreen}
+    options={({ navigation }) => ({
+    headerShown: true,
   })}
   />
   <Stack.Screen

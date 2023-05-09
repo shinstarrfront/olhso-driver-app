@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from "react-native";
 import { SignInContext } from '../contexts/SignInContext';
 import { AuthContext } from '../contexts/AuthContext';
 import { Amplify, Auth } from 'aws-amplify'
 import CryptoJS from 'crypto-js';
 
+//드라이버앱에서는 로그인만!
 interface PhoneLoginScreenProps {
     navigation: any; 
     accessToken: any;
@@ -17,46 +18,54 @@ const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET || '';
 Amplify.configure({
     Auth: {
       region: 'us-west-2',
-      userPoolId: 'uus-west-2_UZwUaizX7',
+      userPoolId: 'us-west-2_UZwUaizX7',
       userPoolWebClientId: '2i53te99k4gvkam856n6entaeq',
       identityPoolId: 'us-west-2:e3f65917-26d4-411e-af9e-3a08fbb92c98'
     }
   });
 
-function createSecretHash(username: string, clientId: string, clientSecret: string) {
-    const hash = CryptoJS.HmacSHA256(username + clientId, clientSecret);
-    return hash.toString(CryptoJS.enc.Base64);
-  }
-  
-  interface CognitoUser {
-    idToken: any;
-  }
 
-const PhoneLoginScreen: React.FC<PhoneLoginScreenProps> = ({navigation}) => {
-    const { phoneNumber, setPhoneNumber, password, setPassword } = React.useContext(SignInContext);
-    const { setIdToken, setAccessToken } = useContext(AuthContext); 
+const PhoneLoginScreen: React.FunctionComponent<PhoneLoginScreenProps> = ({navigation}) => {
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [password, setPassword] = useState('');
+    const [showVerification, setShowVerification] = useState(false);
+
     
+
     //signin 요청
     const signIn = async() => {
-        try{
-
-        }
-        catch(error){
-            console.log("error", error);
-        }
+        try {
+            if (phoneNumber === '' || password === '') {
+                // 폰 번호 또는 비밀번호가 비어 있는 경우 함수를 빠져나가기
+                return console.log('폰 번호 또는 비밀번호가 비어있다!');
+                }
+            //const user로 정의 후 console.log(user)로 확인하면 cognito에서 주는 정보 볼 수 있다. 
+            const user = await Auth.signIn(phoneNumber, password);
+            console.log('User successfully signed in!', user);
+            // user의 "challengeName"가 "NEW_PASSWORD_REQUIRED"인 경우는 navigation.navigate('ChangePassword')로 이동
+            if(user.challengeName === 'NEW_PASSWORD_REQUIRED'){
+                return navigation.navigate('ChangePassword', { user }); // 전달 수정 
+            } 
+            // user의 "challengeName"이 "NEW_PASSWORD_REQUIRED"가 아닌 경우는 navigation.navigate('Home')으로 이동
+            else {
+                return navigation.navigate('Home', { user });// 전달 수정
+            }
+          } catch (error) {
+            console.log('에러!!!!', error);
+          }
     };
+    
+
 
     return (
         <View style={styles.container}>
           <Text style={styles.title1}>Let me know your</Text>
-          <Text style={styles.title2}>phone number</Text>
+          <Text style={styles.title2}>phone number.</Text>
           <TouchableOpacity style={styles.phonenumber}>
-            <TextInput style={styles.inputphonenumber} placeholder="Enter your phone number"  />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.code}>
+            <TextInput style={styles.inputphonenumber} placeholder="ex) +8201012345678" defaultValue={phoneNumber} onChangeText={phoneNumber => setPhoneNumber(phoneNumber)} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.password}>
-            <TextInput style={styles.passwordplaceholder} placeholder="Password"  />
+            <TextInput style={styles.passwordplaceholder} placeholder="Password" defaultValue={password} onChangeText={password => setPassword(password)} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.signinbtn} onPress={signIn}>
             <Text style={styles.signinbtnfont}>Sign In</Text>
@@ -106,7 +115,8 @@ const PhoneLoginScreen: React.FC<PhoneLoginScreenProps> = ({navigation}) => {
             color: 'gray',
         },
         inputphonenumber: {
-        color: '#838796'
+        color: 'black',
+        left: 10
         },
         btncode: {
             color: '#838796'

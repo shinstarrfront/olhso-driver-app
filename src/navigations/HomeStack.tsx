@@ -12,13 +12,13 @@ const Stack = createStackNavigator<HomeStackParamList>();
 const HomeStack = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen
+      {/* <Stack.Screen
       name="Truck Info"
       component={TruckInfoScreen}
       options={({ navigation }) => ({
         headerShown: true,
       })}
-      />
+      /> */}
       <Stack.Screen 
       name="Home"
       component={HomeScreen}

@@ -10,6 +10,7 @@ import EditProfileScreen from '../srceens/EditProfileScreen';
 import LeavingWorkScreen from '../srceens/LeavingWorkScreen';
 import OrdersScreen from '../srceens/OrdersScreen';
 import ServiceGuidanceScreen from '../srceens/ServiceGuidanceScreen';
+import ChangePasswordScreen from '../srceens/ChangePasswordScreen';
 
 interface AppStackParamList extends Record<string, object | any> {
   Home: any;
@@ -37,6 +38,14 @@ const AppStack = () => {
           headerBackTitle: '', // sets the back button label to an empty string
           headerBackTitleVisible: false // hides the back button label on iOS
         }} 
+      />
+      <Stack.Screen 
+        name="ChangePassword"
+        component={ChangePasswordScreen}
+        options= {{ 
+          title: '',
+          headerBackTitle: '',
+          headerBackTitleVisible: true }}
       />
       <Stack.Screen
         name="Home"
