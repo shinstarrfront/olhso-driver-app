@@ -17,46 +17,69 @@ interface ChangePasswordScreenProps {
   navigation: ChangePasswordScreenNavigationProp;
 }
 
-
-
 const ChangePasswordScreen: React.FunctionComponent<ChangePasswordScreenProps> = ({navigation, route}) => {
-    const [newPassword, setNewPassword] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirm, setConfirm] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirm, setConfirm] = useState('');
+  const [showPasswordCheckNo, setShowPasswordCheckNo] = useState(false);
+  const [showPasswordCheckOk, setShowPasswordCheckOk] = useState(false);
 
-    const { user } = route.params; // 전달 받기
+  const { user } = route.params; // 전달 받기
 
-    const handlePasswordChange = (value: string) => {
+  const handlePasswordChange = (value: string) => {
     setNewPassword(value);
-    };
+    if (confirm !== '' && value !== confirm) {
+      // 새 비밀번호 입력 후 confirm값이 있고 두 값이 일치하지 않는 경우
+      setShowPasswordCheckNo(true);
+      setShowPasswordCheckOk(false);
+    } else {
+      setShowPasswordCheckNo(false);
+      setShowPasswordCheckOk(false);
+    }
+  };
 
-    //비밀번호 변경
-    const changePassword = async () => {
-        try {
-          await Auth.completeNewPassword(user, newPassword);
-          console.log('Password changed successfully');
-        } catch (error) {
-          console.log('Error changing password:', error);
-        }
-      };
+  const handleConfirmChange = (value: string) => {
+    setConfirm(value);
+    if (value !== newPassword) {
+      setShowPasswordCheckNo(true);
+      setShowPasswordCheckOk(false);
+    } else {
+      setShowPasswordCheckNo(false);
+      setShowPasswordCheckOk(true);
+    }
+  };
 
-  
+  const changePassword = async () => {
+    try {
+      if (newPassword !== confirm) {
+        alert('Passwords do not match.');
+        return;
+      }
+      await Auth.completeNewPassword(user, newPassword);
+      console.log('Password changed successfully');
+    } catch (error) {
+      console.log('Error changing password:', error);
+    }
+  };
 
-    return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Change your password</Text>
-            <TouchableOpacity style={styles.password}>
-                <TextInput style={styles.passwordplaceholder} placeholder="Enter the new Password" defaultValue={newPassword} onChangeText={newPassword => setNewPassword(newPassword)}/>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.confirmpassword}>
-                <TextInput style={styles.confirmpasswordplaceholder} placeholder="Confirm your Password"  />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.changedbtn} onPress={changePassword} >
-            <Text style={styles.changedbtnfont}>Changed</Text>
-          </TouchableOpacity>
-        </View>
-    );
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Change your password</Text>
+      <TouchableOpacity style={styles.password}>
+        <TextInput style={styles.passwordplaceholder} placeholder="Enter the new Password"  defaultValue={newPassword} onChangeText={handlePasswordChange}/>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.confirmpassword}>
+        <TextInput style={styles.confirmpasswordplaceholder} placeholder="Confirm your Password"  defaultValue={confirm} onChangeText={handleConfirmChange}/>
+      </TouchableOpacity>
+      {showPasswordCheckNo && <Text style={styles.passwordcheckno}>X Password doesn't match</Text>}
+      {showPasswordCheckOk && <Text style={styles.passwordcheckok}>O The passwords match!</Text>}
+      <TouchableOpacity style={styles.changedbtn} onPress={changePassword} disabled={showPasswordCheckNo} >
+        <Text style={styles.changedbtnfont}>Changed</Text>
+      </TouchableOpacity>
+    </View>
+  );
 };
+
+
 
 
 const styles = StyleSheet.create({
@@ -111,7 +134,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         left: 30,
         height: 50,
-        top: 300
+        top: 320
     },
     changedbtnfont: {
         textAlign: 'center',
@@ -120,6 +143,16 @@ const styles = StyleSheet.create({
         fontSize: 16,
         paddingTop: 14,
     },
+    passwordcheckno:{
+        top: 300,
+        left: 40,
+        color: '#ED6A2C',
+    },
+    passwordcheckok: {
+        top: 300,
+        left: 40,
+        color: 'green',
+    }
 });
 
 export default ChangePasswordScreen;

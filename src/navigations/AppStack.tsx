@@ -24,7 +24,7 @@ const Stack = createStackNavigator<AppStackParamList>();
 const AppStack = () => {
   return (
     <Stack.Navigator>
-      {/* <Stack.Screen
+      <Stack.Screen
         name="Start"
         component={StartScreen}
         options={({ navigation }) => ({
@@ -47,7 +47,7 @@ const AppStack = () => {
           title: '',
           headerBackTitle: '',
           headerBackTitleVisible: true }}
-      /> */}
+      />
       <Stack.Screen
         name="Home"
         component={HomeScreen}

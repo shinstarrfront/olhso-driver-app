@@ -5,7 +5,7 @@ import { SignInContext } from '../contexts/SignInContext';
 import { AuthContext } from '../contexts/AuthContext';
 import { Amplify, Auth } from 'aws-amplify'
 import CryptoJS from 'crypto-js';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage'; //로그인 후 앱을 나가도 상태를 유지하기 위함
 
 //드라이버앱에서는 로그인만!
 interface PhoneLoginScreenProps {
@@ -25,46 +25,59 @@ Amplify.configure({
   }
 });
 
-
 const PhoneLoginScreen: React.FunctionComponent<PhoneLoginScreenProps> = ({navigation}) => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [showVerification, setShowVerification] = useState(false);
 
-  // signin 요청
-  const signIn = async() => {
+  //로그인 요청 함수 
+  const signIn = async () => {
     try {
       if (phoneNumber === '' || password === '') {
         // 폰 번호 또는 비밀번호가 비어 있는 경우 함수를 빠져나가기
-        return console.log('폰 번호 또는 비밀번호가 비어있다!');
+        return console.log('폰 번호 또는 비밀번호가 비어있음');
       }
-      // const user로 정의 후 console.log(user)로 확인하면 cognito에서 주는 정보 확인 가능
+  
+      //로그인 되는 순간
       const user = await Auth.signIn(phoneNumber, password);
-      console.log('User successfully signed in!', user);
-
-      // 로그인 정보를 AsyncStorage에 저장
-      await AsyncStorage.setItem('userToken', user.signInUserSession.accessToken.jwtToken);
-
+  
+      if (!user) {
+        console.log('!user임');
+        return;
+      }
+      console.log('로그인 확인', user);
+  
       // user의 "challengeName"가 "NEW_PASSWORD_REQUIRED"인 경우는 navigation.navigate('ChangePassword')로 이동
-      if(user.challengeName === 'NEW_PASSWORD_REQUIRED'){
-        return navigation.navigate('ChangePassword', { user }); // 전달 수정 
+      if (user.challengeName === 'NEW_PASSWORD_REQUIRED') {
+        console.log('확인1');
+        return navigation.navigate('ChangePassword', { user }); // 전달 수정
+        console.log('확인2');
+        await AsyncStorage.setItem('userToken', user.signInUserSession.accessToken.jwtToken);
+       
       } 
-      // user의 "challengeName"이 "NEW_PASSWORD_REQUIRED"가 아닌 경우는 navigation.navigate('Home')으로 이동
       else {
-        return navigation.navigate('Home', { user });// 전달 수정
+        console.log('확인3');
+        // user의 "challengeName"이 "NEW_PASSWORD_REQUIRED"가 아닌 경우는 navigation.navigate('Home')으로 이동
+        return navigation.navigate('Home', { user }); // 전달 수정
+        console.log('확인4');
+        await AsyncStorage.setItem('userToken', user.signInUserSession.accessToken.jwtToken);
       }
     } catch (error) {
-      console.log('에러!!!!', error);
+      console.log('에러 발생', error);
     }
   };
+  
+  
 
   // 이전에 로그인 한 적이 있는지 확인하고, 있다면 자동으로 로그인 처리하기
-  const checkLoginStatus = async () => {
-    const userToken = await AsyncStorage.getItem('userToken');
-    if (userToken) {
+    const checkLoginStatus = async () => {
+        const userToken = await AsyncStorage.getItem('userToken');
+        console.log('userToken임', userToken);
+    if (userToken !== null) {
       navigation.navigate('Home');
     }
-  }
+  };
+  
 
   // PhoneLoginScreen 컴포넌트가 마운트될 때 checkLoginStatus 실행
   React.useEffect(() => {
