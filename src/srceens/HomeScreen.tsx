@@ -15,47 +15,52 @@ const HomeScreen = () => {
   const animation = React.useRef(new Animated.Value(Dimensions.get('window').height / 3)).current;
   const [orders, setOrders] = useState([]);
 
-  // 소켓 연결 및 이벤트 핸들러 등록
+  // 소켓 연결 및 이벤트 핸들러 등록!
   useEffect(() => {
     // 위치 권한 요청
     (async () => {
-      const { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        console.log('Permission to access location was denied');
-        return;
-      }
-    })();
-  
+        const { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+          console.log('위치 액세스 권한이 거부됨');
+          return;
+        }
+      })();
+
     // socket.io-client 생성
-    const socket = io('http://localhost:3000', { transports: ['websocket'] });
+    const socket = io('http://localhost:8080/truck', 
+     { transports: ['websocket'] });
     
-    // connect 이벤트 구독
+    // connect 이벤트 구독(출근)
     socket.on('connect', () => {
-      console.log('Socket connected successfully!');
+      console.log('소켓 연결 성공적');
     });
   
     // Truck & Drive NameSpace에 속한 TruckID 룸에 입장하고 enterRoom 이벤트 발생
-    socket.emit('enterRoom', { roomName: 'TruckID', nameSpace: 'Truck & Drive' });
+    socket.emit('enterRoom', 
+     { truckID: '1234' });
   
     // orderList 이벤트를 구독
     socket.on('orderList', (data) => {
-      console.log('orderList event received: ', data);
+      console.log('주문 목록 이벤트가 수신됨', data);
     });
   
     // GPS 정보를 업데이트하는 함수
-    const updateLocation = (longitude: number, latitude: number) => {
-      socket.emit('updateLocation', { longitude, latitude }, 'Truck & Drive', 'TruckID');
-    }
+    const updateLocation = (truckID:string, lng: number, lat: number) => {
+        socket.emit('updateLocation', 
+         { truckID, lng, lat }, 'Truck & Drive', 'TruckID');
+     }
   
-    // 위치 정보 업데이트를 위한 이벤트 핸들러 등록
-    Location.watchPositionAsync({ accuracy: Location.Accuracy.High }, (position) => {
-      const { longitude, latitude } = position.coords;
-      updateLocation(longitude, latitude);
-    });
+    // 위치 정보 업데이트를 위한 이벤트 핸들러 등록(expo-location 사용)
+    Location.watchPositionAsync({ accuracy: Location.Accuracy.High }, (position)=> {
+        const { coords } = position;
+        const { longitude, latitude } = coords;
+        updateLocation('1234', longitude, latitude);
+     });
+  
   
     return () => {
-      // 컴포넌트가 unmount될 때?(퇴근 시) 소켓 연결 종료
-      socket.disconnect();
+      // 컴포넌트가 unmount될 때 소켓 연결 종료(퇴근)
+     //  socket.disconnect();
     };
   }, []);
   
