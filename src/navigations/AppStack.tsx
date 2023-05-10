@@ -20,10 +20,11 @@ interface AppStackParamList extends Record<string, object | any> {
 
 const Stack = createStackNavigator<AppStackParamList>();
 
+//로그인 후
 const AppStack = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen
+      {/* <Stack.Screen
         name="Start"
         component={StartScreen}
         options={({ navigation }) => ({
@@ -46,7 +47,7 @@ const AppStack = () => {
           title: '',
           headerBackTitle: '',
           headerBackTitleVisible: true }}
-      />
+      /> */}
       <Stack.Screen
         name="Home"
         component={HomeScreen}

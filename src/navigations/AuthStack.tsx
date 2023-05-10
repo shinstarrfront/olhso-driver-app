@@ -11,12 +11,18 @@ import ServiceGuidanceScreen from '../srceens/ServiceGuidanceScreen';
 import ChangePasswordScreen from '../srceens/ChangePasswordScreen';
 
 interface AuthStackParamList {
-  LogIn: any;
+  LogIn: PhoneLoginScreenProps;
+  PhoneLogIn: PhoneLoginScreenProps;
   [key: string]: any;
+}
+
+interface PhoneLoginScreenProps {
+  navigation: any; 
 }
 
 const Stack = createStackNavigator<AuthStackParamList>();
 
+//로그인 전
 const AuthStack = () => {
   return (
     <Stack.Navigator
@@ -26,7 +32,7 @@ const AuthStack = () => {
         headerTitle: ''
     }}
 >
-<Stack.Screen 
+  <Stack.Screen 
     name="Start" 
     component={StartScreen}
     options={({ navigation }) => ({
@@ -34,27 +40,27 @@ const AuthStack = () => {
     })}
     />
     
-<Stack.Screen 
+  <Stack.Screen 
     name="PhoneLogIn"
     component={PhoneLoginScreen}
-        options={{ 
-          title: '', // hides the screen title in the header
-          headerBackTitle: '', // sets the back button label to an empty string
-          headerBackTitleVisible: false // hides the back button label on iOS
+    options={{ 
+          title: '', 
+          headerBackTitle: '', 
+          headerBackTitleVisible: false
         }} 
-  />
-  <Stack.Screen 
-    name="Home"
-    component={HomeScreen}
-    options={({ navigation }) => ({
-    headerShown: false,
-  })}
   />
    <Stack.Screen 
     name="ChangePassword"
     component={ChangePasswordScreen}
     options={({ navigation }) => ({
     headerShown: true,
+  })}
+  />
+  {/* <Stack.Screen 
+    name="Home"
+    component={HomeScreen}
+    options={({ navigation }) => ({
+    headerShown: false,
   })}
   />
   <Stack.Screen
@@ -116,8 +122,8 @@ const AuthStack = () => {
           headerBackTitle: '', 
           headerBackTitleVisible: false
         })}
-        />
-</Stack.Navigator>
+        /> */}
+    </Stack.Navigator>
   );
 };
 

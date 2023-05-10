@@ -51,10 +51,11 @@ const HomeScreen = () => {
      }
   
     // 위치 정보 업데이트를 위한 이벤트 핸들러 등록(expo-location 사용)
-    Location.watchPositionAsync({ accuracy: Location.Accuracy.High }, (position)=> {
-        const { coords } = position;
-        const { longitude, latitude } = coords;
-        updateLocation('1234', longitude, latitude);
+    Location.watchPositionAsync({ accuracy: Location.Accuracy.High }, 
+        (position)=> {
+            const { coords } = position;
+            const { longitude, latitude } = coords;
+            updateLocation('1234', longitude, latitude);
      });
   
   
