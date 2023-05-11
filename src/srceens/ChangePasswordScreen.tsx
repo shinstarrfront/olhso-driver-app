@@ -102,6 +102,7 @@ import { CognitoUser } from 'amazon-cognito-identity-js';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../types';
+import AsyncStorage from '@react-native-async-storage/async-storage'; 
 
 
 interface ChangePasswordScreenRouteProp extends RouteProp<RootStackParamList, 'ChangePassword'> {}
@@ -117,6 +118,7 @@ const ChangePasswordScreen: React.FunctionComponent<ChangePasswordScreenProps> =
   const [confirm, setConfirm] = useState('');
   const [showPasswordCheckNo, setShowPasswordCheckNo] = useState(false);
   const [showPasswordCheckOk, setShowPasswordCheckOk] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { user } = route.params; // 전달 받기
 
@@ -143,18 +145,33 @@ const ChangePasswordScreen: React.FunctionComponent<ChangePasswordScreenProps> =
     }
   };
 
-  const changePassword = async () => {
-    try {
-      if (newPassword !== confirm) {
-        alert('Passwords do not match.');
-        return;
-      }
-      await Auth.completeNewPassword(user, newPassword);
-      console.log('Password changed successfully');
-    } catch (error) {
-      console.log('Error changing password:', error);
+  //changed 버튼을 눌렀을 때 실행되는 함수
+const changePassword = async () => {
+    if (newPassword !== confirm) {
+      setShowPasswordCheckNo(true);
+      setShowPasswordCheckOk(false);
+      return;
     }
+  
+    // 로딩 인디케이터 활성화
+    setIsLoading(true);
+  
+    try {
+      await Auth.completeNewPassword(user, newPassword);
+      console.log('Password changed successfully', user);
+      await AsyncStorage.setItem('userToken', JSON.stringify(user));
+      console.log('AsyncStorage에 user 정보 저장', user);
+      navigation.navigate('Home');
+      console.log('Home으로 이동');
+    } catch (error) {
+      console.log('패스워드 수정 에러', error);
+      alert('Please try again later.');
+    }
+  
+    // 로딩 인디케이터 비활성화
+    setIsLoading(false);
   };
+  
 
  
   
