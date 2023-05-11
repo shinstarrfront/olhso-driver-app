@@ -1,3 +1,4 @@
+//최초에 출근 시 재고 입력하는 화면
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
