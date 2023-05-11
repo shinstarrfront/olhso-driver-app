@@ -2,7 +2,8 @@
 import io from 'socket.io-client';
 import * as Location from 'expo-location';
 
-const socket = io('http://localhost:8080/truck', { transports: ['websocket'] });
+const socket = io('http://localhost:8080/truck'
+, { transports: ['websocket'] });
 
 // connect 이벤트 구독(출근)
 socket.on('connect', () => {
@@ -10,7 +11,8 @@ socket.on('connect', () => {
 });
 
 // Truck & Drive NameSpace에 속한 TruckID 룸에 입장하고 enterRoom 이벤트 발생
-socket.emit('enterRoom', { truckID: '1234' });
+socket.emit('enterRoom'
+, { truckID: '1234' });
 
 // orderList 이벤트를 구독
 socket.on('orderList', (data) => {
@@ -19,7 +21,8 @@ socket.on('orderList', (data) => {
 
 // GPS 정보를 업데이트하는 함수
 const updateLocation = (truckID: string, lng: number, lat: number) => {
-  socket.emit('updateLocation', { truckID, lng, lat }, 'Truck & Drive', 'TruckID');
+  socket.emit('updateLocation'
+  , { truckID, lng, lat }, 'Truck & Drive', 'TruckID');
 }
 
 // 위치 정보 업데이트를 위한 이벤트 핸들러 등록(expo-location 사용)
