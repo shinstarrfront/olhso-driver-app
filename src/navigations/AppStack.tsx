@@ -48,13 +48,16 @@ const AppStack = () => {
           headerBackTitle: '',
           headerBackTitleVisible: true }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="Home"
         component={HomeScreen}
         options={({ navigation }) => ({
-          headerShown: false,
+          title: '',
+          headerStyle: {
+            backgroundColor: 'white', // sets the background color of the header
+          },
           })}
-      />
+      /> */}
       <Stack.Screen
         name="TruckInfo"
         component={TruckInfoScreen}

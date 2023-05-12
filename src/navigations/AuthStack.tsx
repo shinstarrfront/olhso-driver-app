@@ -56,14 +56,17 @@ const AuthStack = () => {
     headerShown: true,
   })}
   />
-  {/* <Stack.Screen 
-    name="Home"
-    component={HomeScreen}
-    options={({ navigation }) => ({
-    headerShown: false,
-  })}
-  />
-  <Stack.Screen
+  {/* <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={({ navigation }) => ({
+          title: '',
+          headerStyle: {
+            backgroundColor: 'white', // sets the background color of the header
+          },
+          })}
+      /> */}
+  {/* <Stack.Screen
   name="TruckInfo"
   component={TruckInfoScreen}
   options={({ navigation }) => ({

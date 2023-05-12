@@ -1,4 +1,6 @@
+import React, { useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+import { StyleSheet, Text, View, TouchableOpacity, Animated, Modal, Button, Linking } from "react-native";
 import HomeScreen from '../srceens/HomeScreen';
 import TruckInfoScreen from '../srceens/TruckInfoScreen';
 
@@ -10,24 +12,79 @@ interface HomeStackParamList {
 const Stack = createStackNavigator<HomeStackParamList>();
 
 const HomeStack = () => {
+  const [modalVisible, setModalVisible] = useState(false);
+
+  //모달 생성
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
+  //모달 종료
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
+  //모달 화면 구성
+  const ModalContent = () => {
+    return (
+      <Modal visible={modalVisible} animationType="slide" transparent>
+        <View style={styles.modalContainer}>
+          <View style={styles.modal}>
+            <Button title="Emergency Call" onPress={() => {Linking.openURL('tel:01039598640');}} />
+            <Button title="Pause Delivery" /> 
+          </View>
+        </View>
+      </Modal>
+    );
+  };
+
   return (
-    <Stack.Navigator>
-      {/* <Stack.Screen
-      name="Truck Info"
-      component={TruckInfoScreen}
-      options={({ navigation }) => ({
-        headerShown: true,
-      })}
-      /> */}
-      <Stack.Screen 
-      name="Home"
-      component={HomeScreen}
-      options={({ navigation }) => ({
-        headerShown: false,
-      })}
-      />
-    </Stack.Navigator>
+    <>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            title: '',
+            headerStyle: {
+              backgroundColor: 'orange', //테스트를 하기 위함
+            },
+            headerTransparent: true,
+            headerRight: () => (
+              <TouchableOpacity onPress={openModal}>
+                <Text style={styles.buttonText}>Help</Text>
+              </TouchableOpacity>
+            ),
+          }}
+        />
+      </Stack.Navigator>
+      <ModalContent />
+    </>
   );
 };
 
+const styles = StyleSheet.create({
+  buttonText: {
+    color: 'white',
+    marginRight: 16,
+    fontSize: 16,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modal: {
+    backgroundColor: 'white',
+    padding: 16,
+    borderRadius: 8,
+  },
+  modalText: {
+    fontSize: 20,
+    marginBottom: 16,
+  },
+});
+
 export default HomeStack;
+

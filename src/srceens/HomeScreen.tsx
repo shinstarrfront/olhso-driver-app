@@ -1,21 +1,27 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Animated } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Animated, Modal, Button } from "react-native";
 import MapView from 'react-native-maps';
 import { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { Dimensions } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
+import {createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
+import { NavigationContainer, RouteProp } from '@react-navigation/native';
+import {createDrawerNavigator, DrawerContentScrollView, DrawerItemList,DrawerItem, DrawerNavigationProp } from '@react-navigation/drawer';
 import { useEffect, useState } from 'react';
+import { Ionicons } from '@expo/vector-icons';
 import socket from '../utils/socket.io';
+import styled from 'styled-components';  
 
+interface HomeScreenProps {
+    navigation: DrawerNavigationProp<Record<string, object>, string>;
+}
 
-
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }: HomeScreenProps) => {
+  const [modalVisible, setModalVisible] = useState(false);
   const [nonModalHeight, setNonModalHeight] = React.useState(Dimensions.get('window').height / 3);
   const animation = React.useRef(new Animated.Value(Dimensions.get('window').height / 3)).current;
   const [orders, setOrders] = useState([]);
 
-  // 소켓 연결 및 이벤트 핸들러 등록(중앙에서 관리하도록 분리중)
+  // 소켓 연결 및 이벤트 핸들러 등록(중앙에서 관리하도록 분리 전 코드)
 //   useEffect(() => {
 //     // 위치 권한 요청
 //     (async () => {
@@ -84,15 +90,13 @@ const HomeScreen = () => {
 
     setNonModalHeight(newHeight);
   };
-
-
+ 
+  //Drawer 함수
+  const Drawer = createDrawerNavigator();
 
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={[styles.circleButton1, { left: 0 }]} />
-      <TouchableOpacity style={[styles.circleButton2, { right: 0 }]} />
-
       <MapView //구글 지도 띄우기 
         style={styles.map}
         initialRegion={{
@@ -156,24 +160,6 @@ const styles = StyleSheet.create({
     width: 90,
     position: 'absolute',
     top: 10,
-  },
-  circleButton1: {
-    position: 'absolute',
-    top: 30,
-    left: 10,
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: 'red',
-  },
-  circleButton2: {
-    position: 'absolute',
-    top: 10,
-    left: 10,
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: 'gray',
   },
 });
 
