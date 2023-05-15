@@ -9,8 +9,9 @@ import {createDrawerNavigator, DrawerContentScrollView, DrawerItemList,DrawerIte
 import { useEffect, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import socket from '../utils/socket.io';
-import styled from 'styled-components';  
 import 'react-native-reanimated';
+import SwipeButton from '@dillionverma/react-native-swipe-button';
+
 
 
 interface HomeScreenProps {
@@ -120,6 +121,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
         />
       </MapView>
       <Animated.View style={[styles.nonModal, { height: animation }]}>
+      <SwipeButton />
          <TouchableOpacity onPress={onButtonPress} style={[styles.button, { marginTop: 5 }]} />
          <View>
          {orders.map((orders) => (
@@ -163,6 +165,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 10,
   },
+  
 });
 
 export default HomeScreen;
