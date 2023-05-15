@@ -40,7 +40,7 @@ const AuthStack = () => {
     })}
     />
     
-  <Stack.Screen 
+  {/* <Stack.Screen 
     name="PhoneLogIn"
     component={PhoneLoginScreen}
     options={{ 
@@ -48,7 +48,7 @@ const AuthStack = () => {
           headerBackTitle: '', 
           headerBackTitleVisible: false
         }} 
-  />
+  /> */} {/* 잠시 주석 처리 */}
    <Stack.Screen 
     name="ChangePassword"
     component={ChangePasswordScreen}

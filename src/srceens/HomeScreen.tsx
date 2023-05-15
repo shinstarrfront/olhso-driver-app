@@ -10,6 +10,8 @@ import { useEffect, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import socket from '../utils/socket.io';
 import styled from 'styled-components';  
+import 'react-native-reanimated';
+
 
 interface HomeScreenProps {
     navigation: DrawerNavigationProp<Record<string, object>, string>;
@@ -139,13 +141,13 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   map: {
-    width: "100%",
-    height: "100%"
+    width: '100%',
+    height: '100%'
   },
   nonModal: {
     position: "absolute",
     bottom: 0,
-    width: "100%",
+    width: '100%',
     backgroundColor: "#fff",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,

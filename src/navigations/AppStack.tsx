@@ -1,6 +1,5 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Text } from 'react-native';
 import StartScreen from '../srceens/StartScreen';
 import HomeScreen from '../srceens/HomeScreen';
 import PhoneLoginScreen from '../srceens/PhoneLoginScreen';
@@ -31,7 +30,7 @@ const AppStack = () => {
           headerShown: false,
           })}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="PhoneLogIn"
         component={PhoneLoginScreen}
         options={{ 
@@ -39,7 +38,7 @@ const AppStack = () => {
           headerBackTitle: '', // sets the back button label to an empty string
           headerBackTitleVisible: false // hides the back button label on iOS
         }} 
-      />
+      /> */} {/* 잠시 주석 처리 */}
       <Stack.Screen 
         name="ChangePassword"
         component={ChangePasswordScreen}

@@ -1,5 +1,5 @@
 //토큰 중앙 관리 
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useState } from 'react';
 import { Auth } from 'aws-amplify';
 
 interface User {

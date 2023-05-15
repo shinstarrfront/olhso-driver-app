@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet, Text, View, TouchableOpacity, Animated, Modal, Button, Linking } from "react-native";
 import HomeScreen from '../srceens/HomeScreen';
 import TruckInfoScreen from '../srceens/TruckInfoScreen';
+import 'react-native-reanimated';
 
 interface HomeStackParamList {
   Map: any;
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     marginRight: 16,
-    fontSize: 16,
+    fontSize:16,
   },
   modalContainer: {
     flex: 1,
