@@ -20,8 +20,8 @@ interface HomeScreenProps {
 
 const HomeScreen = ({ navigation }: HomeScreenProps) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [nonModalHeight, setNonModalHeight] = React.useState(Dimensions.get('window').height / 3);
-  const animation = React.useRef(new Animated.Value(Dimensions.get('window').height / 3)).current;
+  const [nonModalHeight, setNonModalHeight] = React.useState(Dimensions.get('window').height / 2.5);
+  const animation = React.useRef(new Animated.Value(Dimensions.get('window').height / 2.5)).current;
   const [orders, setOrders] = useState([]);
 
   // 소켓 연결 및 이벤트 핸들러 등록(중앙에서 관리하도록 분리 전 코드)
@@ -83,7 +83,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   
   //모달 위로 올리기 함수
   const onButtonPress = () => {
-    const newHeight = nonModalHeight === Dimensions.get('window').height / 3 ? Dimensions.get('window').height * 0.9 : Dimensions.get('window').height / 3;
+    const newHeight = nonModalHeight === Dimensions.get('window').height / 2.5 ? Dimensions.get('window').height * 0.9 : Dimensions.get('window').height / 2.5;
 
     Animated.timing(animation, {
       toValue: newHeight,
@@ -94,6 +94,9 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
     setNonModalHeight(newHeight);
   };
  
+  //Navigate 이동 함수(클릭시 구글 내비게이션으로 이동해야함)
+  const onNavigatePress = () => {};
+
   //Drawer 함수
   const Drawer = createDrawerNavigator();
 
@@ -120,6 +123,9 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
           description="This my test"
         />
       </MapView>
+      <TouchableOpacity onPress={onNavigatePress} style={styles.navigatebtn}>
+          <Text style={styles.navigatebtnfont}>Navigate</Text> 
+        </TouchableOpacity>
       <Animated.View style={[styles.nonModal, { height: animation }]}>
       <SwipeButton />
          <TouchableOpacity onPress={onButtonPress} style={[styles.button, { marginTop: 5 }]} />
@@ -165,7 +171,23 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 10,
   },
-  
+  navigatebtn: {
+    backgroundColor:'black',
+    position: 'absolute',
+    width: 102,
+    height: 32,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    right: 14,
+    bottom: 359,
+    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.4)',
+  },
+  navigatebtnfont: {
+    color:'white',
+    fontSize: 14,
+    fontWeight: 'bold',
+  }
 });
 
 export default HomeScreen;
