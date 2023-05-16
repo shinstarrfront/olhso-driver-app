@@ -18,7 +18,7 @@ const HomeDrawer: React.FC<HomeDrawerProps> = ({ navigation }) => {
     <Drawer.Navigator>
        <Drawer.Screen name="edit profile" component={EditProfileScreen} />
        <Drawer.Screen name="delidvery history" component={OrdersScreen} />
-       <Drawer.Screen name="Modify & confirm the inventory" component={TruckInfoEditScreen} />x
+       <Drawer.Screen name="Modify & confirm the inventory" component={TruckInfoEditScreen} />
     </Drawer.Navigator>
   );
 };

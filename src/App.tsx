@@ -67,6 +67,7 @@
 
 // export default App;
 
+
 import { registerRootComponent } from 'expo';
 import React from 'react';
 import { DrawerActions, NavigationContainer } from '@react-navigation/native';
@@ -103,3 +104,6 @@ const App = () => {
 };
 
 export default registerRootComponent(App);
+
+
+

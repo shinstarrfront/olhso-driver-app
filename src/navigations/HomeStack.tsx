@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet, Text, View, TouchableOpacity, Animated, Modal, Button, Linking } from "react-native";
 import HomeScreen from '../srceens/HomeScreen';
 import TruckInfoScreen from '../srceens/TruckInfoScreen';
+import { DrawerActions } from '@react-navigation/native';
 import 'react-native-reanimated';
 
 interface HomeStackParamList {
@@ -46,7 +47,7 @@ const HomeStack = () => {
         <Stack.Screen
           name="Home"
           component={HomeScreen}
-          options={{
+          options={({ navigation }) => ({
             title: '',
             headerStyle: {
               backgroundColor: 'orange', //테스트를 하기 위함
@@ -58,17 +59,18 @@ const HomeStack = () => {
               </TouchableOpacity>
             ),
             headerLeft: () => (
-              <TouchableOpacity onPress={() => {}}>
+              <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
                 <Text style={styles.buttonText1}>Menu</Text>
               </TouchableOpacity>
             ),
-          }}
+          })}
         />
       </Stack.Navigator>
       <ModalContent />
     </>
   );
 };
+
 
 const styles = StyleSheet.create({
   buttonText1: {
