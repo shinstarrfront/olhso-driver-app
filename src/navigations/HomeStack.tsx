@@ -54,7 +54,12 @@ const HomeStack = () => {
             headerTransparent: true,
             headerRight: () => (
               <TouchableOpacity onPress={openModal}>
-                <Text style={styles.buttonText}>Help</Text>
+                <Text style={styles.buttonText2}>Help</Text>
+              </TouchableOpacity>
+            ),
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => {}}>
+                <Text style={styles.buttonText1}>Menu</Text>
               </TouchableOpacity>
             ),
           }}
@@ -66,7 +71,12 @@ const HomeStack = () => {
 };
 
 const styles = StyleSheet.create({
-  buttonText: {
+  buttonText1: {
+    color: 'white',
+    fontSize:16,
+    marginLeft: 16,
+  },
+  buttonText2: {
     color: 'white',
     marginRight: 16,
     fontSize:16,

@@ -93,15 +93,11 @@ const App = () => {
   // }
 
   return (
-    <NavigationContainer key="navigation">
-      {/* <Drawer.Navigator
-        drawerContent={(props:any)=><CustomDrawerContent {...props}/>}
-      >
-        <Drawer.Screen name="Home" component={HomeDrawer} />
-      </Drawer.Navigator> */}
-      {/* {isAuthenticated ? <AppStack /> : <AuthStack />} */}
-      {/* <AuthStack /> */}
-      <HomeStack />
+      <NavigationContainer key="navigation">
+        {/* <Drawer.Navigator>
+          <Drawer.Screen name="Home" component={HomeDrawer} />
+        </Drawer.Navigator> */}
+        <HomeStack />
     </NavigationContainer>
   );
 };
