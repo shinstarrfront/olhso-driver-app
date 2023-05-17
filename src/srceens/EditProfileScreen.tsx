@@ -14,30 +14,38 @@ const EditProfileScreen = () => {
       
     return (
         <View style={styles.container}>
-            <View style={styles.box1}>
-
-                <Text style={styles.FN}>First Name</Text>
-                <Text style={styles.LN}>Last Name</Text>
-                <TouchableOpacity style={styles.firstname}>
-                <TextInput style={styles.inputfirstname} placeholder="First Name"  />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.lastname}>
-                <TextInput style={styles.inputlastname} placeholder="Last Name"  />
-                </TouchableOpacity>
-
-                {/* <Text style={styles.PN}>Phone Number</Text>
-                <TouchableOpacity style={styles.phonenumber}>
-                <TextInput style={styles.inputphonenumber} placeholder="ex) +8201012345678"  />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.zipcode}>
-                <TextInput style={styles.zipcodeplaceholder} placeholder="Zip code(optional)" />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.requestbtn}>
-                <Text style={styles.requestbtnfont}>Request the Modify</Text>
-                </TouchableOpacity>     
-                <Text style={styles.SO}>Sign Out</Text> */}
-                
+        <View style={styles.box1}> 
+          <View style={styles.box11}> 
+          <View style={styles.box111}>
+            <Text style={styles.FN}>First Name</Text>
+            <Text style={styles.LN}>Last Name</Text>
+            </View>
+            <View style={styles.box112}>
+              <TouchableOpacity style={styles.firstname}>
+                <TextInput style={styles.inputfirstname} placeholder="First Name" />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.lastname}>
+                <TextInput style={styles.inputlastname} placeholder="Last Name" />
+              </TouchableOpacity>
+              </View>
+          </View>
+          <View style={styles.box12}> 
+            <Text style={styles.PN}>Phone Number</Text>
+            <TouchableOpacity style={styles.phonenumber}>
+              <TextInput style={styles.inputphonenumber} placeholder="ex) +8201012345678" />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.zipcode}>
+              <TextInput style={styles.inputzipcode} placeholder="Zip code(optional)" />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.box13}> 
+            <TouchableOpacity style={styles.requestbtn}>
+              <Text style={styles.requestbtnfont}>Request the Modify</Text>
+            </TouchableOpacity>
+            <Text style={styles.SO}>Sign Out</Text>
+          </View>
         </View>
+        <View style={styles.box2}></View> 
       </View>
     );
 };
@@ -51,26 +59,53 @@ const styles = StyleSheet.create({
     },
     box1: {
         flex: 1,
+        backgroundColor: 'grey',
+    },
+    box11: {
+        backgroundColor: 'yellow',
+        flex: 1,
+    },
+    box111: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        left: '14.26%',
+    },
+    box112: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        left: '14.26%',
+        // width: '100%',
+    },
+    box12:{
+        backgroundColor: 'orange',
+        flex: 2,
+    },
+    box13: {
+        backgroundColor: 'blue',
+        flex: 1,
+    },
+    box2: {
+        flex: 1,
     },
     FN: {
         fontSize: 14,
         color: '#838796',
-        left: '3.9%',
-        top: '2.125%',
+        left: '14.26%',
+        top: '3%',
+        width: '50%',
     },
     LN: {
         fontSize: 14,
         color: '#838796',
-        left: '51.39%',
+        width: '50%',
+        top: '3%',
     },
     firstname: {
-
+        width: '50%',
+        height: '12.67%',
+        top: '6%',
     },
     inputfirstname: {
-        width: '44.72%',
-        height: '5.75%',
-        left: '3.9%',
-        top: '17.125%',
         backgroundColor:'#F1F1F4',
         borderRadius: 23,
         color: 'black',
@@ -79,13 +114,11 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     lastname: {
-       
+        width: '50%',
+        height: '12.67%',
+        top: '6%',
     },
     inputlastname: {
-        width: '44.72%',
-        height: '5.75%',
-        right: '3.9%',
-        top: '17.125%',
         backgroundColor:'#F1F1F4',
         borderRadius: 23,
         color: 'black',
@@ -100,12 +133,19 @@ const styles = StyleSheet.create({
         top: '10.625 %',
     },
     SO: {
-
+        fontSize: 14,
+        color: '#838796',
+        alignItems: 'center',
+        left: '44.26%',
+        top: '20%'
     },
     inputphonenumber: {
-    color: 'black',
-    left: 10,
-
+        backgroundColor:'#F1F1F4',
+        borderRadius: 23,
+        color: 'black',
+        padding: 15,
+        position: 'absolute',
+        width: '92.22%',
     },
     btncode: {
         color: '#838796'
@@ -117,7 +157,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         left: 30,
         height: 50,
-        top: 300,
+        top: '15%',
         borderWidth: 1,
     },
     requestbtnfont: {
@@ -128,17 +168,8 @@ const styles = StyleSheet.create({
         paddingTop: 14,
     },
     phonenumber:{
-        width: '92.22%',
-        height: '5.75%',
-        backgroundColor:'#F1F1F4',
-        borderRadius: 30,
-        top: '18.625%',
-        color: 'black',
-        padding: 15,
-        position: 'absolute',
-        textAlign: 'center',
+        top: '25.625%',
         left: '3.9%',
-        right: '3.9%',
     },
     code: {
         color: 'black',
@@ -146,22 +177,16 @@ const styles = StyleSheet.create({
         top: 155,
     },
     zipcode:{
-        width: '92.22%',
-        height: '5.75%',
+        top: '55.625%',
+        left: '3.9%',
+    },
+    inputzipcode: {
         backgroundColor:'#F1F1F4',
-        borderRadius: 30,
-        top: 230,
-        color: 'blck',
+        borderRadius: 23,
+        color: 'black',
         padding: 15,
         position: 'absolute',
-        textAlign: 'center',
-        left: '3.9%',
-        right: '3.9%',
-       
-    },
-    zipcodeplaceholder: {
-        color: 'black',
-        left: 10
+        width: '92.22%',
     },
     
 });
