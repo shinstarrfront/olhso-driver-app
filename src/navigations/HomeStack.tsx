@@ -33,7 +33,9 @@ const HomeStack = () => {
         <View style={styles.modalContainer}>
           <View style={styles.modal}>
             <Button title="Emergency Call" onPress={() => {Linking.openURL('tel:01039598640');}} />
-            <Button title="Pause Delivery" /> 
+            <Button title="Pause Delivery 10분" /> 
+            <Button title="Pause Delivery 20분" /> 
+            <Button title="밥 시간" /> 
             <Text onPress={closeModal}>X</Text>
           </View>
         </View>
