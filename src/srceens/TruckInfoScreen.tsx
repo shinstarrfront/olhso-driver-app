@@ -1,10 +1,13 @@
 //최초에 출근 시 재고 입력하는 화면
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
 const TruckInfoScreen = () => {
   return (
     <View style={styles.container}>
+      <Text style={styles.title1}>Truck Number</Text>
+
+      <Text style={styles.title2}>Food Inventory</Text>
       <View style={styles.row}>
         <View style={styles.box}>
           <Text style={styles.text}>CS</Text>
@@ -61,6 +64,9 @@ const TruckInfoScreen = () => {
           <Text style={styles.text}>JC</Text>
         </View>
       </View>
+      <TouchableOpacity style={styles.savebtn}>
+        <Text style={styles.savebtnfont}>Save</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -86,6 +92,18 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 20,
   },
+  title1: {
+
+  },
+  title2: {
+
+  },
+  savebtn: {
+
+  },
+  savebtnfont: {
+
+  }
 });
 
 export default TruckInfoScreen;

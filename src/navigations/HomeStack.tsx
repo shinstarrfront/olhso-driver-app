@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   buttonText2: {
     color: 'white',
     marginRight: 16,
-    fontSize:16,
+    fontSize: 16,
   },
   modalContainer: {
     flex: 1,

@@ -14,7 +14,8 @@ const OrdersScreen = () => {
       
     return (
         <View style={styles.container}>
-            <Text style={styles.title}></Text>
+            <Text style={styles.date}>Date</Text>
+            <Text style={styles.price}>Price</Text>
         </View>
     );
 };
@@ -27,9 +28,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    title: {
-        fontSize: 30,
+    date: {
+
     },
+    price: {
+        
+    },
+
 });
 
 export default OrdersScreen;
