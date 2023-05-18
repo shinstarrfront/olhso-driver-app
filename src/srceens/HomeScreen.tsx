@@ -128,7 +128,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
         </TouchableOpacity>
       <Animated.View style={[styles.nonModal, { height: animation }]}>
       <SwipeButton />
-         <TouchableOpacity onPress={onButtonPress} style={[styles.button, { marginTop: 5 }]} />
+         <TouchableOpacity onPress={onButtonPress}  hitSlop={8} style={[styles.button, { marginTop: 5 }]} />
          <View>
          {orders.map((orders) => (
               <Text>Orders: {JSON.stringify(orders)}</Text>

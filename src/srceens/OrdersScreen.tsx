@@ -15,12 +15,16 @@ const OrdersScreen = () => {
       
     return (
         <View style={styles.container}>
-            <View style={styles.box1}>
-            <Text style={styles.date}>Date</Text>
-            <Text style={styles.price}>Price</Text>
-            </View>
-            <View style={styles.box2}>
-                <Text style={styles.orderscontent}>Orders</Text>
+            <View style={styles.boxcolumn}>
+                <View style={styles.box1}>
+                <Text style={styles.date}>Date</Text>
+                <Text style={styles.price}>Price</Text>
+                </View>
+                <View style={styles.box2}>
+                {orders.map((order, index) => (
+                        <Text key={index} style={styles.orderscontent}>{order}</Text>
+                    ))}
+                </View>
             </View>
         </View>
     );
@@ -35,30 +39,42 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: "#fff",
     },
+    boxcolumn: {
+        width: '91.46%',
+        alignSelf: 'center',
+        height: '100%',
+    },
     box1: {
-        flex: 10,
+        position: 'absolute',
+        top: 14,
+        flex: 9.16,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        backgroundColor: 'yellow',
+        height: 48,
+        textAlign: 'center',
+        alignContent: 'center',
     },
     box2: {
-        flex: 90,
-        backgroundColor: 'green',
+        flex: 90.84,
         width: '100%',
+        top: 68,
+        backgroundColor: 'gray',
     },
     date: {
-        top: '1%',
         color: '#838796',
-        fontSize: 14,
+        fontSize: 16,
         width: '50%',
         left: '14.26%',
+        textAlign: 'center',
+        alignContent: 'center',
     },
     price: {
-        top: '1%',
         color: '#838796',
-        fontSize: 14,
+        fontSize: 16,
         width: '50%',
         rigth: '14.26%',
+        textAlign: 'center',
+        alignContent: 'center',
     },
     orderscontent: {
 
