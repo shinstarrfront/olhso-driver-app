@@ -30,33 +30,35 @@ const AppStack = () => {
           headerShown: false,
           })}
       />
-      {/* <Stack.Screen
-        name="PhoneLogIn"
-        component={PhoneLoginScreen}
-        options={{ 
-          title: '', // hides the screen title in the header
-          headerBackTitle: '', // sets the back button label to an empty string
-          headerBackTitleVisible: false // hides the back button label on iOS
+{/* <Stack.Screen 
+    name="PhoneLogIn"
+    component={PhoneLoginScreen}
+    options={{ 
+          headerTitle: 'Sign in', 
+          headerBackTitle: '', 
+          headerBackTitleVisible: false,
+          headerTintColor: 'black', 
         }} 
-      /> */} {/* 잠시 주석 처리 */}
+  /> */}
       <Stack.Screen 
         name="ChangePassword"
         component={ChangePasswordScreen}
         options= {{ 
-          title: '',
+          title: 'Change the password',
           headerBackTitle: '',
           headerBackTitleVisible: true }}
       />
-      {/* <Stack.Screen
+      <Stack.Screen
         name="Home"
         component={HomeScreen}
         options={({ navigation }) => ({
-          title: '',
-          headerStyle: {
-            backgroundColor: 'white', // sets the background color of the header
-          },
+          headerShown: false,
+          // title: '',
+          // headerStyle: {
+          //   backgroundColor: 'transparent', // sets the background color of the header
+          // },
           })}
-      /> */}
+  />
       <Stack.Screen
         name="TruckInfo"
         component={TruckInfoScreen}

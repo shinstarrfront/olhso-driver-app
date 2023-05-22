@@ -1,14 +1,8 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import StartScreen from '../srceens/StartScreen';
 import HomeScreen from '../srceens/HomeScreen';
-import PhoneLoginScreen from '../srceens/PhoneLoginScreen';
-import TruckInfoScreen from '../srceens/TruckInfoScreen';
-import TruckInfoEditScreen from '../srceens/TruckInfoEditScreen';
-import EditProfileScreen from '../srceens/EditProfileScreen';
-import LeavingWorkScreen from '../srceens/LeavingWorkScreen';
-import OrdersScreen from '../srceens/OrdersScreen';
-import ServiceGuidanceScreen from '../srceens/ServiceGuidanceScreen';
 import ChangePasswordScreen from '../srceens/ChangePasswordScreen';
+import PhoneLoginScreen from '../srceens/PhoneLoginScreen';
 
 interface AuthStackParamList {
   LogIn: PhoneLoginScreenProps;
@@ -39,93 +33,39 @@ const AuthStack = () => {
     headerShown: false,
     })}
     />
-    
-  {/* <Stack.Screen 
+  
+   
+  <Stack.Screen 
     name="PhoneLogIn"
     component={PhoneLoginScreen}
     options={{ 
-          title: '', 
+          headerTitle: 'Sign in', 
           headerBackTitle: '', 
-          headerBackTitleVisible: false
+          headerBackTitleVisible: false,
+          headerTintColor: 'black', 
         }} 
-  /> */} {/* 잠시 주석 처리 */}
+  />
    <Stack.Screen 
     name="ChangePassword"
     component={ChangePasswordScreen}
-    options={({ navigation }) => ({
-    headerShown: true,
-  })}
+    options={{ 
+      headerTitle: 'Change the password', 
+      headerBackTitle: '', 
+      headerBackTitleVisible: false,
+      headerTintColor: 'black', 
+    }} 
   />
-  {/* <Stack.Screen
+  <Stack.Screen
         name="Home"
         component={HomeScreen}
         options={({ navigation }) => ({
-          title: '',
-          headerStyle: {
-            backgroundColor: 'white', // sets the background color of the header
-          },
-          })}
-      /> */}
-  {/* <Stack.Screen
-  name="TruckInfo"
-  component={TruckInfoScreen}
-  options={({ navigation }) => ({
-    headerShown: true,
-    title: 'Truck info', 
-    headerBackTitle: '', 
-    headerBackTitleVisible: true
-  })}
-  /> 
-   <Stack.Screen
-        name="TruckInfoEdit"
-        component={TruckInfoEditScreen}
-        options={({ navigation }) => ({
-          headerShown: true,
-          title: 'Truck info', 
-          headerBackTitle: '', 
-          headerBackTitleVisible: true
-        })}
-        />
-        <Stack.Screen
-        name="EditProfile"
-        component={EditProfileScreen}
-        options={({ navigation }) => ({
-          headerShown: true,
-          title: 'Edit Profile', 
-          headerBackTitle: '', 
-          headerBackTitleVisible: false
-        })}
-        />
-         <Stack.Screen
-        name="Orders"
-        component={OrdersScreen}
-        options={({ navigation }) => ({
-          headerShown: true,
-          title: 'Orders', 
-          headerBackTitle: '', 
-          headerBackTitleVisible: false
-        })}
-        />
-        <Stack.Screen
-        name="ServiceGuidance"
-        component={ServiceGuidanceScreen}
-        options={({ navigation }) => ({
-          headerShown: true,
-          title: 'Service Policy Guidance', 
-          headerBackTitle: '', 
-          headerBackTitleVisible: false
-        })}
-        />
-        <Stack.Screen
-        name="LeavingWork"
-        component={LeavingWorkScreen}
-        options={({ navigation }) => ({
           headerShown: false,
-          title: '', 
-          headerBackTitle: '', 
-          headerBackTitleVisible: false
-        })}
-        /> */}
+          // title: '',
+          // headerStyle: {
+          //   backgroundColor: 'transparent', // sets the background color of the header
+          // },
+          })}
+  />
     </Stack.Navigator>
   );
 };

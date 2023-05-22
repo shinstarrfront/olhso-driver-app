@@ -87,10 +87,10 @@ const PhoneLoginScreen: React.FunctionComponent<PhoneLoginScreenProps> = ({navig
 
     return (
         <View style={styles.container}>
-          <Text style={styles.title1}>Let me know your</Text>
-          <Text style={styles.title2}>phone number.</Text>
+          <View style={styles.boxcolumn}> 
+          <View style={styles.box}>
           <TouchableOpacity style={styles.phonenumber}>
-            <TextInput style={styles.inputphonenumber} placeholder="ex) +8201012345678" defaultValue={phoneNumber} onChangeText={phoneNumber => setPhoneNumber(phoneNumber)} />
+            <TextInput style={styles.inputphonenumber} placeholder="+8201012345678" defaultValue={phoneNumber} onChangeText={phoneNumber => setPhoneNumber(phoneNumber)} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.password}>
             <TextInput style={styles.passwordplaceholder} placeholder="Password" defaultValue={password} onChangeText={password => setPassword(password)} />
@@ -98,6 +98,8 @@ const PhoneLoginScreen: React.FunctionComponent<PhoneLoginScreenProps> = ({navig
           <TouchableOpacity style={styles.signinbtn} onPress={signIn}>
             <Text style={styles.signinbtnfont}>Sign In</Text>
           </TouchableOpacity>
+          </View>
+          </View>
         </View>
       );
     };
@@ -108,21 +110,16 @@ const PhoneLoginScreen: React.FunctionComponent<PhoneLoginScreenProps> = ({navig
             flex: 1,
             backgroundColor:'#FFFFFF',
         },
-        title1: {
-            fontSize: 32,
-            fontWeight: 'bold',
-            textAlign: 'left',
-            position: 'absolute',
-            top: 20,
-            paddingLeft: 20,
-        },
-        title2: {
-            fontSize: 32,
-            fontWeight: 'bold',
-            textAlign: 'left',
-            position: 'absolute',
-            top: 60,
-            paddingLeft: 20,
+        boxcolumn: {
+          width: '91.46%',
+          alignSelf: 'center',
+          height: '100%',
+      },
+        box: {
+          position: 'absolute',
+          height: 170,
+          width: '100%',
+          top:30,
         },
         inputtitle1: {
             top: 130,
@@ -150,32 +147,30 @@ const PhoneLoginScreen: React.FunctionComponent<PhoneLoginScreenProps> = ({navig
             color: '#838796'
         },
         signinbtn: {
-            width: '85%',
+            position: 'absolute',
+            width: '100%',
             backgroundColor: '#ED6A2C',
-            borderRadius: 30,
+            borderRadius: 29,
             textAlign: 'center',
-            left: 30,
-            height: 50,
-            top: 300
+            height: 46,
+            top: 124
         },
         signinbtnfont: {
             textAlign: 'center',
             color: 'white',
             fontWeight: 'bold',
             fontSize: 16,
-            paddingTop: 14,
+            paddingTop: 15,
         },
         phonenumber:{
-            width: '85%',
+          position: 'absolute',
+            width: '100%',
             backgroundColor:'#F1F1F4',
-            borderRadius: 30,
-            top: 160,
+            borderRadius: 29,
             color: 'black',
             padding: 15,
-            position: 'absolute',
             textAlign: 'center',
-            left: 30,
-            height: 50,
+            height: 46,
         },
         code: {
             color: 'black',
@@ -183,16 +178,15 @@ const PhoneLoginScreen: React.FunctionComponent<PhoneLoginScreenProps> = ({navig
             top: 155,
         },
         password:{
-            width: '85%',
+          position: 'absolute',
+            width: '100%',
             backgroundColor:'#F1F1F4',
-            borderRadius: 30,
-            top: 230,
+            borderRadius: 29,
+            top: 58,
             color: 'blck',
             padding: 15,
-            position: 'absolute',
             textAlign: 'center',
-            left: 30,
-            height: 50,
+            height: 46,
         },
         passwordplaceholder: {
             color: 'black',

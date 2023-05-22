@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Animated, Modal, Button } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Animated, Modal, Button, Image } from "react-native";
 import MapView from 'react-native-maps';
 import { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { Dimensions } from 'react-native';
@@ -7,11 +7,11 @@ import {createStackNavigator, StackNavigationProp } from '@react-navigation/stac
 import { NavigationContainer, RouteProp } from '@react-navigation/native';
 import {createDrawerNavigator, DrawerContentScrollView, DrawerItemList,DrawerItem, DrawerNavigationProp } from '@react-navigation/drawer';
 import { useEffect, useState } from 'react';
-import { Ionicons } from '@expo/vector-icons';
 import socket from '../utils/socket.io';
 import 'react-native-reanimated';
 import SwipeButton from '@dillionverma/react-native-swipe-button';
-
+import MenuIcon from '../assets/menu.png';
+import AlertIcon from '../assets/alert.png';
 
 
 interface HomeScreenProps {
@@ -20,8 +20,8 @@ interface HomeScreenProps {
 
 const HomeScreen = ({ navigation }: HomeScreenProps) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [nonModalHeight, setNonModalHeight] = React.useState(Dimensions.get('window').height / 2.5);
-  const animation = React.useRef(new Animated.Value(Dimensions.get('window').height / 2.5)).current;
+  const [nonModalHeight, setNonModalHeight] = React.useState(Dimensions.get('window').height / 2.7);
+  const animation = React.useRef(new Animated.Value(Dimensions.get('window').height / 2.7)).current;
   const [orders, setOrders] = useState([]);
 
   // 소켓 연결 및 이벤트 핸들러 등록(중앙에서 관리하도록 분리 전 코드)
@@ -83,7 +83,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   
   //모달 위로 올리기 함수
   const onButtonPress = () => {
-    const newHeight = nonModalHeight === Dimensions.get('window').height / 2.5 ? Dimensions.get('window').height * 0.9 : Dimensions.get('window').height / 2.5;
+    const newHeight = nonModalHeight === Dimensions.get('window').height / 2.7 ? Dimensions.get('window').height * 0.9 : Dimensions.get('window').height / 2.7;
 
     Animated.timing(animation, {
       toValue: newHeight,
@@ -126,9 +126,18 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
       <TouchableOpacity onPress={onNavigatePress} style={styles.navigatebtn}>
           <Text style={styles.navigatebtnfont}>Navigate</Text> 
         </TouchableOpacity>
+        <Image
+          source={MenuIcon}
+          style={styles.menuIcon}
+        />
+        <Image
+          source={AlertIcon}
+          style={styles.alertIcon}
+        />
       <Animated.View style={[styles.nonModal, { height: animation }]}>
+      {/*출근하기 버튼*/}
       <SwipeButton />
-         <TouchableOpacity onPress={onButtonPress}  hitSlop={8} style={[styles.button, { marginTop: 5 }]} />
+         <TouchableOpacity onPress={onButtonPress}  hitSlop={15} style={[styles.button, { marginTop: 5 }]} />
          <View>
          {orders.map((orders) => (
               <Text>Orders: {JSON.stringify(orders)}</Text>
@@ -150,7 +159,16 @@ const styles = StyleSheet.create({
   },
   map: {
     width: '100%',
-    height: '100%'
+    height: '100%',
+  },
+  menuIcon: {
+    height: 42,
+    top: 30,
+    left: 16,
+  },
+  alertIcon: {
+    height: 42,
+    top: 30,
   },
   nonModal: {
     position: "absolute",
@@ -179,14 +197,19 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    right: 14,
-    bottom: 359,
+    right: 16,
+    top: 481,
+    bottom: 12,
     boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.4)',
   },
   navigatebtnfont: {
-    color:'white',
+    fontFamily: 'Poppins',
+    color:'#ffffff',
     fontSize: 14,
     fontWeight: 'bold',
+    padding: 9,
+    alignContent: 'center',
+    justifyContent: 'center',
   }
 });
 

@@ -22,13 +22,13 @@ const TestStack = () => {
           headerShown: true,
         })}
       /> */}
-      <Stack.Screen
+      {/* <Stack.Screen
         name="Orders"
         component={OrdersScreen}
         options={({ navigation }) => ({
           headerShown: true,
         })}
-      />
+      /> */}
       {/* <Stack.Screen
         name="TruckInfoEdit"
         component={TruckInfoEditScreen}

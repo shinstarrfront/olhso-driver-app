@@ -78,29 +78,24 @@ import AuthStack from './navigations/AuthStack';
 import HomeDrawer from './navigations/HomeDrawer';
 import HomeStack from './navigations/HomeStack';
 import TestStack from './navigations/TestStack';
+import * as Font from 'expo-font';
+import { QueryClient, QueryClientProvider } from 'react-query';
+
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
+
 const App = () => {
   const isAuthenticated = false; 
-  // const CustomDrawerContent = (props:any) => {
-  //   return (
-  //     <DrawerContentScrollView {...props}>
-  //       <DrawerItemList {...props} />
-  //       <DrawerItem label="End Shift" onPress={() => alert('End Shift')} />
-  //     </DrawerContentScrollView>
-  //   );
-  // }
+  const queryClient = new QueryClient();
 
   return (
+    <QueryClientProvider client={queryClient}>
       <NavigationContainer key="navigation">
-        {/* <Drawer.Navigator>
-          <Drawer.Screen name="Home" component={HomeDrawer} />
-        </Drawer.Navigator> 
-        <HomeStack /> */}
-        <TestStack />
+        {isAuthenticated ? <AppStack /> : <AuthStack />}
     </NavigationContainer>
+    </QueryClientProvider>
   );
 };
 

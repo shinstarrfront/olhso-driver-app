@@ -173,20 +173,19 @@ const changePassword = async () => {
   };
   
 
- 
-  
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Change your password</Text>
+       <View style={styles.boxcolumn}> 
+       <View style={styles.box}>
       <TouchableOpacity style={styles.password}>
-        <TextInput style={styles.passwordplaceholder} 
+        <TextInput style={styles.inputpassword} 
         placeholder="Enter the new Password"  
         defaultValue={newPassword} 
         onChangeText={handlePasswordChange}/>
       </TouchableOpacity>
       <TouchableOpacity style={styles.confirmpassword}>
       <TextInput 
-        style={styles.confirmpasswordplaceholder} 
+        style={styles.inputconfirmpassword} 
         placeholder={confirm ? Array(confirm.length).fill('*').join('') : 'Confirm your Password'}  
         defaultValue={confirm} 
         onChangeText={handleConfirmChange}
@@ -197,6 +196,8 @@ const changePassword = async () => {
       <TouchableOpacity style={styles.changedbtn} onPress={changePassword} disabled={showPasswordCheckNo} >
         <Text style={styles.changedbtnfont}>Changed</Text>
       </TouchableOpacity>
+      </View>
+      </View>
     </View>
   );
 };
@@ -207,6 +208,17 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor:'#FFFFFF',
     },
+    boxcolumn: {
+      width: '91.46%',
+      alignSelf: 'center',
+      height: '100%',
+  },
+    box: {
+      position: 'absolute',
+      height: 170,
+      width: '100%',
+      top:30,
+    },
     title: {
         fontSize: 32,
         fontWeight: 'bold',
@@ -216,52 +228,49 @@ const styles = StyleSheet.create({
         paddingLeft: 20,
     },
     password:{
-        width: '85%',
-        backgroundColor:'#F1F1F4',
-        borderRadius: 30,
-        top: 160,
-        color: 'blck',
-        padding: 15,
-        position: 'absolute',
-        textAlign: 'center',
-        left: 30,
-        height: 50,
+      position: 'absolute',
+      width: '100%',
+      backgroundColor:'#F1F1F4',
+      borderRadius: 29,
+      color: 'black',
+      padding: 15,
+      textAlign: 'center',
+      height: 46,
     },
-    passwordplaceholder: {
+    inputpassword: {
         color: 'black',
         left: 10
     },
     confirmpassword: {
-        width: '85%',
-        backgroundColor:'#F1F1F4',
-        borderRadius: 30,
-        top: 230,
-        color: 'blck',
-        padding: 15,
-        position: 'absolute',
-        textAlign: 'center',
-        left: 30,
-        height: 50,
+      position: 'absolute',
+      width: '100%',
+      backgroundColor:'#F1F1F4',
+      borderRadius: 29,
+      top: 58,
+      color: 'blck',
+      padding: 15,
+      textAlign: 'center',
+      height: 46,
     },
-    confirmpasswordplaceholder: {
+    inputconfirmpassword: {
         color: 'black',
         left: 10
     },
     changedbtn: {
-        width: '85%',
-        backgroundColor: '#ED6A2C',
-        borderRadius: 30,
-        textAlign: 'center',
-        left: 30,
-        height: 50,
-        top: 320
+      position: 'absolute',
+      width: '100%',
+      backgroundColor: '#ED6A2C',
+      borderRadius: 29,
+      textAlign: 'center',
+      height: 46,
+      top: 124
     },
     changedbtnfont: {
-        textAlign: 'center',
-        color: 'white',
-        fontWeight: 'bold',
-        fontSize: 16,
-        paddingTop: 14,
+      textAlign: 'center',
+      color: 'white',
+      fontWeight: 'bold',
+      fontSize: 16,
+      paddingTop: 15,
     },
     passwordcheckno:{
         top: 290,

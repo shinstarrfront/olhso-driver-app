@@ -34,6 +34,8 @@ import AppStack from './AppStack';
 import HomeStack from './HomeStack';
 import HomeDrawer from './HomeDrawer';
 import TestStack from './TestStack';
+import * as Font from 'expo-font';
+
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -41,7 +43,6 @@ const Stack = createStackNavigator();
 const Navigation = () => {
   return (
     <NavigationContainer>
-      <TestStack />
       <AuthStack />
       <AppStack />
       <HomeStack />
