@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from "react-native";
-import { SignInContext } from '../contexts/SignInContext';
-import { AuthContext } from '../contexts/AuthContext';
 import { Amplify, Auth } from 'aws-amplify'
-import CryptoJS from 'crypto-js';
 import AsyncStorage from '@react-native-async-storage/async-storage'; //로그인 후 앱을 나가도 상태를 유지하기 위함
+import { useMutation } from 'react-query';
+import axios from 'axios';
+import { useUpdateDriverStatusStart } from '../state/mutations';
 
 //드라이버앱에서는 로그인만!
 interface PhoneLoginScreenProps {
@@ -29,6 +29,7 @@ const PhoneLoginScreen: React.FunctionComponent<PhoneLoginScreenProps> = ({navig
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [showVerification, setShowVerification] = useState(false);
+ 
 
   //로그인 요청 함수 
   const signIn = async () => {
