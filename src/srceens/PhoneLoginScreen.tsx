@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'; //로그�
 import { useMutation } from 'react-query';
 import axios from 'axios';
 import { useUpdateDriverStatusStart } from '../state/mutations';
+import { getDriverInfo } from '../state/queries';
 
 //드라이버앱에서는 로그인만!
 interface PhoneLoginScreenProps {
@@ -47,8 +48,10 @@ const PhoneLoginScreen: React.FunctionComponent<PhoneLoginScreenProps> = ({navig
         return;
       }
       console.log('로그인 확인', user);
+       // 로그인 후 phoneNumber를 AsyncStorage에 저장
+       await AsyncStorage.setItem('phoneNumber', phoneNumber);
   
-      // user의 "challengeName"가 "NEW_PASSWORD_REQUIRED"인 경우는 navigation.navigate('ChangePassword')로 이동
+      // 1)user의 "challengeName"가 "NEW_PASSWORD_REQUIRED"인 경우는 navigation.navigate('ChangePassword')로 이동
       if (user.challengeName === 'NEW_PASSWORD_REQUIRED') {
         console.log('확인1');
         return navigation.navigate('ChangePassword', { user }); // 전달 수정
@@ -58,7 +61,12 @@ const PhoneLoginScreen: React.FunctionComponent<PhoneLoginScreenProps> = ({navig
       } 
       else {
         console.log('확인3');
-        // user의 "challengeName"이 "NEW_PASSWORD_REQUIRED"가 아닌 경우는 navigation.navigate('Home')으로 이동
+        // 2)user의 "challengeName"이 "NEW_PASSWORD_REQUIRED"가 아닌 경우는 
+        // 2-1)드라이버 기본 정보 불러오기(api 요청)
+        const driverInfo = await getDriverInfo(user.driverMobileNum);
+        console.log('드라이버 기본 정보:', driverInfo);
+        // 2-2)api 요청이 성공하면, 홈으로 이동한다
+        // navigation.navigate('Home')으로 이동
         return navigation.navigate('Home', { user }); // 전달 수정
         console.log('확인4');
         await AsyncStorage.setItem('userToken', user.signInUserSession.accessToken.jwtToken);

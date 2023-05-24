@@ -12,7 +12,7 @@ import 'react-native-reanimated';
 import SwipeButton from '@dillionverma/react-native-swipe-button';
 import MenuIcon from '../assets/menu.png';
 import AlertIcon from '../assets/alert.png';
-
+import DriverStartModal from '../components/DriverStartModal';
 
 interface HomeScreenProps {
     navigation: DrawerNavigationProp<Record<string, object>, string>;
@@ -100,6 +100,10 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   //Drawer 함수
   const Drawer = createDrawerNavigator();
 
+  //출근 완료 모달 테스트용
+  const onModalTest = () => {
+    console.log('모달 테스트')
+  }
 
   return (
     <View style={styles.container}>
@@ -123,9 +127,13 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
           description="This my test"
         />
       </MapView>
-      <TouchableOpacity onPress={onNavigatePress} style={styles.navigatebtn}>
+      {/* <TouchableOpacity onPress={onNavigatePress} style={styles.navigatebtn}>
           <Text style={styles.navigatebtnfont}>Navigate</Text> 
-        </TouchableOpacity>
+      </TouchableOpacity> */}
+      {/*출근 모달 테스트용*/}
+      <TouchableOpacity onPress={onModalTest} style={styles.navigatebtn}>
+          <Text style={styles.navigatebtnfont}>Navigate</Text> 
+      </TouchableOpacity>
         <Image
           source={MenuIcon}
           style={styles.menuIcon}

@@ -1,36 +1,14 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Modal, StyleSheet } from 'react-native';
-import { getPossibleTruckList, getMenuInfo } from '../state/queries';
+import { View, Text, TouchableOpacity, StyleSheet, Modal } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 interface DriverStartModalProps {
   visible: boolean;
-  onDoneApi: () => void;
+ 
 }
 
-//Done 버튼 클릭시
-//운행 가능한 트럭 리스트 가져오기
-//재고 메뉴 리스트 불러오기
 
-const onDoneApi = async (navigation:any) => {
-    try {
-      const truckList = await getPossibleTruckList();
-      const menuInfo = await getMenuInfo();
-  
-      // truckList와 menuInfo에서 받아온 정보 저장
-      await AsyncStorage.setItem('truckList', JSON.stringify(truckList));
-      await AsyncStorage.setItem('menuInfo', JSON.stringify(menuInfo));
-
-      console.log('Truck List:', truckList);
-      console.log('Menu Info:', menuInfo);
-  
-      // 동작을 완료한 후 트럭 재고 화면으로 이동
-      navigation.navigate('TruckInfo');
-
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
 
 
 const DriverStartModal: React.FC<DriverStartModalProps> = ({ visible }) => {
@@ -38,10 +16,14 @@ const DriverStartModal: React.FC<DriverStartModalProps> = ({ visible }) => {
     <Modal visible={visible} animationType="fade" transparent>
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
-          <Text style={styles.text1}>출근 완료</Text>
+          <Text style={styles.text1}>Are you sure you want to go to the next step?</Text>
+          <Text style={styles.text2}>Not all inventory items have been entered.</Text>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button1} onPress={onDoneApi} >
-              <Text style={styles.buttonText1}>Done</Text>
+            <TouchableOpacity style={styles.button1} >
+              <Text style={styles.buttonText1}>Cancel</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button2} >
+              <Text style={styles.buttonText1}>Yes</Text>
             </TouchableOpacity>
           </View>
         </View>

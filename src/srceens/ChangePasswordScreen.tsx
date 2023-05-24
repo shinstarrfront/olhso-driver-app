@@ -103,6 +103,7 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../types';
 import AsyncStorage from '@react-native-async-storage/async-storage'; 
+import { getDriverInfo } from '../state/queries';
 
 
 interface ChangePasswordScreenRouteProp extends RouteProp<RootStackParamList, 'ChangePassword'> {}
@@ -161,6 +162,10 @@ const changePassword = async () => {
       console.log('Password changed successfully', user);
       await AsyncStorage.setItem('userToken', JSON.stringify(user));
       console.log('AsyncStorage에 user 정보 저장', user);
+      // 드라이버 기본 정보 불러오기(api 요청)
+      const driverInfo = await getDriverInfo(user.driverMobileNum);
+      console.log('드라이버 기본 정보:', driverInfo);
+      // 홈으로 이동
       navigation.navigate('Home');
       console.log('Home으로 이동');
     } catch (error) {
