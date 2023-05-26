@@ -111,7 +111,7 @@ const changePassword = async () => {
         placeholder={'Confirm your Password'}  
         defaultValue={confirm} 
         onChangeText={handleConfirmChange}
-        secureTextEntry // 추가: 입력 내용을 숨김 처리
+        secureTextEntry //입력 내용을 숨김 처리해줌
         />
       </TouchableOpacity>
       </View>
