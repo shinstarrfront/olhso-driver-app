@@ -3,11 +3,16 @@ import { useQuery } from 'react-query';
 import axios from 'axios';
 import DriverStartModal from '../components/DriverStartModal';
 import { useState } from 'react';
+import { AsyncStorage } from '@aws-amplify/core';
+
+
 
 const BASE_URL = 'https://vi7lmzryog.execute-api.us-west-2.amazonaws.com/prod';
 
+
     //드라이버의 기본 정보 가져오기
-    export const getDriverInfo = async (driverMobileNum: string) => {
+    export const getDriverInfo = async () => {
+        const driverMobileNum = await AsyncStorage.getItem('phoneNumber');
         const url = `${BASE_URL}/drivers/${driverMobileNum}`;
         // const url = `${BASE_URL}/drivers/+8201039598640`;
         console.log('driverMobileNum:',driverMobileNum);
@@ -17,6 +22,8 @@ const BASE_URL = 'https://vi7lmzryog.execute-api.us-west-2.amazonaws.com/prod';
         // 서버 응답에 따른 처리
         if(response.status === 200 && data.msg === 'ok'){
           console.log(data, '함수 ok?');
+        // 서버로부터 받은 드라이버 개인 정보, AsyncStorage에 저장
+          await AsyncStorage.setItem('driverInfo', JSON.stringify(data));
         } else if (response.status === 200 && data.msg === '데이터가 존재하지 않습니다') {
           console.log('error', '데이터가 존재하지 않습니다!');
         }

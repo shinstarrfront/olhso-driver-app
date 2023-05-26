@@ -15,13 +15,13 @@ const Stack = createStackNavigator<TestStackParamList>();
 const TestStack = () => {
   return (
     <Stack.Navigator>
-      {/* <Stack.Screen
+      <Stack.Screen
         name="Edit Profile"
         component={EditProfileScreen}
         options={({ navigation }) => ({
           headerShown: true,
         })}
-      /> */}
+      />
       {/* <Stack.Screen
         name="Orders"
         component={OrdersScreen}

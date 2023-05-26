@@ -75,14 +75,21 @@ const changePassword = async () => {
     try {
       await Auth.completeNewPassword(user, newPassword);
       console.log('Password changed successfully', user);
-      await AsyncStorage.setItem('userToken', JSON.stringify(user));
+      await AsyncStorage.setItem('phoneNumber', user.signInUserSession.phone_Number);
+      await AsyncStorage.setItem('idToken', user.signInUserSession.idToken.jwtToken);
+      await AsyncStorage.setItem('refreshToken', user.signInUserSession.refreshToken.token);
+      await AsyncStorage.setItem('accessToken', user.signInUserSession.accessToken.jwtToken);
+      console.log('AsyncStorage 저장된 핸드폰 번호', user.signInUserSession.phone_Number);
       console.log('AsyncStorage에 user 정보 저장', user);
+
       // 드라이버 기본 정보 불러오기(api 요청)
-      const driverInfo = await getDriverInfo(user.driverMobileNum);
+      const driverInfo = await getDriverInfo();
       console.log('드라이버 기본 정보:', driverInfo);
+
       // 홈으로 이동
       navigation.navigate('Home');
       console.log('Home으로 이동');
+
     } catch (error) {
       console.log('패스워드 수정 에러', error);
       alert('Please try again later.');

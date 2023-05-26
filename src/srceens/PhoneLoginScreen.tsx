@@ -68,7 +68,7 @@ const PhoneLoginScreen: React.FunctionComponent<PhoneLoginScreenProps> = ({navig
         await AsyncStorage.setItem('refreshToken', user.signInUserSession.refreshToken.token);
         await AsyncStorage.setItem('accessToken', user.signInUserSession.accessToken.jwtToken);
         // 2-1)드라이버 기본 정보 불러오기(api 요청)
-        const driverInfo = await getDriverInfo(user.driverMobileNum);
+        const driverInfo = await getDriverInfo();
         console.log('드라이버 기본 정보:', driverInfo);
         // 2-2)api 요청이 성공하면, 홈으로 이동한다
         // navigation.navigate('Home')으로 이동
@@ -123,10 +123,21 @@ const PhoneLoginScreen: React.FunctionComponent<PhoneLoginScreenProps> = ({navig
           <View style={styles.boxcolumn}> 
           <View style={styles.box}>
           <TouchableOpacity style={styles.phonenumber}>
-            <TextInput style={styles.inputphonenumber} placeholder="+8201012345678" defaultValue={phoneNumber} onChangeText={phoneNumber => setPhoneNumber(phoneNumber)} />
+            <TextInput 
+            style={styles.inputphonenumber} 
+            placeholder="+8201012345678" 
+            defaultValue={phoneNumber} 
+            onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
+             />
           </TouchableOpacity>
           <TouchableOpacity style={styles.password}>
-            <TextInput style={styles.passwordplaceholder} placeholder="Password" defaultValue={password} onChangeText={password => setPassword(password)} />
+            <TextInput 
+            style={styles.passwordplaceholder} 
+            placeholder="Password" 
+            defaultValue={password} 
+            onChangeText={password => setPassword(password)}
+            secureTextEntry 
+             />
           </TouchableOpacity>
           <TouchableOpacity style={styles.signinbtn} onPress={signIn}>
             <Text style={styles.signinbtnfont}>Sign In</Text>
