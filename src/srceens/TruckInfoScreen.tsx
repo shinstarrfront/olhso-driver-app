@@ -99,7 +99,7 @@ const TruckInfoScreen = () => {
                   render={({ field: { onChange, value } }) => (
                 <View 
                   style={styles.dropdownGender}
-                   >
+                >
                   <DropDownPicker
                     style={styles.dropdown}
                     open={genderOpen}
@@ -553,7 +553,7 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         color: 'white',
         fontSize: 16,
-        fontFamily: 'Poppins-Regular',
+        fontFamily: 'Poppins',
         fontStyle: 'normal',
         fontWeight: '600',
         paddingTop: 15,

@@ -196,10 +196,19 @@ const changePassword = async () => {
         onChangeText={handleConfirmChange}
         />
       </TouchableOpacity>
-      {showPasswordCheckNo && <Text style={styles.passwordcheckno}>Password doesn't match</Text>}
-      {showPasswordCheckOk && <Text style={styles.passwordcheckok}>The passwords match!</Text>}
+      </View>
+      <View style={styles.box2}>
+      <Text style={styles.testpassword1}>At least 8 characters</Text>
+      <Text style={styles.testpassword2}>One lower case letter</Text>
+      <Text style={styles.testpassword3}>One upper case letter</Text>
+      <Text style={styles.testpassword4}>One number</Text>
+      <Text style={styles.testpassword5}>One special character</Text>
+      {showPasswordCheckNo && <Text style={styles.testpasswordcheckno}>Password doesn't match</Text>}
+      {showPasswordCheckOk && <Text style={styles.testpasswordcheckok}>The passwords match!</Text>}
+      </View>
+      <View style={styles.box3}>
       <TouchableOpacity style={styles.changedbtn} onPress={changePassword} disabled={showPasswordCheckNo} >
-        <Text style={styles.changedbtnfont}>Changed</Text>
+        <Text style={styles.changedbtnfont}>Sign In</Text>
       </TouchableOpacity>
       </View>
       </View>
@@ -223,6 +232,19 @@ const styles = StyleSheet.create({
       height: 170,
       width: '100%',
       top:30,
+    },
+    box2: {
+      position: 'absolute',
+      width: '100%',
+      heigth: 300,
+      top: 157,
+      left: 20
+    },
+    box3: {
+      position: 'absolute',
+      top: 325,
+      width: '100%',
+      marginTop: 30
     },
     title: {
         fontSize: 32,
@@ -262,13 +284,11 @@ const styles = StyleSheet.create({
         left: 10
     },
     changedbtn: {
-      position: 'absolute',
       width: '100%',
       backgroundColor: '#ED6A2C',
       borderRadius: 29,
       textAlign: 'center',
       height: 46,
-      top: 124
     },
     changedbtnfont: {
       textAlign: 'center',
@@ -277,15 +297,39 @@ const styles = StyleSheet.create({
       fontSize: 16,
       paddingTop: 15,
     },
-    passwordcheckno:{
-        top: 290,
-        left: 40,
-        color: '#ED6A2C',
+    testpassword1: {
+      color: '#838796',
+      fontSize: 13,
     },
-    passwordcheckok: {
-        top: 290,
-        left: 40,
-        color: 'green',
+    testpassword2: {
+      color: '#838796',
+      marginTop: 12,
+      fontSize: 13,
+    },
+    testpassword3: {
+      color: '#838796',
+      marginTop: 12,
+      fontSize: 13,
+    },
+    testpassword4: {
+      color: '#838796',
+      marginTop: 12,
+      fontSize: 13,
+    },
+    testpassword5: {
+      color: '#838796',
+      marginTop: 12,
+      fontSize: 13,
+    },
+    testpasswordcheckno:{
+      marginTop: 12,
+      color: '#ED6A2C',
+      fontSize: 13,
+    },
+    testpasswordcheckok: {
+      marginTop: 12,
+      color: 'green',
+      fontSize: 13,
     }
 });
 
