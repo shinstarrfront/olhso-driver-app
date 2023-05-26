@@ -107,10 +107,11 @@ const changePassword = async () => {
       </TouchableOpacity>
       <TouchableOpacity style={styles.confirmpassword}>
       <TextInput 
-        style={styles.inputconfirmpassword} 
-        placeholder={confirm ? Array(confirm.length).fill('*').join('') : 'Confirm your Password'}  
+        style={styles.inputconfirmpassword}  
+        placeholder={'Confirm your Password'}  
         defaultValue={confirm} 
         onChangeText={handleConfirmChange}
+        secureTextEntry // 추가: 입력 내용을 숨김 처리
         />
       </TouchableOpacity>
       </View>
@@ -118,13 +119,13 @@ const changePassword = async () => {
       <Text style={[styles.testpassword1, isPasswordValid && { color:  'black' }]}>
          <Text style={{ color: isPasswordValid ? '#ED6A2C' : '#FFFFFF' }}>✓</Text> At least 8 characters</Text>
       <Text style={[styles.testpassword2, hasLowerCase && { color: 'black' }]}>
-      <Text style={{ color: hasLowerCase ? '#ED6A2C' : '#FFFFFF' }}>✓</Text> One lower case letter</Text>
+        <Text style={{ color: hasLowerCase ? '#ED6A2C' : '#FFFFFF' }}>✓</Text> One lower case letter</Text>
       <Text style={[styles.testpassword3, hasUpperCase && { color: 'black' }]}>
-      <Text style={{ color: hasUpperCase ? '#ED6A2C' : '#FFFFFF' }}>✓</Text> One upper case letter</Text>
+        <Text style={{ color: hasUpperCase ? '#ED6A2C' : '#FFFFFF' }}>✓</Text> One upper case letter</Text>
       <Text style={[styles.testpassword4, hasNumber && { color: 'black' }]}>
-      <Text style={{ color: hasNumber ? '#ED6A2C' : '#FFFFFF' }}>✓</Text> One number</Text>
+        <Text style={{ color: hasNumber ? '#ED6A2C' : '#FFFFFF' }}>✓</Text> One number</Text>
       <Text style={[styles.testpassword5, hasSpecialChar && { color: 'black' }]}>
-      <Text style={{ color: hasSpecialChar ? '#ED6A2C' : '#FFFFFF' }}>✓</Text> One special character</Text>
+        <Text style={{ color: hasSpecialChar ? '#ED6A2C' : '#FFFFFF' }}>✓</Text> One special character</Text>
       {showPasswordCheckNo && <Text style={styles.testpasswordcheckno}>✕ Password doesn't match</Text>}
       {showPasswordCheckOk && <Text style={styles.testpasswordcheckok}>✓ The passwords match</Text>}
       </View>
