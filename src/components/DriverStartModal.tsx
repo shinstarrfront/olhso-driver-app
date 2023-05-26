@@ -40,7 +40,7 @@ const DriverStartModal: React.FC<DriverStartModalProps> = ({ visible }) => {
         <View style={styles.modalContent}>
           <Text style={styles.text1}>출근 완료</Text>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button1} onPress={onDoneApi} >
+            <TouchableOpacity style={styles.button1}  >
               <Text style={styles.buttonText1}>Done</Text>
             </TouchableOpacity>
           </View>

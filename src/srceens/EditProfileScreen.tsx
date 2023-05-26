@@ -56,6 +56,7 @@ const EditProfileScreen = () => {
   const [lastName, setLastName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
 
+
   // AsyncStorage에서 드라이버 정보 가져오기
   useEffect(() => {
     const getDriverInfo = async () => {
@@ -96,6 +97,8 @@ const EditProfileScreen = () => {
               placeholder="First Name"
               value={firstName}
               onChangeText={setFirstName}
+              editable={false} // 입력 및 수정 불가 설정
+              selectTextOnFocus={false} // 입력 및 수정 불가 설정
             />
           </TouchableOpacity>
           <TouchableOpacity style={styles.lastname}>
@@ -104,6 +107,8 @@ const EditProfileScreen = () => {
               placeholder="Last Name"
               value={lastName}
               onChangeText={setLastName}
+              editable={false} // 입력 및 수정 불가 설정
+              selectTextOnFocus={false} // 입력 및 수정 불가 설정
             />
           </TouchableOpacity>
         </View>
@@ -115,6 +120,8 @@ const EditProfileScreen = () => {
               placeholder="+8201012345678"
               value={phoneNumber}
               onChangeText={setPhoneNumber}
+              editable={false} // 입력 및 수정 불가 설정
+              selectTextOnFocus={false} // 입력 및 수정 불가 설정
             />
           </TouchableOpacity>
         </View>
@@ -122,7 +129,9 @@ const EditProfileScreen = () => {
           <TouchableOpacity style={styles.requestbtn}>
             <Text style={styles.requestbtnfont}>Request the Modify</Text>
           </TouchableOpacity>
+          <TouchableOpacity>
           <Text style={styles.SO}>Sign Out</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>

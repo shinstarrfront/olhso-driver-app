@@ -12,7 +12,7 @@ import 'react-native-reanimated';
 import SwipeButton from '@dillionverma/react-native-swipe-button';
 import MenuIcon from '../assets/menu.png';
 import AlertIcon from '../assets/alert.png';
-import DriverStartModal from '../components/DriverStartModal';
+
 
 interface HomeScreenProps {
     navigation: DrawerNavigationProp<Record<string, object>, string>;
@@ -23,6 +23,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   const [nonModalHeight, setNonModalHeight] = React.useState(Dimensions.get('window').height / 2.7);
   const animation = React.useRef(new Animated.Value(Dimensions.get('window').height / 2.7)).current;
   const [orders, setOrders] = useState([]);
+
 
   // 소켓 연결 및 이벤트 핸들러 등록(중앙에서 관리하도록 분리 전 코드)
 //   useEffect(() => {

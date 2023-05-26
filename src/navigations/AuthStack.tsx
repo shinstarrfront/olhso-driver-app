@@ -3,6 +3,7 @@ import StartScreen from '../srceens/StartScreen';
 import HomeScreen from '../srceens/HomeScreen';
 import ChangePasswordScreen from '../srceens/ChangePasswordScreen';
 import PhoneLoginScreen from '../srceens/PhoneLoginScreen';
+import TruckInfoScreen from '../srceens/TruckInfoScreen';
 
 interface AuthStackParamList {
   LogIn: PhoneLoginScreenProps;
@@ -66,6 +67,16 @@ const AuthStack = () => {
           // },
           })}
   />
+  <Stack.Screen
+        name="TruckInfo"
+        component={TruckInfoScreen}
+        options={({ navigation }) => ({
+          headerShown: true,
+          title: 'Truck info', 
+          headerBackTitle: '', 
+          headerBackTitleVisible: true
+        })}
+        />
     </Stack.Navigator>
   );
 };

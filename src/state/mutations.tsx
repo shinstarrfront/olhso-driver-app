@@ -3,39 +3,40 @@ import axios from 'axios';
 import DriverStartModal from '../components/DriverStartModal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState } from 'react';
+import { Alert } from 'react-native';
 
 const BASE_URL = 'https://vi7lmzryog.execute-api.us-west-2.amazonaws.com/prod';
-const driverMobileNum = AsyncStorage.getItem('phoneNumber');
+
 
 // 출근하기
-export const updateDriverStatusStart = async (driverMobileNum: any) => {
+export const updateDriverStatusStart = async () => {
+  const driverMobileNum = await AsyncStorage.getItem('phoneNumber');
+  const url = `${BASE_URL}/drivers/${driverMobileNum}/status`;
+  console.log('driverMobileNum는', driverMobileNum);
   try {
-    const url = `${BASE_URL}/drivers/${driverMobileNum}/status`;
-    console.log('driverMobileNum는', driverMobileNum);
-
     const response = await axios.patch(url, { type: 'start' });
-
-    if (response && response.status === 200) {
-      const data = response.data;
-      const [isModalVisible, setModalVisible] = useState(false);
-
-      // 서버 응답에 따른 처리
-      if (data.msg === 'ok') {
-        console.log('서버 응답 ok 성공', data);
-        // 출근 완료 모달 띄우기
-        setModalVisible(true);
-      } else if (data.msg === '데이터가 존재하지 않습니다') {
-        console.log('서버 응답 ok이지만 데이터 존재하지 않는다', data);
-      }
-
-      console.log('data!!', data);
-      return data;
-    } else {
-      console.log('서버 응답 에러', response);
-      throw new Error('API request failed');
+    const data = response.data;
+    if(response.status === 200 && data.msg === 'ok'){
+      console.log(data, '함수 ok?');
+       // 출근 완료 모달 띄우기
+      // alert('출근 완료!');
+      Alert.alert(
+        'Go to work !',  // Title
+        '',            // Message (empty string)
+        [
+          {
+            text: 'OK',
+            onPress: (navigation:any) => navigation.navigate('TruckInfoScreen'),  // Navigate on OK button press
+          },
+        ]
+      );
+    } else if (response.status === 200 && data.msg === '데이터가 존재하지 않습니다') {
+      console.log('error', '데이터가 존재하지 않습니다!');
     }
-  } catch (error) {
-    console.log('error 상황', error);
+    console.log('data:', data);
+    return data;
+  } catch (error:any) {
+    console.log('error 상황', error.code, error.message);
   }
 };
 
