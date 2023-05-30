@@ -45,7 +45,7 @@ const Navigation = () => {
     <NavigationContainer>
       <AuthStack />
       <AppStack />
-      <HomeStack />
+      {/* <HomeStack /> */}
   </NavigationContainer>
   );
 };

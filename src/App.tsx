@@ -94,7 +94,6 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <NavigationContainer key="navigation">
         {isAuthenticated ? <AppStack /> : <AuthStack />}
-        {/* <TestStack /> */}
     </NavigationContainer>
     </QueryClientProvider>
   );

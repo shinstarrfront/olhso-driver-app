@@ -24,7 +24,7 @@ const AuthStack = () => {
     initialRouteName="Start"
     screenOptions={{
         headerBackTitleVisible: false,
-        headerTitle: ''
+        // headerTitle: ''
     }}
 >
   <Stack.Screen 
@@ -32,6 +32,7 @@ const AuthStack = () => {
     component={StartScreen}
     options={({ navigation }) => ({
     headerShown: false,
+    headerTitle: '',
     })}
     />
   
@@ -70,12 +71,12 @@ const AuthStack = () => {
   <Stack.Screen
         name="TruckInfo"
         component={TruckInfoScreen}
-        options={({ navigation }) => ({
-          headerShown: true,
+        options={{ 
           title: 'Truck info', 
+          headerShown: true,
           headerBackTitle: '', 
-          headerBackTitleVisible: true
-        })}
+          // headerBackTitleVisible: true
+        }}
         />
     </Stack.Navigator>
   );

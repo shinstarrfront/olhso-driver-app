@@ -83,13 +83,13 @@ const PhoneLoginScreen: React.FunctionComponent<PhoneLoginScreenProps> = ({navig
   
   
   // // 이전에 로그인 한 적이 있는지 확인하고, 있다면 자동으로 로그인 처리하기
-  //   const checkLoginStatus = async () => {
-  //       const userToken = await AsyncStorage.getItem('userToken');
-  //       console.log('userToken임', userToken);
-  //   if (userToken !== null) {
-  //     navigation.navigate('Home');
-  //   }
-  // };
+    const checkLoginStatus = async () => {
+        const userToken = await AsyncStorage.getItem('userToken');
+        console.log('userToken임', userToken);
+    if (userToken !== null) {
+      navigation.navigate('Home');
+    }
+  };
   
 
   // //자동 로그인과 로그아웃에 대한 처리하기 
@@ -112,10 +112,10 @@ const PhoneLoginScreen: React.FunctionComponent<PhoneLoginScreenProps> = ({navig
 
 
   // // PhoneLoginScreen 컴포넌트가 마운트될 때 checkLoginStatus 실행
-  // React.useEffect(() => {
-  //   checkLoginStatus();
-  //   // checkRefreshtokensStatus();
-  // }, []);
+  React.useEffect(() => {
+    checkLoginStatus();
+    // checkRefreshtokensStatus();
+  }, []);
 
 
     return (

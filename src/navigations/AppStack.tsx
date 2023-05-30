@@ -30,16 +30,6 @@ const AppStack = () => {
           headerShown: false,
           })}
       />
-{/* <Stack.Screen 
-    name="PhoneLogIn"
-    component={PhoneLoginScreen}
-    options={{ 
-          headerTitle: 'Sign in', 
-          headerBackTitle: '', 
-          headerBackTitleVisible: false,
-          headerTintColor: 'black', 
-        }} 
-  /> */}
       <Stack.Screen 
         name="ChangePassword"
         component={ChangePasswordScreen}
@@ -61,23 +51,20 @@ const AppStack = () => {
   />
       <Stack.Screen
         name="TruckInfo"
-        component={TruckInfoScreen}
-        options={({ navigation }) => ({
-          headerShown: true,
-          title: 'Truck info', 
-          headerBackTitle: '', 
-          headerBackTitleVisible: true
-        })}
+        component={TruckInfoScreen}  
+        options= {{ 
+          title: 'Truck Info',
+          headerBackTitle: '',
+          headerBackTitleVisible: true 
+        }}
         />
         <Stack.Screen
         name="TruckInfoEdit"
         component={TruckInfoEditScreen}
-        options={({ navigation }) => ({
-          headerShown: true,
-          title: 'Truck info', 
-          headerBackTitle: '', 
-          headerBackTitleVisible: true
-        })}
+        options= {{ 
+          title: 'Truck Info',
+          headerBackTitle: '',
+          headerBackTitleVisible: true }}
         />
         <Stack.Screen
         name="EditProfile"

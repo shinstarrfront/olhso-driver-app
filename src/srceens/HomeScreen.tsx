@@ -13,7 +13,7 @@ import SwipeButton from '@dillionverma/react-native-swipe-button';
 import MenuIcon from '../assets/menu.png';
 import AlertIcon from '../assets/alert.png';
 import { useUpdateDriverStatusStart } from '../state/mutations';
-import styled from 'styled-components';
+
 
 interface HomeScreenProps {
     navigation: DrawerNavigationProp<Record<string, object>, string>;
@@ -109,9 +109,8 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   };
 
   // 출근 완료 모달 닫기 함수
-  const closeModal = () => {
+  const closeModal = (navigation:any) => {
     setModalVisible(false);
-    //스크린 이동
     navigation.navigate('TruckInfo'); 
   };
 
