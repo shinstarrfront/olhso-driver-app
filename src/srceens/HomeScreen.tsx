@@ -12,7 +12,8 @@ import 'react-native-reanimated';
 import SwipeButton from '@dillionverma/react-native-swipe-button';
 import MenuIcon from '../assets/menu.png';
 import AlertIcon from '../assets/alert.png';
-
+import { useUpdateDriverStatusStart } from '../state/mutations';
+import styled from 'styled-components';
 
 interface HomeScreenProps {
     navigation: DrawerNavigationProp<Record<string, object>, string>;
@@ -23,6 +24,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   const [nonModalHeight, setNonModalHeight] = React.useState(Dimensions.get('window').height / 2.7);
   const animation = React.useRef(new Animated.Value(Dimensions.get('window').height / 2.7)).current;
   const [orders, setOrders] = useState([]);
+  const updateDriverStatusStartMutation = useUpdateDriverStatusStart();
 
 
   // 소켓 연결 및 이벤트 핸들러 등록(중앙에서 관리하도록 분리 전 코드)
@@ -101,10 +103,27 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   //Drawer 함수
   const Drawer = createDrawerNavigator();
 
-  //출근 완료 모달 테스트용
-  const onModalTest = () => {
-    console.log('모달 테스트')
-  }
+  // 출근 완료 모달 열기 함수
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
+  // 출근 완료 모달 닫기 함수
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
+  // 출근 완료 핸들러
+  const handleAttendanceComplete = async () => {
+    try {
+      const data = await updateDriverStatusStartMutation.mutateAsync(); // 출근 상태 업데이트 요청
+      if (data.msg === 'ok') {
+        openModal(); // 모달 열기
+      }
+    } catch (error) {
+      console.log('에러 발생:', error);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -132,7 +151,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
           <Text style={styles.navigatebtnfont}>Navigate</Text> 
       </TouchableOpacity> */}
       {/*출근 모달 테스트용*/}
-      <TouchableOpacity onPress={onModalTest} style={styles.navigatebtn}>
+      <TouchableOpacity onPress={onNavigatePress} style={styles.navigatebtn}>
           <Text style={styles.navigatebtnfont}>Navigate</Text> 
       </TouchableOpacity>
         <Image
@@ -145,7 +164,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
         />
       <Animated.View style={[styles.nonModal, { height: animation }]}>
       {/*출근하기 버튼*/}
-      <SwipeButton />
+      <SwipeButton onSwipeEnd={handleAttendanceComplete} />
          <TouchableOpacity onPress={onButtonPress}  hitSlop={15} style={[styles.button, { marginTop: 5 }]} />
          <View>
          {orders.map((orders) => (
@@ -153,6 +172,18 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
             ))}
          </View>
      </Animated.View>
+       {/*출근완료 모달 */}
+     <Modal visible={modalVisible} animationType="slide">
+     <View style={styles.modalContainer1}>
+        <View style={styles.modalContainer2}>
+          <Text style={styles.modalText}>출근 완료</Text>
+          {/* <Button title="Done" onPress={closeModal} style={styles.modalbtn} /> */}
+          <TouchableOpacity style={styles.modalbtn} onPress={closeModal}>
+            <Text style={styles.modalbtnfont}>Done</Text>
+          </TouchableOpacity>
+        </View>
+        </View>
+      </Modal>
      </View>
   );
 };
@@ -163,6 +194,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  modalContainer1: {
+    backgroundColor: 'rgba(0,0,0,0.9)',
+    height: '100%',
+    width: '100%',
+    position: 'absolute',
+  },
+  modalContainer2: {
+    width: '91.46%',
+    height: 210,
+    top: 295,
+    bottom: 295,
+    borderRadius: 4,
+    zIndex: 99,
+    backgroundColor: '#FFFFFF',
+    position: 'absolute',
+    alignSelf: 'center',
+    },
   title: {
     fontSize: 30,
   },
@@ -219,7 +267,40 @@ const styles = StyleSheet.create({
     padding: 9,
     alignContent: 'center',
     justifyContent: 'center',
-  }
+  },
+  modalText: {
+    fontFamily: 'Poppins',
+    color:'#22232B',
+    fontSize: 16,
+    fontWeight: 'bold',
+    padding: 9,
+    alignContent: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+    top: 66,
+  },
+  modalbtn: {
+    backgroundColor: '#ED6A2C',
+    height: 46,
+    borderRadius: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+    top: 148,
+    position: 'absolute',
+    width: '91.46%',
+    alignSelf: 'center',
+  },
+  modalbtnfont: {
+    color: '#ffffff',
+    fontFamily: 'Poppins',
+    fontSize: 16,
+    fontWeight: 'bold',
+    padding: 9,
+    alignContent: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+    position: 'absolute',
+  },
 });
 
 export default HomeScreen;

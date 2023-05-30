@@ -5,8 +5,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState } from 'react';
 import { Alert } from 'react-native';
 
-const BASE_URL = 'https://vi7lmzryog.execute-api.us-west-2.amazonaws.com/prod';
 
+const BASE_URL = 'https://vi7lmzryog.execute-api.us-west-2.amazonaws.com/prod';
 
 // 출근하기
 export const updateDriverStatusStart = async () => {
@@ -18,18 +18,19 @@ export const updateDriverStatusStart = async () => {
     const data = response.data;
     if(response.status === 200 && data.msg === 'ok'){
       console.log(data, '함수 ok?');
+      return data;
        // 출근 완료 모달 띄우기
       // alert('출근 완료!');
-      Alert.alert(
-        'Go to work !',  // Title
-        '',            // Message (empty string)
-        [
-          {
-            text: 'OK',
-            onPress: (navigation:any) => navigation.navigate('TruckInfoScreen'),  // Navigate on OK button press
-          },
-        ]
-      );
+      // Alert.alert(
+      //   'Go to work !',  // Title
+      //   '',            // Message (empty string)
+      //   [
+      //     {
+      //       text: 'OK',
+      //       onPress: (navigation:any) => navigation.navigate('TruckInfo'),
+      //     },
+      //   ]
+      // );
     } else if (response.status === 200 && data.msg === '데이터가 존재하지 않습니다') {
       console.log('error', '데이터가 존재하지 않습니다!');
     }
