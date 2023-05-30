@@ -21,6 +21,8 @@ const TruckInfoScreen = () => {
   const [truckNumber, setTruckNumber] = useState('');
   const [foodInventory, setFoodInventory] = useState('');
   const [truckList, setTruckList] = useState([]);
+  const [selectedMenu, setSelectedMenu] = useState('');
+  const [selectedQuantity, setSelectedQuantity] = useState(1);
 
   useEffect(() => {
     getPossibleTruckList()
@@ -92,9 +94,6 @@ const TruckInfoScreen = () => {
     });
   }, []);
 
-  const handleNonmodalPress = () => {
-    setModalVisible(true);
-  };
 
   // 각각의 슬롯을 클릭했을 때 호출되는 함수
   const handleSlotPress = (slot: any) => {
@@ -102,6 +101,18 @@ const TruckInfoScreen = () => {
     setModalVisible(true);
   };
 
+  // 재고 입력 후 save 버튼을 눌렀을 때 호출되는 함수
+  const handleSaveButton = (genderValue2: any) => {
+    // 선택된 메뉴와 수량을 상태에 저장
+    // selectedMenu에는 DropDownPicker에서 선택된 값을,
+    // selectedQuantity에는 quantity 버튼에서 선택된 값을 저장
+    setSelectedMenu(genderValue2);
+    setSelectedQuantity(count);
+  
+    // 모달 닫기
+    setModalVisible(false);
+  };
+  
 
       
       return (
@@ -167,9 +178,9 @@ const TruckInfoScreen = () => {
                 <View style={styles.row}>
                     <TouchableOpacity style={styles.slotbox} onPress={() => setModalVisible(true)}>
                         <View style={styles.slot}>
-                          <Text style={styles.text}>CS</Text>
-                          <Text style={styles.text2}>Cube Steak</Text>
-                          <Text style={styles.count}>1</Text>
+                          <TextInput placeholder='CS' style={styles.text} editable={false}></TextInput>
+                          <TextInput placeholder='Cube Steak' style={styles.text2} editable={false}></TextInput>
+                          <TextInput placeholder='1' style={styles.count} editable={false}>1</TextInput>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.slotbox} onPress={() => setModalVisible(true)}>
@@ -423,18 +434,17 @@ const styles = StyleSheet.create({
         position: 'absolute',
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
-        zIndex: 101,
       },
       box5: {
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
         width: '100%',
         height: '100%',
-        zIndex: 90,
       },
       box41: {
         width: '100%',
         position: 'absolute',
         top: 20,
+        zIndex: 101,
       },
       box42: {
         width: '100%',
@@ -528,7 +538,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         fontFamily: 'Poppins-Regular',
         fontStyle: 'normal',
-        fontWeight: '500',
+        fontWeight: '400',
         top: 56,
         left: 8.26,
         color: '#838796',
@@ -602,7 +612,8 @@ const styles = StyleSheet.create({
         color: "grey",
       },
       placeholderStyles2: {
-        color: "grey",
+        backgroundColor: "#F1F1F4",
+
       },
       dropdownGender: {
         width: "100%",
