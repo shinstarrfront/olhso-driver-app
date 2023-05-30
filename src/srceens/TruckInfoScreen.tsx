@@ -25,7 +25,7 @@ const TruckInfoScreen = () => {
   useEffect(() => {
     getPossibleTruckList()
       .then((trucks) => {
-        console.log('운행 가능한 트럭 리스트 - ', trucks.data);
+        console.log('운행 가능한 트럭 리스트 - ', trucks.data.driverID);
         setTruckList(trucks.data.driverID); // 트럭 리스트 설정
       })
       .catch((error) => {
@@ -38,9 +38,9 @@ const TruckInfoScreen = () => {
   const [genderOpen, setGenderOpen] = useState(false);
   const [genderValue, setGenderValue] = useState(null);
   const [gender, setGender] = useState([
-    { label: "Truck1", value: "Truck1" },
-    { label: "Truck2", value: "Truck2" },
-    { label: "Truck3", value: "Truck3" },
+    { label: "T1", value: "T1" },
+    { label: "T2", value: "T2" },
+    { label: "T3", value: "T3" },
   ]);
   const [companyOpen, setCompanyOpen] = useState(false);
   const onGenderOpen = useCallback(() => {
@@ -54,9 +54,10 @@ const TruckInfoScreen = () => {
   const [genderOpen2, setGenderOpen2] = useState(false);
   const [genderValue2, setGenderValue2] = useState(null);
   const [gender2, setGender2] = useState([
-    { label: "Menu1", value: "Menu1" },
-    { label: "Menu2", value: "Menu2" },
-    { label: "Menu3", value: "Menu3" },
+    { label: "Galbi", value: "Galbi" },
+    { label: "Wing", value: "Wing" },
+    { label: "Japchae", value: "Japchae" },
+    { label: "Tofu", value: "Tofu" },
   ]);
   const [companyOpen2, setCompanyOpen2] = useState(false);
   const onGenderOpen2 = useCallback(() => {
@@ -112,24 +113,46 @@ const TruckInfoScreen = () => {
                   name="gender"
                   defaultValue=""
                   control={control}
+              //     render={({ field: { onChange, value } }) => (
+              //   <View 
+              //     style={styles.dropdownGender}
+              //   >
+              //      <DropDownPicker
+              //       style={styles.dropdown}
+              //       open={genderOpen}
+              //       value={genderValue}
+              //       items={truckList.map((truck) => ({ label: truck, value: truck }))}
+              //       setOpen={setGenderOpen}
+              //       setValue={setGenderValue}
+              //       setItems={setGender}
+              //       placeholder="Select Truck"
+              //       placeholderStyle={styles.placeholderStyles}
+              //       onOpen={onGenderOpen}
+              //       onChangeValue={onChange}
+              //       dropDownContainerStyle={styles.dropDownContainer}
+              //     />
+              //   </View>
+              // )}
                   render={({ field: { onChange, value } }) => (
-                <View 
-                  style={styles.dropdownGender}
-                >
-                   <DropDownPicker
-                    style={styles.dropdown}
-                    open={genderOpen}
-                    value={genderValue}
-                    items={truckList.map((truck) => ({ label: truck, value: truck }))}
-                    setOpen={setGenderOpen}
-                    setValue={setGenderValue}
-                    setItems={setGender}
-                    placeholder="Select Truck"
-                    placeholderStyle={styles.placeholderStyles}
-                    onOpen={onGenderOpen}
-                    onChangeValue={onChange}
-                    dropDownContainerStyle={styles.dropDownContainer}
-                  />
+                <View style={styles.dropdownGender}>
+                  {gender.length > 0 ? (
+                    <DropDownPicker
+                      style={styles.dropdown}
+                      open={genderOpen}
+                      value={genderValue} 
+                      items={gender}
+                      setOpen={setGenderOpen}
+                      setValue={setGenderValue}
+                      setItems={setGender}
+                      placeholder="Select Truck"
+                      placeholderStyle={styles.placeholderStyles}
+                      onOpen={onGenderOpen}
+                      onChangeValue={onChange}
+                      dropDownContainerStyle={styles.dropDownContainer}
+                    />
+                  ) : (
+                    <Text>No trucks available</Text> // 또는 다른 처리를 수행할 수 있음
+                  )}
                 </View>
               )}
             />
@@ -137,7 +160,7 @@ const TruckInfoScreen = () => {
             <View style={styles.box2}> 
                 <Text style={styles.FI}>Food Inventory</Text>
                 <TouchableOpacity>
-                <Text style={styles.Reset}>Reset</Text>
+                {/* <Text style={styles.Reset}>Reset</Text> */}
                 </TouchableOpacity>
                 <View style={styles.box21}> 
                {/*1번째줄*/}
@@ -306,7 +329,7 @@ const TruckInfoScreen = () => {
                             setValue={setGenderValue2}
                             setItems={setGender2}
                             placeholder="Select Menu"
-                            placeholderStyle={styles.placeholderStyles}
+                            placeholderStyle={styles.placeholderStyles2}
                             onOpen={onGenderOpen2}
                             onChangeValue={onChange}
                             dropDownContainerStyle={styles.dropDownContainer2}
@@ -328,6 +351,7 @@ const TruckInfoScreen = () => {
                         </TouchableOpacity>
                       </View>
                       {/*quantity 수량 버튼 끝*/}
+                      {/*재고 저장 버튼*/}
                       <TouchableOpacity style={styles.savebtn2}>
                       <Text style={styles.savebtnfont2}>Save</Text>
                       </TouchableOpacity>
@@ -399,7 +423,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
-        zIndex: 100,
+        zIndex: 101,
       },
       box5: {
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -575,6 +599,9 @@ const styles = StyleSheet.create({
         paddingTop: 15,
       },
       placeholderStyles: {
+        color: "grey",
+      },
+      placeholderStyles2: {
         color: "grey",
       },
       dropdownGender: {

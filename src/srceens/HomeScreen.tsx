@@ -120,8 +120,8 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
     // 운행 가능한 트럭 리스트 가져오기, AsyncStorage에 저장
     getPossibleTruckList()
       .then((trucks) => {
-        console.log('운행 가능한 트럭 리스트 - ', trucks.data);
-        AsyncStorage.setItem('possibleTruckList', JSON.stringify(trucks.data.driverID));
+        console.log('운행 가능한 트럭 리스트 - ', trucks);
+        AsyncStorage.setItem('possibleTruckList', JSON.stringify(trucks));
       })
       .catch((error) => {
         console.log('운행 가능한 트럭 리스트 가져오기 오류 - ', error.response.data, error.response.status);

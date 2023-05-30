@@ -25,7 +25,28 @@ export const updateDriverStatusStart = async () => {
     console.log('data:', data);
     return data;
   } catch (error:any) {
-    console.log('error 상황', error.code, error.message);
+    console.log('출근하기 error 상황', error.code, error.message);
+  }
+};
+
+// 출근 시 재고 입력
+export const updateDriverInventory = async () => {
+  const truckID = await AsyncStorage.getItem('truckID');
+  const url = `${BASE_URL}/trucks/${truckID}/stock`;
+  console.log('truckID는', truckID);
+  try {
+    const response = await axios.patch(url);
+    const data = response.data;
+    if(response.status === 200 && data.msg === 'ok'){
+      console.log(data, '출근 재고 입력 ok?');
+      return data;
+    } else if(response.status === 422) {
+      console.log('error', '필요한 데이터가 입력되지 않았습니다.');
+    }
+    console.log('data:', data);
+    return data;
+    } catch (error:any) {
+    console.log('출근 시 재고 입력 error 상황', error.code, error.message);
   }
 };
 
