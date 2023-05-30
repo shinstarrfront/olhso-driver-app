@@ -31,9 +31,6 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
 import AuthStack from './AuthStack';
 import AppStack from './AppStack';
-import HomeStack from './HomeStack';
-import HomeDrawer from './HomeDrawer';
-import TestStack from './TestStack';
 import * as Font from 'expo-font';
 
 

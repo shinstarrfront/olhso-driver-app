@@ -37,7 +37,6 @@ const BASE_URL = 'https://vi7lmzryog.execute-api.us-west-2.amazonaws.com/prod';
     //운행 가능한 트럭 리스트 가져오기
     export const getPossibleTruckList = async () => {
         const url = `${BASE_URL}/trucks?status=active`;
-        console.log('status=active:', status);
         try{
         const response = await axios.get(url);
         const data = response.data;
@@ -45,20 +44,20 @@ const BASE_URL = 'https://vi7lmzryog.execute-api.us-west-2.amazonaws.com/prod';
         if(response.status === 200 && data.msg === 'ok'){
             console.log(data, 'ok?');
         } else if (response.status === 200 && data.msg === '운행가능한 트럭이 없습니다') {
-          console.log('error는', '운행가능한 트럭이 없습니다');
+          console.log('error::', '운행가능한 트럭이 없습니다');
         }
-        console.log('data는', data);
+        console.log('data::', data);
         return data;
         }
         catch(error:any){
-        console.log('error는', error.response.status, error.response.data.msg); 
+        console.log('error::', error.response.status, error.response.data.msg); 
         }
     };
 
     //메뉴 정보 확인
     export const getMenuInfo = async () => {
         //아직 미정으로 수정 예정(api 작업 전)
-        const url = `${BASE_URL}/menus`;
+        const url = `${BASE_URL}/menus?type=AutoWok`;
         try{
         const response = await axios.get(url);
         const data = response.data;
@@ -66,13 +65,13 @@ const BASE_URL = 'https://vi7lmzryog.execute-api.us-west-2.amazonaws.com/prod';
         if(response.status === 200 && data.msg === 'ok'){
             console.log(data, 'ok??');
         }else if(response.status === 200 && data.msg === '메뉴 리스트가 없습니다'){
-            console.log('error=', '메뉴 리스트가 없습니다');
+            console.log('error==', '메뉴 리스트가 없습니다');
         }
-        console.log('data=', data);
+        console.log('data==', data);
         return data;
         }
         catch(error:any){
-        console.log('error=', error.response.status, error.response.data.msg); 
+        console.log('error==', error.response.status, error.response.data.msg); 
         }
     };
 

@@ -13,7 +13,9 @@ import SwipeButton from '@dillionverma/react-native-swipe-button';
 import MenuIcon from '../assets/menu.png';
 import AlertIcon from '../assets/alert.png';
 import { useUpdateDriverStatusStart } from '../state/mutations';
-
+import { AsyncStorage } from '@aws-amplify/core';
+import { getPossibleTruckList } from '../state/queries';
+import { getMenuInfo } from '../state/queries';
 
 interface HomeScreenProps {
     navigation: DrawerNavigationProp<Record<string, object>, string>;
@@ -110,8 +112,37 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
 
   // 출근 완료 모달 닫기 함수
   const closeModal = (navigation:any) => {
+    //Done 클릭시, 모달 닫고
     setModalVisible(false);
-    navigation.navigate('TruckInfo'); 
+
+    // 운행 가능한 트럭 리스트 가져오기
+    // 운행 가능한 트럭 리스트 가져오기, 내용 console.log로 확인
+    // 운행 가능한 트럭 리스트 가져오기, AsyncStorage에 저장
+    getPossibleTruckList()
+      .then((trucks) => {
+        console.log('운행 가능한 트럭 리스트 - ', trucks);
+        AsyncStorage.setItem('possibleTruckList', JSON.stringify(trucks));
+      })
+      .catch((error) => {
+        console.log('운행 가능한 트럭 리스트 가져오기 오류 - ', error.response.data, error.response.status);
+      });
+
+    // 메뉴 정보 확인 
+    // 메뉴 정보 확인, 내용 console.log로 확인
+    // 메뉴 정보 확인, AsyncStorage에 저장
+    getMenuInfo()
+      .then((menus) => {
+        console.log('메뉴 정보 - ', menus);
+        AsyncStorage.setItem('menuInfo', JSON.stringify(menus));
+      })
+      .catch((error) => {
+        console.log('메뉴 정보 확인 오류 - ', error);
+      });
+
+    // 화면 이동
+    // navigation.navigate('TruckInfo'); 
+    navigation.navigate('TruckInfo', { screen: 'TruckInfo' });
+  
   };
 
   // 출근 완료 핸들러
@@ -122,7 +153,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
         openModal(); // 모달 열기
       }
     } catch (error) {
-      console.log('에러 발생:', error);
+      console.log('에러 발생 - ', error);
     }
   };
 
@@ -179,7 +210,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
         <View style={styles.modalContainer2}>
           <Text style={styles.modalText}>출근 완료</Text>
           {/* <Button title="Done" onPress={closeModal} style={styles.modalbtn} /> */}
-          <TouchableOpacity style={styles.modalbtn} onPress={closeModal}>
+          <TouchableOpacity style={styles.modalbtn} onPress={() => closeModal(navigation)}>
             <Text style={styles.modalbtnfont}>Done</Text>
           </TouchableOpacity>
         </View>

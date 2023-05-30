@@ -52,11 +52,11 @@ const AppStack = () => {
       <Stack.Screen
         name="TruckInfo"
         component={TruckInfoScreen}  
-        options= {{ 
+        options= {({ navigation }) => ({
           title: 'Truck Info',
           headerBackTitle: '',
           headerBackTitleVisible: true 
-        }}
+        })}
         />
         <Stack.Screen
         name="TruckInfoEdit"

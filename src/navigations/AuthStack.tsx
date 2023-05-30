@@ -71,12 +71,11 @@ const AuthStack = () => {
   <Stack.Screen
         name="TruckInfo"
         component={TruckInfoScreen}
-        options={{ 
-          title: 'Truck info', 
-          headerShown: true,
-          headerBackTitle: '', 
-          // headerBackTitleVisible: true
-        }}
+        options= {({ navigation }) => ({
+          title: 'Truck Info',
+          headerBackTitle: '',
+          headerBackTitleVisible: true 
+        })}
         />
     </Stack.Navigator>
   );
