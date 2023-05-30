@@ -120,8 +120,8 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
     // 운행 가능한 트럭 리스트 가져오기, AsyncStorage에 저장
     getPossibleTruckList()
       .then((trucks) => {
-        console.log('운행 가능한 트럭 리스트 - ', trucks);
-        AsyncStorage.setItem('possibleTruckList', JSON.stringify(trucks));
+        console.log('운행 가능한 트럭 리스트 - ', trucks.data);
+        AsyncStorage.setItem('possibleTruckList', JSON.stringify(trucks.data.driverID));
       })
       .catch((error) => {
         console.log('운행 가능한 트럭 리스트 가져오기 오류 - ', error.response.data, error.response.status);
@@ -132,8 +132,8 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
     // 메뉴 정보 확인, AsyncStorage에 저장
     getMenuInfo()
       .then((menus) => {
-        console.log('메뉴 정보 - ', menus);
-        AsyncStorage.setItem('menuInfo', JSON.stringify(menus));
+        console.log('메뉴 정보 - ', menus.data);
+        AsyncStorage.setItem('menuInfo', JSON.stringify(menus.data.menuName));
       })
       .catch((error) => {
         console.log('메뉴 정보 확인 오류 - ', error);

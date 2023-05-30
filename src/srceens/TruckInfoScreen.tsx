@@ -6,6 +6,8 @@ import { TextInput } from 'react-native-gesture-handler';
 import socket from '../utils/socket.io';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {useForm, Controller} from 'react-hook-form';
+import { AsyncStorage } from '@aws-amplify/core';
+import { getPossibleTruckList } from '../state/queries';
 
 interface NonmodalProps {
   visible: boolean;
@@ -18,6 +20,20 @@ const TruckInfoScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [truckNumber, setTruckNumber] = useState('');
   const [foodInventory, setFoodInventory] = useState('');
+  const [truckList, setTruckList] = useState([]);
+
+  useEffect(() => {
+    getPossibleTruckList()
+      .then((trucks) => {
+        console.log('운행 가능한 트럭 리스트 - ', trucks.data);
+        setTruckList(trucks.data.driverID); // 트럭 리스트 설정
+      })
+      .catch((error) => {
+        console.log('운행 가능한 트럭 리스트 가져오기 오류 - ', error.response.data, error.response.status);
+      });
+  }, []);
+
+
   //드롭다운1 관련 선언 시작
   const [genderOpen, setGenderOpen] = useState(false);
   const [genderValue, setGenderValue] = useState(null);
@@ -100,11 +116,11 @@ const TruckInfoScreen = () => {
                 <View 
                   style={styles.dropdownGender}
                 >
-                  <DropDownPicker
+                   <DropDownPicker
                     style={styles.dropdown}
                     open={genderOpen}
-                    value={genderValue} 
-                    items={gender}
+                    value={genderValue}
+                    items={truckList.map((truck) => ({ label: truck, value: truck }))}
                     setOpen={setGenderOpen}
                     setValue={setGenderValue}
                     setItems={setGender}
