@@ -111,6 +111,8 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   // 출근 완료 모달 닫기 함수
   const closeModal = () => {
     setModalVisible(false);
+    //스크린 이동
+    navigation.navigate('TruckInfo'); 
   };
 
   // 출근 완료 핸들러
