@@ -120,8 +120,8 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
     // 운행 가능한 트럭 리스트 가져오기, AsyncStorage에 저장
     getPossibleTruckList()
       .then((trucks) => {
-        console.log('운행 가능한 트럭 리스트 - ', trucks);
-        AsyncStorage.setItem('possibleTruckList', JSON.stringify(trucks));
+        console.log('운행 가능한 트럭 리스트 - ', trucks.data);
+        AsyncStorage.setItem('possibleTruckList', JSON.stringify(trucks.data));
       })
       .catch((error) => {
         console.log('운행 가능한 트럭 리스트 가져오기 오류 - ', error.response.data, error.response.status);
@@ -179,10 +179,6 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
           description="This my test"
         />
       </MapView>
-      {/* <TouchableOpacity onPress={onNavigatePress} style={styles.navigatebtn}>
-          <Text style={styles.navigatebtnfont}>Navigate</Text> 
-      </TouchableOpacity> */}
-      {/*출근 모달 테스트용*/}
       <TouchableOpacity onPress={onNavigatePress} style={styles.navigatebtn}>
           <Text style={styles.navigatebtnfont}>Navigate</Text> 
       </TouchableOpacity>
@@ -197,10 +193,10 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
       <Animated.View style={[styles.nonModal, { height: animation }]}>
       {/*출근하기 버튼*/}
       <SwipeButton onSwipeEnd={handleAttendanceComplete} />
-         <TouchableOpacity onPress={onButtonPress}  hitSlop={15} style={[styles.button, { marginTop: 5 }]} />
+         <TouchableOpacity onPress={onButtonPress} hitSlop={15} style={[styles.button, { marginTop: 5 }]} />
          <View>
          {orders.map((orders) => (
-              <Text>Orders: {JSON.stringify(orders)}</Text>
+              <Text style={styles.orders}>Orders: {JSON.stringify(orders)}</Text>
             ))}
          </View>
      </Animated.View>
@@ -225,6 +221,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  orders: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'black'
   },
   modalContainer1: {
     backgroundColor: 'rgba(0,0,0,0.9)',

@@ -8,6 +8,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import {useForm, Controller} from 'react-hook-form';
 import { AsyncStorage } from '@aws-amplify/core';
 import { getPossibleTruckList } from '../state/queries';
+import { updateDriverStatusStart } from '../state/mutations';
 
 interface NonmodalProps {
   visible: boolean;
@@ -22,13 +23,15 @@ const TruckInfoScreen = () => {
   const [foodInventory, setFoodInventory] = useState('');
   const [truckList, setTruckList] = useState([]);
   const [selectedMenu, setSelectedMenu] = useState('');
-  const [selectedQuantity, setSelectedQuantity] = useState(1);
+  const [selectedQuantity, setSelectedQuantity] = useState('');
+  const [showModal, setShowModal] = useState(false);
+ 
 
   useEffect(() => {
     getPossibleTruckList()
       .then((trucks) => {
-        console.log('운행 가능한 트럭 리스트 - ', trucks.data.driverID);
-        setTruckList(trucks.data.driverID); // 트럭 리스트 설정
+        console.log('운행 가능한 트럭 리스트 ~ ', trucks.data);
+        setTruckList(trucks.data); // 트럭 리스트 설정
       })
       .catch((error) => {
         console.log('운행 가능한 트럭 리스트 가져오기 오류 - ', error.response.data, error.response.status);
@@ -40,9 +43,9 @@ const TruckInfoScreen = () => {
   const [genderOpen, setGenderOpen] = useState(false);
   const [genderValue, setGenderValue] = useState(null);
   const [gender, setGender] = useState([
-    { label: "T1", value: "T1" },
-    { label: "T2", value: "T2" },
-    { label: "T3", value: "T3" },
+    { label: "1234", value: "1234" },
+    { label: "2345", value: "2345" },
+    { label: "3456", value: "3456" },
   ]);
   const [companyOpen, setCompanyOpen] = useState(false);
   const onGenderOpen = useCallback(() => {
@@ -55,21 +58,33 @@ const TruckInfoScreen = () => {
   //드롭다운2 관련 선언 시작
   const [genderOpen2, setGenderOpen2] = useState(false);
   const [genderValue2, setGenderValue2] = useState(null);
-  const [gender2, setGender2] = useState([
+  const [gender1, setGender1] = useState([
     { label: "Galbi", value: "Galbi" },
     { label: "Wing", value: "Wing" },
     { label: "Japchae", value: "Japchae" },
     { label: "Tofu", value: "Tofu" },
   ]);
-  const [companyOpen2, setCompanyOpen2] = useState(false);
-  const onGenderOpen2 = useCallback(() => {
+  const [companyOpen1, setCompanyOpen1] = useState(false);
+  const onGenderOpen1 = useCallback(() => {
     setCompanyOpen(false);
   }, []);
+
   const [selectedSlot2, setSelectedSlot2] = useState(null);
+
   //드롭다운2 관련 선언 끝
 
+  // 모달 열고 닫기 시작
+  const handleModalOpen = (slot: any) => {
+    setSelectedSlot(slot);
+    setModalVisible(true);
+  };
+
+  const handleModalClose = () => {
+    setModalVisible(false);
+    };
+
   //모달 수량 버튼 관련 선언 시작
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
 
   const handleMinusPress = () => {
     if (count > 0) {
@@ -79,11 +94,14 @@ const TruckInfoScreen = () => {
 
   const handlePlusPress = () => {
     setCount(count + 1);
+    //5 이상은 + 불가능
+    if (count >= 4) {
+      setCount(4);
+    }
   };
 
-  const handleModalClose = () => {
-    setModalVisible(false);
-  };
+  
+ 
   
  //모달 수량 버튼 관련 선언 끝
 
@@ -101,18 +119,34 @@ const TruckInfoScreen = () => {
     setModalVisible(true);
   };
 
-  // 재고 입력 후 save 버튼을 눌렀을 때 호출되는 함수
-  const handleSaveButton = (genderValue2: any) => {
-    // 선택된 메뉴와 수량을 상태에 저장
-    // selectedMenu에는 DropDownPicker에서 선택된 값을,
-    // selectedQuantity에는 quantity 버튼에서 선택된 값을 저장
-    setSelectedMenu(genderValue2);
-    setSelectedQuantity(count);
-  
-    // 모달 닫기
-    setModalVisible(false);
+  // Save 버튼 클릭시 호출되는 함수
+  const handleSave = (menu:any, quantity:any) => {
+    setSelectedMenu(menu); // 선택한 메뉴 저장
+    setSelectedQuantity(quantity); // 선택한 수량 저장
+    setModalVisible(false); // 모달 닫기
+    console.log('선택한 메뉴 - ', menu);
+    console.log('선택한 수량 - ', quantity);
   };
-  
+
+  // 최종적으로 재고 등록 후 Save 버튼 클릭시 호출되는 함수
+  const handleTruckInfoSave = async () => {
+    // 출근 시 재고 입력 함수 호출
+    // 함수 성공시, 확인용 모달 띄우기
+    // 모달의 Yes를 누르는 순간, 소켓에 입장하기
+    // 소켓 입장 성공시, Home 스크린으로 이동하기
+    try {
+      const response = await updateDriverStatusStart();
+      const data = response.data;
+      if (response.status === 200 && data.msg === 'ok') {
+        console.log('재고 등록', data);
+        // setShowModal(true); // 모달 표시 상태를 true로 변경
+      }
+    }
+    catch(error){
+      console.log(error)
+    }
+    console.log('모달 관련 함수 호출');
+  };
 
       
       return (
@@ -171,6 +205,7 @@ const TruckInfoScreen = () => {
             <View style={styles.box2}> 
                 <Text style={styles.FI}>Food Inventory</Text>
                 <TouchableOpacity>
+                  {/* 초기화 버튼 주석처리 */}
                 {/* <Text style={styles.Reset}>Reset</Text> */}
                 </TouchableOpacity>
                 <View style={styles.box21}> 
@@ -178,16 +213,14 @@ const TruckInfoScreen = () => {
                 <View style={styles.row}>
                     <TouchableOpacity style={styles.slotbox} onPress={() => setModalVisible(true)}>
                         <View style={styles.slot}>
-                          <TextInput placeholder='CS' style={styles.text} editable={false}></TextInput>
-                          <TextInput placeholder='Cube Steak' style={styles.text2} editable={false}></TextInput>
-                          <TextInput placeholder='1' style={styles.count} editable={false}>1</TextInput>
+                          <Text style={styles.text}>{genderValue1}</Text>
+                          <Text style={styles.count}>{count}</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.slotbox} onPress={() => setModalVisible(true)}>
                     <View style={styles.slot}>
-                    <Text style={styles.text}></Text>
-                    <Text style={styles.text2}></Text>
-                    <Text style={styles.count}></Text>
+                    <Text style={styles.text}>{genderValue2}</Text>
+                    <Text style={styles.count}>{count}</Text>
                     </View>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.slotbox} onPress={() => setModalVisible(true)}>
@@ -319,7 +352,7 @@ const TruckInfoScreen = () => {
                 setModalVisible(!modalVisible);
               }}
             >
-              <TouchableOpacity onPress={handleModalClose}>
+            <TouchableOpacity onPress={handleModalClose}>
               <View style={styles.box5}>
                 <View style={styles.box4}>
                     <View style={styles.miniboxcolumn}>
@@ -363,8 +396,8 @@ const TruckInfoScreen = () => {
                       </View>
                       {/*quantity 수량 버튼 끝*/}
                       {/*재고 저장 버튼*/}
-                      <TouchableOpacity style={styles.savebtn2}>
-                      <Text style={styles.savebtnfont2}>Save</Text>
+                      <TouchableOpacity style={styles.savebtn2} onPress={handleTruckInfoSave}>
+                        <Text style={styles.savebtnfont2}>Save</Text>
                       </TouchableOpacity>
                     </View>
                     </View>
@@ -373,6 +406,14 @@ const TruckInfoScreen = () => {
               </TouchableOpacity>
             </Modal>
             {/*모달창 끝*/}
+
+            {showModal && (
+            <Modal>
+              {/* 모달 내용 */}
+              출근 완료
+            </Modal>
+            )}
+
         </View>
       );
 };
@@ -668,3 +709,5 @@ const styles = StyleSheet.create({
 });
 
 export default TruckInfoScreen;
+
+

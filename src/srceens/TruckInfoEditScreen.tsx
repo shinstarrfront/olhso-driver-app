@@ -44,89 +44,89 @@ const TruckInfoEditScreen = () => {
                 <TouchableOpacity onPress={handleNonmodalPress}>
                 <View style={styles.row}>
                     <View style={styles.slot}>
-                      <Text style={styles.text}>CS</Text>
-                      <Text style={styles.text2}>Cube Steak</Text>
-                      <Text style={styles.count}>1</Text>
+                      <Text style={styles.text}></Text>
+                      <Text style={styles.text2}></Text>
+                      <Text style={styles.count}></Text>
                     </View>
                     <View style={styles.slot}>
-                    <Text style={styles.text}>JC</Text>
-                    <Text style={styles.text2}>Japchae</Text>
+                    <Text style={styles.text}></Text>
+                    <Text style={styles.text2}></Text>
                     <Text style={styles.count}></Text>
                     </View>
                     <View style={styles.slot}>
-                    <Text style={styles.text}>JC</Text>
-                    <Text style={styles.text2}>Japchae</Text>
+                    <Text style={styles.text}></Text>
+                    <Text style={styles.text2}></Text>
                     <Text style={styles.count}></Text>
                     </View>
                     <View style={styles.slot}>
-                    <Text style={styles.text}>JC</Text>
-                    <Text style={styles.text2}>Japchae</Text>
-                    <Text style={styles.count}></Text>
-                    </View>
-                </View>
-                <View style={styles.row}>
-                    <View style={styles.slot}>
-                    <Text style={styles.text}>CS</Text>
-                    <Text style={styles.text2}>Cube Steak</Text>
-                    <Text style={styles.count}></Text>
-                    </View>
-                    <View style={styles.slot}>
-                    <Text style={styles.text}>JC</Text>
-                    <Text style={styles.text2}>Japchae</Text>
-                    <Text style={styles.count}></Text>
-                    </View>
-                    <View style={styles.slot}>
-                    <Text style={styles.text}>JC</Text>
-                    <Text style={styles.text2}>Japchae</Text>
-                    <Text style={styles.count}></Text>
-                    </View>
-                    <View style={styles.slot}>
-                    <Text style={styles.text}>JC</Text>
-                    <Text style={styles.text2}>Japchae</Text>
+                    <Text style={styles.text}></Text>
+                    <Text style={styles.text2}></Text>
                     <Text style={styles.count}></Text>
                     </View>
                 </View>
                 <View style={styles.row}>
                     <View style={styles.slot}>
-                    <Text style={styles.text}>CS</Text>
-                    <Text style={styles.text2}>Cube Steak</Text>
+                    <Text style={styles.text}></Text>
+                    <Text style={styles.text2}></Text>
                     <Text style={styles.count}></Text>
                     </View>
                     <View style={styles.slot}>
-                    <Text style={styles.text}>JC</Text>
-                    <Text style={styles.text2}>Japchae</Text>
+                    <Text style={styles.text}></Text>
+                    <Text style={styles.text2}></Text>
                     <Text style={styles.count}></Text>
                     </View>
                     <View style={styles.slot}>
-                    <Text style={styles.text}>JC</Text>
-                    <Text style={styles.text2}>Japchae</Text>
+                    <Text style={styles.text}></Text>
+                    <Text style={styles.text2}></Text>
                     <Text style={styles.count}></Text>
                     </View>
                     <View style={styles.slot}>
-                    <Text style={styles.text}>JC</Text>
-                    <Text style={styles.text2}>Japchae</Text>
+                    <Text style={styles.text}></Text>
+                    <Text style={styles.text2}></Text>
+                    <Text style={styles.count}></Text>
+                    </View>
+                </View>
+                <View style={styles.row}>
+                    <View style={styles.slot}>
+                    <Text style={styles.text}></Text>
+                    <Text style={styles.text2}></Text>
+                    <Text style={styles.count}></Text>
+                    </View>
+                    <View style={styles.slot}>
+                    <Text style={styles.text}></Text>
+                    <Text style={styles.text2}></Text>
+                    <Text style={styles.count}></Text>
+                    </View>
+                    <View style={styles.slot}>
+                    <Text style={styles.text}></Text>
+                    <Text style={styles.text2}></Text>
+                    <Text style={styles.count}></Text>
+                    </View>
+                    <View style={styles.slot}>
+                    <Text style={styles.text}></Text>
+                    <Text style={styles.text2}></Text>
                     <Text style={styles.count}></Text>
                     </View>
                     </View>
                     <View style={styles.row}>
                         <View style={styles.slot}>
-                        <Text style={styles.text}>CS</Text>
-                        <Text style={styles.text2}>Cube Steak</Text>
+                        <Text style={styles.text}></Text>
+                        <Text style={styles.text2}></Text>
                         <Text style={styles.count}></Text>
                         </View>
                         <View style={styles.slot}>
-                        <Text style={styles.text}>JC</Text>
-                        <Text style={styles.text2}>Japchae</Text>
+                        <Text style={styles.text}></Text>
+                        <Text style={styles.text2}></Text>
                         <Text style={styles.count}></Text>
                         </View>
                         <View style={styles.slot}>
-                        <Text style={styles.text}>JC</Text>
-                        <Text style={styles.text2}>Japchae</Text>
+                        <Text style={styles.text}></Text>
+                        <Text style={styles.text2}></Text>
                         <Text style={styles.count}></Text>
                         </View>
                         <View style={styles.slot}>
-                        <Text style={styles.text}>JC</Text>
-                        <Text style={styles.text2}>Japchae</Text>
+                        <Text style={styles.text}></Text>
+                        <Text style={styles.text2}></Text>
                         <Text style={styles.count}></Text>
                         </View>
                     </View>

@@ -38,7 +38,7 @@ export const updateDriverInventory = async () => {
     const response = await axios.patch(url);
     const data = response.data;
     if(response.status === 200 && data.msg === 'ok'){
-      console.log(data, '출근 재고 입력 ok?');
+      console.log(data, '출근 재고 입력');
       return data;
     } else if(response.status === 422) {
       console.log('error', '필요한 데이터가 입력되지 않았습니다.');
