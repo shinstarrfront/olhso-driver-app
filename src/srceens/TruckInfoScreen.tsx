@@ -9,6 +9,7 @@ import {useForm, Controller} from 'react-hook-form';
 import { AsyncStorage } from '@aws-amplify/core';
 import { getPossibleTruckList } from '../state/queries';
 import { updateDriverStatusStart } from '../state/mutations';
+import { updateDriverInventory } from '../state/mutations';
 
 interface NonmodalProps {
   visible: boolean;
@@ -58,6 +59,7 @@ const TruckInfoScreen = () => {
   //드롭다운2 관련 선언 시작
   const [genderOpen2, setGenderOpen2] = useState(false);
   const [genderValue2, setGenderValue2] = useState(null);
+  const [genderValue3, setGenderValue3] = useState(null);
   const [gender1, setGender1] = useState([
     { label: "Galbi", value: "Galbi" },
     { label: "Wing", value: "Wing" },
@@ -81,7 +83,7 @@ const TruckInfoScreen = () => {
 
   const handleModalClose = () => {
     setModalVisible(false);
-    };
+  };
 
   //모달 수량 버튼 관련 선언 시작
   const [count, setCount] = useState(1);
@@ -101,8 +103,6 @@ const TruckInfoScreen = () => {
   };
 
   
- 
-  
  //모달 수량 버튼 관련 선언 끝
 
   useEffect(() => {
@@ -119,6 +119,7 @@ const TruckInfoScreen = () => {
     setModalVisible(true);
   };
 
+
   // Save 버튼 클릭시 호출되는 함수
   const handleSave = (menu:any, quantity:any) => {
     setSelectedMenu(menu); // 선택한 메뉴 저장
@@ -126,28 +127,92 @@ const TruckInfoScreen = () => {
     setModalVisible(false); // 모달 닫기
     console.log('선택한 메뉴 - ', menu);
     console.log('선택한 수량 - ', quantity);
+    console.log('모달에 있는 sava 버튼 클릭 여부')
   };
+  
+  // const renderSlots = () => {
+  //   const slots = [];
 
+  //   for (let i = 0; i < 16; i += 4) {
+  //     const row = [];
+
+  //     for (let j = 0; j < 4; j++) {
+  //       const index = i + j;
+
+  //       row.push(
+  //         <TouchableOpacity
+  //           key={index}
+  //           style={styles.slotbox}
+  //           onPress={() => handleSlotPress(index)}
+  //         >
+  //           <View style={styles.slot}>
+  //             <Text style={styles.text}>{selectedSlot === index ? selectedMenu : ''}</Text>
+  //             <Text style={styles.count}>{selectedSlot === index ? selectedQuantity : ''}</Text>
+  //           </View>
+  //         </TouchableOpacity>
+  //       );
+  //     }
+
+  //     slots.push(
+  //       <View key={i} style={styles.row}>
+  //         {row}
+  //       </View>
+  //     );
+  //   }
+
+  //   return slots;
+  // };
+  
   // 최종적으로 재고 등록 후 Save 버튼 클릭시 호출되는 함수
-  const handleTruckInfoSave = async () => {
-    // 출근 시 재고 입력 함수 호출
-    // 함수 성공시, 확인용 모달 띄우기
-    // 모달의 Yes를 누르는 순간, 소켓에 입장하기
-    // 소켓 입장 성공시, Home 스크린으로 이동하기
-    try {
-      const response = await updateDriverStatusStart();
-      const data = response.data;
-      if (response.status === 200 && data.msg === 'ok') {
-        console.log('재고 등록', data);
-        // setShowModal(true); // 모달 표시 상태를 true로 변경
-      }
-    }
-    catch(error){
-      console.log(error)
-    }
-    console.log('모달 관련 함수 호출');
-  };
+  // const handleTruckInfoSave = async () => {
+  //   setModalVisible(false);
+  //   // 출근 시 재고 입력 함수 호출
+  //   // 함수 성공시, 확인용 모달 띄우기
+  //   // setSuccessModalVisible(true);
+  //   // 모달의 Yes를 누르는 순간, 소켓에 입장하기
+  //   // await joinSocket();
+  //   // 소켓 입장 성공시, Home 스크린으로 이동하기
+  //   try {
+  //     const response = await updateDriverStatusStart();
+  //     const data = response.data;
+  //     if (response.status === 200 && data.msg === 'ok') {
+  //       console.log('재고 등록', data);
+  //       // setShowModal(true); // 모달 표시 상태를 true로 변경
+  //     }
+  //   }
+  //   catch(error){
+  //     console.log(error)
+  //   }
+  //   console.log('최종 save 버튼 클릭시');
+  // };
 
+  const handleTruckInfoSave = async () => {
+    setModalVisible(false);
+  
+    // 출근 시 재고 입력 함수 호출
+    try {
+      const result = await updateDriverInventory(); // 출근 시 재고 입력 함수 호출
+      console.log('result는', result)
+      // 함수 성공 시 확인용 모달 띄우기
+      // if (result && result.msg === 'ok') 
+      if (result.status === 200 && result.msg === 'ok') 
+      {
+        // 모달 또는 알림 등을 사용하여 성공 메시지 표시
+        console.log('출근 시 재고 입력 성공', result);
+        Alert.alert('Success', '출근 시 재고 입력이 성공적으로 완료되었습니다.');
+      }
+    } catch (error) {
+      // 함수 호출 실패 또는 에러 발생 시 처리
+      console.error('출근 시 재고 입력 오류:', error);
+      // 모달 또는 알림 등을 사용하여 에러 메시지 표시
+      Alert.alert('Error', '출근 시 재고 입력 중 오류가 발생했습니다.');
+    }
+    console.log('최종 save 버튼 클릭시');
+
+    // 트럭에 배정된 드라이버 변경
+    // 소켓 입장
+    // 스크린 이동
+  };
       
       return (
         <View style={styles.container}>
@@ -196,7 +261,7 @@ const TruckInfoScreen = () => {
                       dropDownContainerStyle={styles.dropDownContainer}
                     />
                   ) : (
-                    <Text>No trucks available</Text> // 또는 다른 처리를 수행할 수 있음
+                    <Text>No trucks available</Text> // 또는 다른 처리
                   )}
                 </View>
               )}
@@ -210,17 +275,17 @@ const TruckInfoScreen = () => {
                 </TouchableOpacity>
                 <View style={styles.box21}> 
                {/*1번째줄*/}
-                <View style={styles.row}>
+               <View style={styles.row}>
                     <TouchableOpacity style={styles.slotbox} onPress={() => setModalVisible(true)}>
                         <View style={styles.slot}>
-                          <Text style={styles.text}>{genderValue1}</Text>
+                          <Text style={styles.text}>{genderValue2}</Text>
                           <Text style={styles.count}>{count}</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.slotbox} onPress={() => setModalVisible(true)}>
                     <View style={styles.slot}>
-                    <Text style={styles.text}>{genderValue2}</Text>
-                    <Text style={styles.count}>{count}</Text>
+                    <Text style={styles.text}></Text>
+                    <Text style={styles.count}></Text>
                     </View>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.slotbox} onPress={() => setModalVisible(true)}>
@@ -331,11 +396,15 @@ const TruckInfoScreen = () => {
                     </View>
                 </TouchableOpacity>
                 </View>
+                {/* {renderSlots()} */}
                 </View>
             </View>
             {/*저장버튼*/}
             <View style={styles.box3}> 
-                <TouchableOpacity style={styles.savebtn}>
+                <TouchableOpacity 
+                style={styles.savebtn} 
+                onPress={() => handleTruckInfoSave}
+                >
                 <Text style={styles.savebtnfont}>Save</Text>
              </TouchableOpacity>
             </View>
@@ -367,14 +436,14 @@ const TruckInfoScreen = () => {
                           <DropDownPicker
                             style={styles.dropdown2}
                             open={genderOpen2}
-                            value={genderValue2} 
-                            items={gender2}
+                            value={genderValue2}
+                            items={gender1}
                             setOpen={setGenderOpen2}
                             setValue={setGenderValue2}
-                            setItems={setGender2}
+                            setItems={setGender1}
                             placeholder="Select Menu"
                             placeholderStyle={styles.placeholderStyles2}
-                            onOpen={onGenderOpen2}
+                            onOpen={onGenderOpen1}
                             onChangeValue={onChange}
                             dropDownContainerStyle={styles.dropDownContainer2}
                           />
@@ -396,8 +465,12 @@ const TruckInfoScreen = () => {
                       </View>
                       {/*quantity 수량 버튼 끝*/}
                       {/*재고 저장 버튼*/}
-                      <TouchableOpacity style={styles.savebtn2} onPress={handleTruckInfoSave}>
-                        <Text style={styles.savebtnfont2}>Save</Text>
+                      <TouchableOpacity 
+                        style={styles.savebtn2} 
+                        onPress={handleTruckInfoSave}
+                        // onPress={() => handleSave}
+                      >
+                      <Text style={styles.savebtnfont2}>Save</Text>
                       </TouchableOpacity>
                     </View>
                     </View>
@@ -410,7 +483,7 @@ const TruckInfoScreen = () => {
             {showModal && (
             <Modal>
               {/* 모달 내용 */}
-              출근 완료
+              Are you sure you want to go to the next step?
             </Modal>
             )}
 
@@ -496,7 +569,7 @@ const styles = StyleSheet.create({
         color: '#838796',
         fontSize: 14,
         lineHeight: 21,
-        fontFamily: 'Poppins-Regular',
+        //fontFamily: 'Poppins-Regular',
         fontStyle: 'normal',
         fontWeight: '500',
         position: 'absolute',
@@ -541,31 +614,32 @@ const styles = StyleSheet.create({
         marginBottom: 4.13,
       },
       nonmodaltitle1: {
-        fontFamily: 'Poppins-bold',
+        //fontFamily: 'Poppins-bold',
         fontWeight: 'bold',
         fontSize: 14,
         color: '#838796',
       },
       nonmodaltitle2: {
         top: 0,
-        fontFamily: 'Poppins-bold',
+        //fontFamily: 'Poppins-bold',
         fontWeight: 'bold',
         fontSize: 14,
         color: '#838796',
       },
       text: {
         fontSize: 14,
-        fontFamily: 'Poppins-Regular',
+        //fontFamily: 'Poppins-Regular',
         fontStyle: 'normal',
         fontWeight: '400',
         top: 8,
         left: 8.25,
         position: 'absolute',
         color: '#838796',
+        width: 60,
       },
       text2: {
         fontSize: 10,
-        fontFamily: 'Poppins-Regular',
+        //fontFamily: 'Poppins-Regular',
         fontStyle: 'normal',
         fontWeight: '400',
         top: 26,
@@ -577,7 +651,7 @@ const styles = StyleSheet.create({
       count: {
         fontSize: 18,
         position: 'absolute',
-        fontFamily: 'Poppins-Regular',
+        //fontFamily: 'Poppins-Regular',
         fontStyle: 'normal',
         fontWeight: '400',
         top: 56,
@@ -588,7 +662,7 @@ const styles = StyleSheet.create({
         color: '#838796',
         fontSize: 14,
         lineHeight: 21,
-        fontFamily: 'Poppins-Regular',
+        //fontFamily: 'Poppins-Regular',
         fontStyle: 'normal',
         fontWeight: '700',
         position: 'absolute',
@@ -606,7 +680,7 @@ const styles = StyleSheet.create({
         color: '#838796',
         fontSize: 14,
         lineHeight: 21,
-        fontFamily: 'Poppins-Regular',
+        //fontFamily: 'Poppins-Regular',
         fontStyle: 'normal',
         fontWeight: '700',
         position: 'absolute',
@@ -625,7 +699,7 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         color: 'white',
         fontSize: 16,
-        fontFamily: 'Poppins-Regular',
+        //fontFamily: 'Poppins-Regular',
         fontStyle: 'normal',
         fontWeight: '600',
         paddingTop: 15,
@@ -644,7 +718,7 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         color: 'white',
         fontSize: 16,
-        fontFamily: 'Poppins',
+        //fontFamily: 'Poppins',
         fontStyle: 'normal',
         fontWeight: '600',
         paddingTop: 15,

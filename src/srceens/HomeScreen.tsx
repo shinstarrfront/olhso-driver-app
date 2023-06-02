@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Animated, Modal, Button, Image } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Animated, Modal, Button, Image, ActivityIndicator } from "react-native";
 import MapView from 'react-native-maps';
 import { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { Dimensions } from 'react-native';
@@ -27,64 +27,14 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   const animation = React.useRef(new Animated.Value(Dimensions.get('window').height / 2.7)).current;
   const [orders, setOrders] = useState([]);
   const updateDriverStatusStartMutation = useUpdateDriverStatusStart();
+  const [isLoading, setIsLoading] = useState(false);
 
-
-  // 소켓 연결 및 이벤트 핸들러 등록(중앙에서 관리하도록 분리 전 코드)
-//   useEffect(() => {
-//     // 위치 권한 요청
-//     (async () => {
-//         const { status } = await Location.requestForegroundPermissionsAsync();
-//         if (status !== 'granted') {
-//           console.log('위치 액세스 권한이 거부됨');
-//           return;
-//         }
-//       })();
-
-//     // socket.io-client 생성
-//     const socket = io('http://localhost:8080/truck', 
-//      { transports: ['websocket'] });
-    
-//     // connect 이벤트 구독(출근)
-//     socket.on('connect', () => {
-//       console.log('소켓 연결 성공적');
-//     });
-  
-//     // Truck & Drive NameSpace에 속한 TruckID 룸에 입장하고 enterRoom 이벤트 발생
-//     socket.emit('enterRoom', 
-//      { truckID: '1234' });
-  
-//     // orderList 이벤트를 구독
-//     socket.on('orderList', (data) => {
-//       console.log('주문 목록 이벤트가 수신됨', data);
-//     });
-  
-//     // GPS 정보를 업데이트하는 함수
-//     const updateLocation = (truckID:string, lng: number, lat: number) => {
-//         socket.emit('updateLocation', 
-//          { truckID, lng, lat }, 'Truck & Drive', 'TruckID');
-//      }
-  
-//     // 위치 정보 업데이트를 위한 이벤트 핸들러 등록(expo-location 사용)
-//     Location.watchPositionAsync({ accuracy: Location.Accuracy.High }, 
-//         (position)=> {
-//             const { coords } = position;
-//             const { longitude, latitude } = coords;
-//             updateLocation('1234', longitude, latitude);
-//      });
-  
-  
-//     return () => {
-//       // 컴포넌트가 unmount될 때 소켓 연결 종료(퇴근)
-//      //  socket.disconnect();
-//     };
-//   }, []);
-  
-    //import 해온 소켓 이벤트 핸들러 등록
-    useEffect(() => {
-        socket.on('orderList', (data:any) => {
-          setOrders(data);
-        });
-      }, []);
+  //import 해온 소켓 이벤트 핸들러 등록
+  useEffect(() => {
+    socket.on('orderList', (data:any) => {
+    setOrders(data);
+    });
+  }, []);
   
   //모달 위로 올리기 함수
   const onButtonPress = () => {
@@ -148,17 +98,26 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   // 출근 완료 핸들러
   const handleAttendanceComplete = async () => {
     try {
+      setIsLoading(true);
       const data = await updateDriverStatusStartMutation.mutateAsync(); // 출근 상태 업데이트 요청
       if (data.msg === 'ok') {
         openModal(); // 모달 열기
       }
     } catch (error) {
       console.log('에러 발생 - ', error);
+    } 
+      finally{
+      setIsLoading(false);
     }
   };
 
   return (
     <View style={styles.container}>
+      {isLoading && (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#ED6A2C"  />
+          </View>
+        )}
       <MapView //구글 지도 띄우기 
         style={styles.map}
         initialRegion={{
@@ -219,6 +178,15 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingContainer: {
+    //화면 정중앙에 로딩 표시
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    zIndex: 999,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -293,7 +261,7 @@ const styles = StyleSheet.create({
     boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.4)',
   },
   navigatebtnfont: {
-    fontFamily: 'Poppins',
+    //fontFamily: 'Poppins',
     color:'#ffffff',
     fontSize: 14,
     fontWeight: 'bold',
@@ -302,7 +270,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   modalText: {
-    fontFamily: 'Poppins',
+    //fontFamily: 'Poppins',
     color:'#22232B',
     fontSize: 16,
     fontWeight: 'bold',
@@ -325,7 +293,7 @@ const styles = StyleSheet.create({
   },
   modalbtnfont: {
     color: '#ffffff',
-    fontFamily: 'Poppins',
+    //fontFamily: 'Poppins',
     fontSize: 16,
     fontWeight: 'bold',
     padding: 9,

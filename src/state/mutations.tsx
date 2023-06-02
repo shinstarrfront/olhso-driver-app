@@ -31,11 +31,16 @@ export const updateDriverStatusStart = async () => {
 
 // 출근 시 재고 입력
 export const updateDriverInventory = async () => {
-  const truckID = await AsyncStorage.getItem('truckID');
-  const url = `${BASE_URL}/trucks/${truckID}/stock`;
+  const truckID = await AsyncStorage.getItem('truckID'); 
   console.log('truckID는', truckID);
+  const url = `${BASE_URL}/trucks/${truckID}/stock`;
+  const slotNum = await AsyncStorage.getItem('slotNum');
+  console.log('slotNum은', slotNum);
+  const menuId = await AsyncStorage.getItem('menuId');
+  console.log('menuId는', menuId);
+  const remainedMenuCount = await AsyncStorage.getItem('remainedMenuCount');
   try {
-    const response = await axios.patch(url);
+    const response = await axios.patch(url, {"data":[{"slotNum":slotNum,"menuId":menuId,"remainedMenuCount":remainedMenuCount}]});
     const data = response.data;
     if(response.status === 200 && data.msg === 'ok'){
       console.log(data, '출근 재고 입력');
@@ -47,6 +52,30 @@ export const updateDriverInventory = async () => {
     return data;
     } catch (error:any) {
     console.log('출근 시 재고 입력 error 상황', error.code, error.message);
+  }
+};
+
+// 트럭에 배정된 드라이버 변경
+export const updateDriverStatusChange = async () => {
+  const truckID = await AsyncStorage.getItem('truckID');
+  const driverID = await AsyncStorage.getItem('driverID');
+  const url = `${BASE_URL}/trucks/${truckID}/driver`;
+  console.log('truckID는', truckID);
+  console.log('driverID는', driverID);
+  try {
+    const response = await axios.patch(url, {"driverID": driverID});
+    const data = response.data;
+    if(response.status === 200 && data.msg === 'ok'){
+      console.log(data, '트럭에 배정된 드라이버 변경');
+      return data;
+    } else if(response.status === 422) {
+      console.log('error', '필요한 데이터가 입력되지 않았습니다.');
+    }
+    console.log('data:', data);
+    return data;
+    }
+  catch (error:any) {
+    console.log('트럭에 배정된 드라이버 변경 error 상황', error.code, error.message);
   }
 };
 

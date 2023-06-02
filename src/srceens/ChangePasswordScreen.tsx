@@ -93,6 +93,7 @@ const changePassword = async () => {
     } catch (error) {
       console.log('패스워드 수정 에러', error);
       alert('Please try again later.');
+      //서버에서 에러를 줄 경우 어떻게 할지 프로세스 추가 필요!
     }
   
     // 로딩 인디케이터 비활성화

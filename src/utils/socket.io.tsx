@@ -2,9 +2,6 @@
 import io from 'socket.io-client';
 import * as Location from 'expo-location';
 
-// const socket = io('http://localhost:8080/truck'
-// , { transports: ['websocket'] });
-
 const socket = io('http://olhsosocket.us-west-2.elasticbeanstalk.com/truck'
 , { transports: ['websocket'] });
 
