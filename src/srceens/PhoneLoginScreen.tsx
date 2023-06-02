@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView, Platform } from "react-native";
 import { Amplify, Auth } from 'aws-amplify'
 import AsyncStorage from '@react-native-async-storage/async-storage'; //로그인 후 앱을 나가도 상태를 유지하기 위함
 import { useMutation } from 'react-query';
@@ -83,13 +83,13 @@ const PhoneLoginScreen: React.FunctionComponent<PhoneLoginScreenProps> = ({navig
   
   
   // // 이전에 로그인 한 적이 있는지 확인하고, 있다면 자동으로 로그인 처리하기(잠시 주석)
-    const checkLoginStatus = async () => {
-        const userToken = await AsyncStorage.getItem('userToken');
-        console.log('userToken임', userToken);
-    if (userToken !== null) {
-      navigation.navigate('Home');
-    }
-  };
+  //   const checkLoginStatus = async () => {
+  //       const userToken = await AsyncStorage.getItem('userToken');
+  //       console.log('userToken임', userToken);
+  //   if (userToken !== null) {
+  //     navigation.navigate('Home');
+  //   }
+  // };
   
 
   // //자동 로그인과 로그아웃에 대한 처리하기(잠시 주석) 
@@ -112,41 +112,44 @@ const PhoneLoginScreen: React.FunctionComponent<PhoneLoginScreenProps> = ({navig
 
 
   // // PhoneLoginScreen 컴포넌트가 마운트될 때 checkLoginStatus 실행
-  React.useEffect(() => {
-    checkLoginStatus();
-    // checkRefreshtokensStatus();
-  }, []);
+  // React.useEffect(() => {
+  //   checkLoginStatus();
+  //   // checkRefreshtokensStatus();
+  // }, []);
 
 
     return (
-        <View style={styles.container}>
-          <View style={styles.boxcolumn}> 
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        <View style={styles.boxcolumn}>
           <View style={styles.box}>
-          <TouchableOpacity style={styles.phonenumber}>
-            <TextInput 
-            style={styles.inputphonenumber} 
-            placeholder="+8201012345678" 
-            defaultValue={phoneNumber} 
-            onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
-             />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.password}>
-            <TextInput 
-            style={styles.passwordplaceholder} 
-            placeholder="Password" 
-            defaultValue={password} 
-            onChangeText={password => setPassword(password)}
-            secureTextEntry 
-             />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.signinbtn} onPress={signIn}>
-            <Text style={styles.signinbtnfont}>Sign In</Text>
-          </TouchableOpacity>
-          </View>
+            <View style={styles.phonenumber}>
+              <TextInput 
+                style={styles.inputphonenumber} 
+                placeholder="+8201012345678" 
+                defaultValue={phoneNumber} 
+                onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
+              />
+            </View>
+            <View style={styles.password}>
+              <TextInput 
+                style={styles.passwordplaceholder} 
+                placeholder="Password" 
+                defaultValue={password} 
+                onChangeText={password => setPassword(password)}
+                secureTextEntry 
+              />
+            </View>
+            <TouchableOpacity style={styles.signinbtn} onPress={signIn}>
+              <Text style={styles.signinbtnfont}>Sign In</Text>
+            </TouchableOpacity>
           </View>
         </View>
-      );
-    };
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
+  );
+};
+
     
     
     const styles = StyleSheet.create({
