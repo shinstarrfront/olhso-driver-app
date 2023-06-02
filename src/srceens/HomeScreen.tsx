@@ -182,10 +182,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   loadingContainer: {
-    //화면 정중앙에 로딩 표시
     position: 'absolute',
     top: '50%',
-    left: '50%',
+    left: '46.5%',
     zIndex: 999,
     justifyContent: 'center',
     alignItems: 'center',

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useContext, useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView, Platform, ActivityIndicator } from "react-native";
 import { SignInContext } from '../contexts/SignInContext';
 import { Auth } from 'aws-amplify'
 import { CognitoUser } from 'amazon-cognito-identity-js';
@@ -24,12 +24,12 @@ const ChangePasswordScreen: React.FunctionComponent<ChangePasswordScreenProps> =
   const [confirm, setConfirm] = useState('');
   const [showPasswordCheckNo, setShowPasswordCheckNo] = useState(false);
   const [showPasswordCheckOk, setShowPasswordCheckOk] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [hasLowerCase, setHasLowerCase] = useState(false);
   const [hasUpperCase, setHasUpperCase] = useState(false);
   const [hasNumber, setHasNumber] = useState(false);
   const [hasSpecialChar, setHasSpecialChar] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { user } = route.params; // 전달 받기
 
@@ -73,6 +73,7 @@ const changePassword = async () => {
     setIsLoading(true);
   
     try {
+      setIsLoading(true);
       await Auth.completeNewPassword(user, newPassword);
       console.log('Password changed successfully', user);
       await AsyncStorage.setItem('phoneNumber', user.signInUserSession.phone_Number);
@@ -95,6 +96,9 @@ const changePassword = async () => {
       alert('Please try again later.');
       //서버에서 에러를 줄 경우 어떻게 할지 프로세스 추가 필요!
     }
+    finally {
+      setIsLoading(false);
+    }
   
     // 로딩 인디케이터 비활성화
     setIsLoading(false);
@@ -102,7 +106,14 @@ const changePassword = async () => {
   
 
   return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
     <View style={styles.container}>
+      {isLoading && (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#ED6A2C" />
+          </View>
+        )}
        <View style={styles.boxcolumn}> 
        <View style={styles.box}>
       <TouchableOpacity style={styles.password}>
@@ -144,6 +155,8 @@ const changePassword = async () => {
       </View>
       </View>
     </View>
+    </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -152,6 +165,14 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor:'#FFFFFF',
+    },
+    loadingContainer: {
+      position: 'absolute',
+      top: '50%',
+      left: '46.5%',
+      zIndex: 999,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     boxcolumn: {
       width: '91.46%',

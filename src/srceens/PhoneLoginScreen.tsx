@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView, Platform } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView, Platform, ActivityIndicator } from "react-native";
 import { Amplify, Auth } from 'aws-amplify'
 import AsyncStorage from '@react-native-async-storage/async-storage'; //로그인 후 앱을 나가도 상태를 유지하기 위함
 import { useMutation } from 'react-query';
 import axios from 'axios';
 import { useUpdateDriverStatusStart } from '../state/mutations';
 import { getDriverInfo } from '../state/queries';
+import { Alert } from 'react-native';
 
 //드라이버앱에서는 로그인만!
 interface PhoneLoginScreenProps {
@@ -31,11 +32,12 @@ const PhoneLoginScreen: React.FunctionComponent<PhoneLoginScreenProps> = ({navig
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [showVerification, setShowVerification] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(false);
 
   //로그인 요청 함수 
   const signIn = async () => {
     try {
+      setIsLoading(true);
       if (phoneNumber === '' || password === '') {
         // 폰 번호 또는 비밀번호가 비어 있는 경우 함수를 빠져나가기
         return console.log('폰 번호 또는 비밀번호가 비어있음');
@@ -78,6 +80,11 @@ const PhoneLoginScreen: React.FunctionComponent<PhoneLoginScreenProps> = ({navig
       }
     } catch (error: any) {
       console.log('에러 발생', error);
+      // 에러 발생 시, 에러 alert 띄우기
+      Alert.alert('Error', 'Incorrect username or password');
+    }
+    finally {
+      setIsLoading(false);
     }
   };
   
@@ -122,6 +129,11 @@ const PhoneLoginScreen: React.FunctionComponent<PhoneLoginScreenProps> = ({navig
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <View style={styles.boxcolumn}>
+        {isLoading && (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#ED6A2C" />
+          </View>
+        )}
           <View style={styles.box}>
             <View style={styles.phonenumber}>
               <TextInput 
@@ -161,6 +173,14 @@ const PhoneLoginScreen: React.FunctionComponent<PhoneLoginScreenProps> = ({navig
           width: '91.46%',
           alignSelf: 'center',
           height: '100%',
+      },
+      loadingContainer: {
+        position: 'absolute',
+        top: '50%',
+        left: '46.5%',
+        zIndex: 999,
+        justifyContent: 'center',
+        alignItems: 'center',
       },
         box: {
           position: 'absolute',
