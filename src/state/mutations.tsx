@@ -46,7 +46,7 @@ export const updateDriverInventory = async () => {
       console.log(data, '출근 재고 입력');
       return data;
     } else if(response.status === 422) {
-      console.log('error', '필요한 데이터가 입력되지 않았습니다.');
+      console.log('error', );
     }
     console.log('data:', data);
     return data;

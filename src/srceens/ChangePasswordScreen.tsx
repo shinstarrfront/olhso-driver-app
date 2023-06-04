@@ -30,7 +30,7 @@ const ChangePasswordScreen: React.FunctionComponent<ChangePasswordScreenProps> =
   const [hasNumber, setHasNumber] = useState(false);
   const [hasSpecialChar, setHasSpecialChar] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
+  // const [isChangingPassword, setIsChangingPassword] = useState(false); // 변경된 부분
   const { user } = route.params; // 전달 받기
 
   const handlePasswordChange = (value: string) => {
@@ -71,6 +71,13 @@ const changePassword = async () => {
   
     // 로딩 인디케이터 활성화
     setIsLoading(true);
+
+    // // 이미 패스워드 변경 중인 경우 더 이상의 요청을 처리하지 않음
+    // if (isChangingPassword) {
+    //   return;
+    // }
+
+    // setIsChangingPassword(true); // 패스워드 변경 중으로 표시
   
     try {
       setIsLoading(true);

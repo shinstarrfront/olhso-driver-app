@@ -36,13 +36,13 @@ const TestStack = () => {
           headerShown: true,
         })}
       /> */}
-      {/* <Stack.Screen
+      <Stack.Screen
         name="TruckInfo"
         component={TruckInfoScreen}
         options={({ navigation }) => ({
           headerShown: true,
         })}
-      /> */}
+      /> 
     </Stack.Navigator>
   );
 };

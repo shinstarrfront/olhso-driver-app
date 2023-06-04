@@ -90,26 +90,41 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
       });
 
     // 화면 이동
-    // navigation.navigate('TruckInfo'); 
-    navigation.navigate('TruckInfo', { screen: 'TruckInfo' });
+    navigation.navigate('TruckInfo'); 
+
   
   };
+  
+// 스와이프를 넘겼을 때 
+const handleAttendanceComplete = async () => {
+  try {
+    setIsLoading(true);
+    openModal(); // 모달 열기
+  } 
+  catch(error){
+    console.log('에러 발생 - ', error);
+  }
+  finally{
+    setIsLoading(false);
+    console.log('로딩끝')
+  }
+};
 
-  // 출근 완료 핸들러
-  const handleAttendanceComplete = async () => {
-    try {
-      setIsLoading(true);
-      const data = await updateDriverStatusStartMutation.mutateAsync(); // 출근 상태 업데이트 요청
-      if (data.msg === 'ok') {
-        openModal(); // 모달 열기
-      }
-    } catch (error) {
-      console.log('에러 발생 - ', error);
-    } 
-      finally{
-      setIsLoading(false);
-    }
-  };
+//출근 완료 Done 버튼 클릭시
+const handleAttendance = async () => {
+try{
+  setIsLoading(true);
+  closeModal(navigation); // 모달 닫기
+  console.log('출근 완료');
+  }
+catch(error){
+  console.log('에러 발생 - ', error);
+}
+finally{
+  setIsLoading(false);
+  console.log('던 로딩끝')
+}
+};
 
   return (
     <View style={styles.container}>
@@ -151,21 +166,24 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
         />
       <Animated.View style={[styles.nonModal, { height: animation }]}>
       {/*출근하기 버튼*/}
-      <SwipeButton onSwipeEnd={handleAttendanceComplete} />
+      <SwipeButton onSwipeEnd={handleAttendanceComplete}/>
          <TouchableOpacity onPress={onButtonPress} hitSlop={15} style={[styles.button, { marginTop: 5 }]} />
          <View>
-         {orders.map((orders) => (
+         {/* {orders.map((orders) => (
               <Text style={styles.orders}>Orders: {JSON.stringify(orders)}</Text>
-            ))}
+            ))} */}
          </View>
      </Animated.View>
        {/*출근완료 모달 */}
      <Modal visible={modalVisible} animationType="slide">
      <View style={styles.modalContainer1}>
         <View style={styles.modalContainer2}>
-          <Text style={styles.modalText}>출근 완료</Text>
+          <Text style={styles.modalText}>Welcome to OLHSO</Text>
           {/* <Button title="Done" onPress={closeModal} style={styles.modalbtn} /> */}
-          <TouchableOpacity style={styles.modalbtn} onPress={() => closeModal(navigation)}>
+          <TouchableOpacity style={styles.modalbtn} 
+          onPress={() => closeModal(navigation)}
+          // onPress={handleAttendance}
+          >
             <Text style={styles.modalbtnfont}>Done</Text>
           </TouchableOpacity>
         </View>
