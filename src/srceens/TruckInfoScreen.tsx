@@ -12,7 +12,7 @@ import { updateDriverStatusStart } from '../state/mutations';
 import { updateDriverInventory } from '../state/mutations';
 import { updateDriverStatusChange } from '../state/mutations';
 import {createDrawerNavigator, DrawerContentScrollView, DrawerItemList,DrawerItem, DrawerNavigationProp } from '@react-navigation/drawer';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 
 interface TruckInfoScreenProps {
@@ -22,10 +22,10 @@ interface TruckInfoScreenProps {
   visible: boolean;
   onClose: () => void;
   slot: string | null;
-  navigation: DrawerNavigationProp<Record<string, object>, string>;
+  navigation: any;
 }
 
-const TruckInfoScreen: React.FunctionComponent<TruckInfoScreenProps> = ({navigation}) => {
+const TruckInfoScreen: React.FC<TruckInfoScreenProps> = ({ navigation }) => {
   const [orders, setOrders] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
@@ -104,11 +104,13 @@ const TruckInfoScreen: React.FunctionComponent<TruckInfoScreenProps> = ({navigat
     setModalVisible2(true);
   };
 
-  //최종 save 버튼 눌렀을때 확인 모달 닫기
-  const closeModal = (navigation:any) => {
-    setModalVisible2(false);
-    navigation.navigate('TruckInfoScreen');
+
+  const closeModal = () => {
+    setModalVisible2(false)
   };
+
+
+
 
   //모달 수량 버튼 관련 선언 시작
   const [count, setCount] = useState(1);
@@ -185,8 +187,6 @@ const TruckInfoScreen: React.FunctionComponent<TruckInfoScreenProps> = ({navigat
 
   //홈화면으로 이동
   navigation.navigate('Home');
-
-
  }
  
 
@@ -351,7 +351,7 @@ const handleTruckInfoSave = async () => {
                     <Text style={styles.modalText2}>Not all inventory items have been entered.</Text>
                     {/*Cancel 클릭시*/}
                     <TouchableOpacity style={styles.modalbtn1} 
-                    onPress={closeModal}
+                     onPress={closeModal}
                     >
                     <Text style={styles.modalbtnfont1}>Cancel</Text>
                     </TouchableOpacity>

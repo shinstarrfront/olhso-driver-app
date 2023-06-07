@@ -28,7 +28,8 @@ Amplify.configure({
   }
 });
 
-const PhoneLoginScreen: React.FunctionComponent<PhoneLoginScreenProps> = ({navigation}) => {
+
+const PhoneLoginScreen=  ({ navigation }: PhoneLoginScreenProps) => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [showVerification, setShowVerification] = useState(false);

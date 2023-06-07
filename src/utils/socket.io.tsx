@@ -28,31 +28,20 @@ socket.on('connect', async () => {
   }
 );
 
-// // Truck & Drive NameSpace에 속한 TruckID 룸에 입장하고 enterRoom 이벤트 발생
-// socket.emit('enterRoom'
-// , { truckID: 'T1' });
 
-// orderList 이벤트를 구독
-// socket.on('orderList', (data) => {
-//   console.log('주문 목록 이벤트가 수신됨', data);
-// });
-
-//에러를 위한 구독
-// socket.on('driverError', (error) => {
-// console.log('에러 발생', error);
-// });
 
 // GPS 정보를 업데이트하는 함수
 const updateLocation = async (truckID: string, lng: number, lat: number) => {
   await socket.emit('updateLocation'
+  // , { truckID, lng, lat });
   , { truckID:'T1', lng:3.456, lat:4.5676 });
   console.log('GPS 정보 업데이트 확인', updateLocation)
-  // 조건 추가 필요()
-  // 현재 위치값에서 이동 시 보내기 or
-  // 시간제한(3~5초)을 줘서 업데이트를 한다
 }
 
 // 위치 정보 업데이트를 위한 이벤트 핸들러 등록(expo-location 사용)
+// 조건 추가 필요()
+  // 현재 위치값에서 이동 시 보내기 or
+  // 시간제한(3~5초)을 줘서 업데이트를 한다
 // Location.watchPositionAsync({ accuracy: Location.Accuracy.High, distanceInterval:10 },
 //   (position) => {
 //     const { coords } = position;
@@ -60,6 +49,6 @@ const updateLocation = async (truckID: string, lng: number, lat: number) => {
 //     updateLocation('truckID', longitude, latitude);
 //   });
 
-// updateLocation('T1', 3.456, 4.5676);
+updateLocation('T1', 3.456, 4.5676);
 
 export default socket;
