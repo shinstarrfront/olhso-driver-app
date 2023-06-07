@@ -2,6 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import StartScreen from '../srceens/StartScreen';
 import HomeScreen from '../srceens/HomeScreen';
+import HomeScreen2 from '../srceens/HomeScreen2';
 import PhoneLoginScreen from '../srceens/PhoneLoginScreen';
 import TruckInfoScreen from '../srceens/TruckInfoScreen';
 import TruckInfoEditScreen from '../srceens/TruckInfoEditScreen';
@@ -49,7 +50,18 @@ const AppStack = () => {
           //   backgroundColor: 'transparent', // sets the background color of the header
           // },
           })}
-  />
+      />
+      <Stack.Screen
+        name="Home2"
+        component={HomeScreen2}
+        options={({ navigation }) => ({
+          headerShown: false,
+          // title: '',
+          // headerStyle: {
+          //   backgroundColor: 'transparent', // sets the background color of the header
+          // },
+          })}
+      />
       <Stack.Screen
         name="TruckInfo"
         component={TruckInfoScreen}  

@@ -104,12 +104,9 @@ const TruckInfoScreen: React.FC<TruckInfoScreenProps> = ({ navigation }) => {
     setModalVisible2(true);
   };
 
-
   const closeModal = () => {
     setModalVisible2(false)
   };
-
-
 
 
   //모달 수량 버튼 관련 선언 시작
@@ -157,7 +154,7 @@ const TruckInfoScreen: React.FC<TruckInfoScreenProps> = ({ navigation }) => {
   };
 
 
-  // 최종적으로 재고 등록 후 Save 버튼 클릭시 호출되는 함수
+  // 최종적으로 재고 등록 후 모달에서 yes 누르면 동작 
  const handleFinallySave = () => {
 
   const newArr = slotstate.map(item => {
@@ -179,15 +176,19 @@ const TruckInfoScreen: React.FC<TruckInfoScreenProps> = ({ navigation }) => {
 
   //재고 입력
   updateDriverInventory();
+
   //드라이버 상태 변경
   updateDriverStatusChange();
-  //모달 닫기
-  setModalVisible2(false);
-  //소켓 접속
 
+  //모달 닫기 
+  setModalVisible2(false);
+  
   //홈화면으로 이동
-  navigation.navigate('Home');
- }
+  navigation.navigate('Home2');
+
+  //소켓 접속
+  socket.connect();
+ };
  
 
 
@@ -196,6 +197,7 @@ const [slotstate,setSlotstate] = useState(Arr);
 const [slotNum,setSlotNum] = useState();
 
 
+//재고 입력 후 모달에서 yes 눌렀을 때
 const handleTruckInfoSave = async () => {
    
     const newArr = slotstate.map(slot => 

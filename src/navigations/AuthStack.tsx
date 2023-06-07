@@ -4,6 +4,7 @@ import HomeScreen from '../srceens/HomeScreen';
 import ChangePasswordScreen from '../srceens/ChangePasswordScreen';
 import PhoneLoginScreen from '../srceens/PhoneLoginScreen';
 import TruckInfoScreen from '../srceens/TruckInfoScreen';
+import HomeScreen2 from '../srceens/HomeScreen2';
 
 interface AuthStackParamList {
   LogIn: PhoneLoginScreenProps;
@@ -68,6 +69,17 @@ const AuthStack = () => {
           // },
           })}
   />
+    <Stack.Screen
+        name="Home2"
+        component={HomeScreen2}
+        options={({ navigation }) => ({
+          headerShown: false,
+          // title: '',
+          // headerStyle: {
+          //   backgroundColor: 'transparent', // sets the background color of the header
+          // },
+          })}
+      />
   <Stack.Screen
         name="TruckInfo"
         component={TruckInfoScreen}

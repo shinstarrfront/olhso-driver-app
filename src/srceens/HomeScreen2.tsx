@@ -21,7 +21,7 @@ interface HomeScreenProps {
     navigation: DrawerNavigationProp<Record<string, object>, string>;
 }
 
-const HomeScreen = ({ navigation }: HomeScreenProps) => {
+const HomeScreen2 = ({ navigation }: HomeScreenProps) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [nonModalHeight, setNonModalHeight] = React.useState(Dimensions.get('window').height / 2.7);
   const animation = React.useRef(new Animated.Value(Dimensions.get('window').height / 2.7)).current;
@@ -99,7 +99,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
 const handleAttendanceComplete = async () => {
   try {
     setIsLoading(true);
-    openModal(); // 모달 열기
+
   } 
   catch(error){
     console.log('에러 발생 - ', error);
@@ -110,21 +110,7 @@ const handleAttendanceComplete = async () => {
   }
 };
 
-//출근 완료 Done 버튼 클릭시
-const handleAttendance = async () => {
-try{
-  setIsLoading(true);
-  closeModal(navigation); // 모달 닫기
-  console.log('출근 완료');
-  }
-catch(error){
-  console.log('에러 발생 - ', error);
-}
-finally{
-  setIsLoading(false);
-  console.log('던 로딩끝')
-}
-};
+
 
   return (
     <View style={styles.container}>
@@ -167,7 +153,7 @@ finally{
       <Animated.View style={[styles.nonModal, { height: animation }]}>
       {/*출근하기 버튼*/}
       <SwipeButton 
-      title="Slide To Start Delivery"
+      title="Slide To Completed"
       onSwipeEnd={handleAttendanceComplete}
       />
          <TouchableOpacity onPress={onButtonPress} hitSlop={15} style={[styles.button, { marginTop: 5 }]} />
@@ -176,23 +162,7 @@ finally{
               <Text style={styles.orders}>Orders: {JSON.stringify(orders)}</Text>
             ))} */}
          </View>
-     </Animated.View>
-       {/*출근완료 모달 시작*/}
-     <Modal visible={modalVisible} animationType="slide">
-     <View style={styles.modalContainer1}>
-        <View style={styles.modalContainer2}>
-          <Text style={styles.modalText}>Welcome to OLHSO</Text>
-          {/* <Button title="Done" onPress={closeModal} style={styles.modalbtn} /> */}
-          <TouchableOpacity style={styles.modalbtn} 
-          onPress={() => closeModal(navigation)}
-          // onPress={handleAttendance}
-          >
-            <Text style={styles.modalbtnfont}>Done</Text>
-          </TouchableOpacity>
-        </View>
-        </View>
-      </Modal>
-      {/*출근완료 모달 끝*/}
+     </Animated.View>   
      </View>
   );
 };
@@ -325,4 +295,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default HomeScreen2;
