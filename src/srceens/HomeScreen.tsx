@@ -174,7 +174,7 @@ finally{
             ))} */}
          </View>
      </Animated.View>
-       {/*출근완료 모달 */}
+       {/*출근완료 모달 시작*/}
      <Modal visible={modalVisible} animationType="slide">
      <View style={styles.modalContainer1}>
         <View style={styles.modalContainer2}>
@@ -189,6 +189,7 @@ finally{
         </View>
         </View>
       </Modal>
+      {/*출근완료 모달 끝*/}
      </View>
   );
 };

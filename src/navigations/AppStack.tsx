@@ -28,6 +28,7 @@ const AppStack = () => {
         component={StartScreen}
         options={({ navigation }) => ({
           headerShown: false,
+          headerBackTitle: '',
           })}
       />
       <Stack.Screen 

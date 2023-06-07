@@ -1,7 +1,7 @@
 //최초에 출근 시 재고 입력하는 화면
 
 import React, { useEffect, useState, useCallback } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Modal, Animated, Pressable, Alert } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Modal, Animated, Pressable, Alert,  } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import socket from '../utils/socket.io';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -10,22 +10,32 @@ import { AsyncStorage } from '@aws-amplify/core';
 import { getPossibleTruckList } from '../state/queries';
 import { updateDriverStatusStart } from '../state/mutations';
 import { updateDriverInventory } from '../state/mutations';
+import { updateDriverStatusChange } from '../state/mutations';
+import {createDrawerNavigator, DrawerContentScrollView, DrawerItemList,DrawerItem, DrawerNavigationProp } from '@react-navigation/drawer';
+import {useNavigation} from '@react-navigation/native';
 
-interface NonmodalProps {
+
+interface TruckInfoScreenProps {
+  v: any;
+  n: any;
+  key : any;
   visible: boolean;
   onClose: () => void;
   slot: string | null;
+  navigation: DrawerNavigationProp<Record<string, object>, string>;
 }
 
-const TruckInfoScreen = () => {
+const TruckInfoScreen: React.FunctionComponent<TruckInfoScreenProps> = ({navigation}) => {
   const [orders, setOrders] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible2, setModalVisible2] = useState(false);
   const [truckNumber, setTruckNumber] = useState('');
   const [foodInventory, setFoodInventory] = useState('');
   const [truckList, setTruckList] = useState([]);
   const [selectedMenu, setSelectedMenu] = useState('');
   const [selectedQuantity, setSelectedQuantity] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [truckPlateNum, setTruckPlateNum] = useState('');
  
 
   useEffect(() => {
@@ -33,11 +43,16 @@ const TruckInfoScreen = () => {
       .then((trucks) => {
         console.log('운행 가능한 트럭 리스트 ~ ', trucks.data);
         setTruckList(trucks.data); // 트럭 리스트 설정
+        // truckPlateNum 상태 설정
+        if (trucks.data.length > 0) {
+          setTruckPlateNum(trucks.data[0].truckPlateNum);
+        }
       })
       .catch((error) => {
         console.log('운행 가능한 트럭 리스트 가져오기 오류 - ', error.response.data, error.response.status);
       });
   }, []);
+  
 
 
   //드롭다운1 관련 선언 시작
@@ -59,23 +74,22 @@ const TruckInfoScreen = () => {
   //드롭다운2 관련 선언 시작
   const [genderOpen2, setGenderOpen2] = useState(false);
   const [genderValue2, setGenderValue2] = useState(null);
-  const [genderValue3, setGenderValue3] = useState(null);
   const [gender1, setGender1] = useState([
     { label: "Galbi", value: "Galbi" },
     { label: "Wing", value: "Wing" },
     { label: "Japchae", value: "Japchae" },
     { label: "Tofu", value: "Tofu" },
   ]);
-  const [companyOpen1, setCompanyOpen1] = useState(false);
+
   const onGenderOpen1 = useCallback(() => {
     setCompanyOpen(false);
   }, []);
 
-  const [selectedSlot2, setSelectedSlot2] = useState(null);
+
 
   //드롭다운2 관련 선언 끝
 
-  // 모달 열고 닫기 시작
+  // slot 클릭시 모달 열고 닫기 시작
   const handleModalOpen = (slot: any) => {
     setSelectedSlot(slot);
     setModalVisible(true);
@@ -83,6 +97,17 @@ const TruckInfoScreen = () => {
 
   const handleModalClose = () => {
     setModalVisible(false);
+  };
+
+  //최종 save 버튼 눌렀을때 확인 모달 열기 
+  const openModal = () => {
+    setModalVisible2(true);
+  };
+
+  //최종 save 버튼 눌렀을때 확인 모달 닫기
+  const closeModal = (navigation:any) => {
+    setModalVisible2(false);
+    navigation.navigate('TruckInfoScreen');
   };
 
   //모달 수량 버튼 관련 선언 시작
@@ -102,9 +127,8 @@ const TruckInfoScreen = () => {
     }
   };
 
-  
- //모달 수량 버튼 관련 선언 끝
 
+ //모달 수량 버튼 관련 선언 끝
   useEffect(() => {
     // import 해온 소켓 이벤트 핸들러 등록
     socket.on('orderList', (data: any) => {
@@ -129,91 +153,64 @@ const TruckInfoScreen = () => {
     console.log('선택한 수량 - ', quantity);
     console.log('모달에 있는 sava 버튼 클릭 여부')
   };
-  
-  // const renderSlots = () => {
-  //   const slots = [];
 
-  //   for (let i = 0; i < 16; i += 4) {
-  //     const row = [];
 
-  //     for (let j = 0; j < 4; j++) {
-  //       const index = i + j;
-
-  //       row.push(
-  //         <TouchableOpacity
-  //           key={index}
-  //           style={styles.slotbox}
-  //           onPress={() => handleSlotPress(index)}
-  //         >
-  //           <View style={styles.slot}>
-  //             <Text style={styles.text}>{selectedSlot === index ? selectedMenu : ''}</Text>
-  //             <Text style={styles.count}>{selectedSlot === index ? selectedQuantity : ''}</Text>
-  //           </View>
-  //         </TouchableOpacity>
-  //       );
-  //     }
-
-  //     slots.push(
-  //       <View key={i} style={styles.row}>
-  //         {row}
-  //       </View>
-  //     );
-  //   }
-
-  //   return slots;
-  // };
-  
   // 최종적으로 재고 등록 후 Save 버튼 클릭시 호출되는 함수
-  // const handleTruckInfoSave = async () => {
-  //   setModalVisible(false);
-  //   // 출근 시 재고 입력 함수 호출
-  //   // 함수 성공시, 확인용 모달 띄우기
-  //   // setSuccessModalVisible(true);
-  //   // 모달의 Yes를 누르는 순간, 소켓에 입장하기
-  //   // await joinSocket();
-  //   // 소켓 입장 성공시, Home 스크린으로 이동하기
-  //   try {
-  //     const response = await updateDriverStatusStart();
-  //     const data = response.data;
-  //     if (response.status === 200 && data.msg === 'ok') {
-  //       console.log('재고 등록', data);
-  //       // setShowModal(true); // 모달 표시 상태를 true로 변경
-  //     }
-  //   }
-  //   catch(error){
-  //     console.log(error)
-  //   }
-  //   console.log('최종 save 버튼 클릭시');
-  // };
+ const handleFinallySave = () => {
 
-  const handleTruckInfoSave = async () => {
-    setModalVisible(false);
-  
-    // 출근 시 재고 입력 함수 호출
-    try {
-      const result = await updateDriverInventory(); // 출근 시 재고 입력 함수 호출
-      console.log('result는', result)
-      // 함수 성공 시 확인용 모달 띄우기
-      // if (result && result.msg === 'ok') 
-      if (result.status === 200 && result.msg === 'ok') 
-      {
-        // 모달 또는 알림 등을 사용하여 성공 메시지 표시
-        console.log('출근 시 재고 입력 성공', result);
-        Alert.alert('Success', '출근 시 재고 입력이 성공적으로 완료되었습니다.');
-      }
-    } catch (error) {
-      // 함수 호출 실패 또는 에러 발생 시 처리
-      console.error('출근 시 재고 입력 오류:', error);
-      // 모달 또는 알림 등을 사용하여 에러 메시지 표시
-      Alert.alert('Error', '출근 시 재고 입력 중 오류가 발생했습니다.');
+  const newArr = slotstate.map(item => {
+    let menuID;
+    if(item.menuID === 'Galbi'){
+      menuID = 'M1'
+    } else if(item.menuID === 'Wing'){
+      menuID = 'M2'
+    } else if(item.menuID === 'Japchae'){
+      menuID = 'M3'
+    } else if(item.menuID === 'Tofu'){
+      menuID = 'M4'
     }
-    console.log('최종 save 버튼 클릭시');
+    return { ...item, menuID: menuID ?? item.menuID };
+  });
 
-    // 트럭에 배정된 드라이버 변경
-    // 소켓 입장
-    // 스크린 이동
+  AsyncStorage.setItem(genderValue)
+  AsyncStorage.setItem('slotstate',JSON.stringify(newArr))
+
+  //재고 입력
+  updateDriverInventory();
+  //드라이버 상태 변경
+  updateDriverStatusChange();
+  //모달 닫기
+  setModalVisible2(false);
+  //소켓 접속
+
+  //홈화면으로 이동
+  navigation.navigate('Home');
+
+
+ }
+ 
+
+
+const Arr = [{slotNum:'1-1',menuID:'',remainedMenuCount:0},{slotNum:'1-2',menuID:'',remainedMenuCount:0},{slotNum:'1-3',menuID:'',remainedMenuCount:0},{slotNum:'1-4',menuID:'',remainedMenuCount:0},{slotNum:'2-1',menuID:'',remainedMenuCount:0},{slotNum:'2-2',menuID:'',remainedMenuCount:0},{slotNum:'2-3',menuID:'',remainedMenuCount:0},{slotNum:'2-4',menuID:'',remainedMenuCount:0},{slotNum:'3-1',menuID:'',remainedMenuCount:0},{slotNum:'3-2',menuID:'',remainedMenuCount:0},{slotNum:'3-3',menuID:'',remainedMenuCount:0},{slotNum:'3-4',menuID:'',remainedMenuCount:0},{slotNum:'4-1',menuID:'',remainedMenuCount:0},{slotNum:'4-2',menuID:'',remainedMenuCount:0},{slotNum:'4-3',menuID:'',remainedMenuCount:0},{slotNum:'4-4',menuID:'',remainedMenuCount:0}]
+const [slotstate,setSlotstate] = useState(Arr);
+const [slotNum,setSlotNum] = useState();
+
+
+const handleTruckInfoSave = async () => {
+   
+    const newArr = slotstate.map(slot => 
+      slot.slotNum === slotNum ? { ...slot, menuID: genderValue2 ?? '',remainedMenuCount: count ?? '' } : slot
+    );
+    setSlotstate(newArr);
+    setCount(1) //초기화
+    setGenderValue2(null) // 초기화  
+    setModalVisible(false);
   };
-      
+
+  const handlePress = (slotNum:any)=> {
+    setModalVisible(true)
+    setSlotNum(slotNum)
+  }
       return (
         <View style={styles.container}>
            <View style={styles.boxcolumn}> 
@@ -223,26 +220,6 @@ const TruckInfoScreen = () => {
                   name="gender"
                   defaultValue=""
                   control={control}
-              //     render={({ field: { onChange, value } }) => (
-              //   <View 
-              //     style={styles.dropdownGender}
-              //   >
-              //      <DropDownPicker
-              //       style={styles.dropdown}
-              //       open={genderOpen}
-              //       value={genderValue}
-              //       items={truckList.map((truck) => ({ label: truck, value: truck }))}
-              //       setOpen={setGenderOpen}
-              //       setValue={setGenderValue}
-              //       setItems={setGender}
-              //       placeholder="Select Truck"
-              //       placeholderStyle={styles.placeholderStyles}
-              //       onOpen={onGenderOpen}
-              //       onChangeValue={onChange}
-              //       dropDownContainerStyle={styles.dropDownContainer}
-              //     />
-              //   </View>
-              // )}
                   render={({ field: { onChange, value } }) => (
                 <View style={styles.dropdownGender}>
                   {gender.length > 0 ? (
@@ -273,137 +250,25 @@ const TruckInfoScreen = () => {
                   {/* 초기화 버튼 주석처리 */}
                 {/* <Text style={styles.Reset}>Reset</Text> */}
                 </TouchableOpacity>
-                <View style={styles.box21}> 
-               {/*1번째줄*/}
-               <View style={styles.row}>
-                    <TouchableOpacity style={styles.slotbox} onPress={() => setModalVisible(true)}>
-                        <View style={styles.slot}>
-                          <Text style={styles.text}>{genderValue2}</Text>
-                          <Text style={styles.count}>{count}</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.slotbox} onPress={() => setModalVisible(true)}>
-                    <View style={styles.slot}>
-                    <Text style={styles.text}></Text>
-                    <Text style={styles.count}></Text>
-                    </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.slotbox} onPress={() => setModalVisible(true)}>
-                    <View style={styles.slot}>
-                    <Text style={styles.text}></Text>
-                    <Text style={styles.text2}></Text>
-                    <Text style={styles.count}></Text>
-                    </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.slotbox} onPress={() => setModalVisible(true)}>
-                    <View style={styles.slot}>
-                    <Text style={styles.text}></Text>
-                    <Text style={styles.text2}></Text>
-                    <Text style={styles.count}></Text>
-                    </View>
-                    </TouchableOpacity>
-                </View>
-                {/*2번째줄*/}
-                <View style={styles.row}>
-                <TouchableOpacity style={styles.slotbox} onPress={() => setModalVisible(true)}>
-                    <View style={styles.slot}>
-                    <Text style={styles.text}></Text>
-                    <Text style={styles.text2}></Text>
-                    <Text style={styles.count}></Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.slotbox} onPress={() => setModalVisible(true)}>
-                    <View style={styles.slot}>
-                    <Text style={styles.text}></Text>
-                    <Text style={styles.text2}></Text>
-                    <Text style={styles.count}></Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.slotbox} onPress={() => setModalVisible(true)}>
-                    <View style={styles.slot}>
-                    <Text style={styles.text}></Text>
-                    <Text style={styles.text2}></Text>
-                    <Text style={styles.count}></Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.slotbox} onPress={() => setModalVisible(true)}>
-                    <View style={styles.slot}>
-                    <Text style={styles.text}></Text>
-                    <Text style={styles.text2}></Text>
-                    <Text style={styles.count}></Text>
-                    </View>
-                </TouchableOpacity>
-                </View>
-                {/*3번째줄*/}
-                <View style={styles.row}>
-                <TouchableOpacity style={styles.slotbox} onPress={() => setModalVisible(true)}>
-                    <View style={styles.slot}>
-                    <Text style={styles.text}></Text>
-                    <Text style={styles.text2}></Text>
-                    <Text style={styles.count}></Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.slotbox} onPress={() => setModalVisible(true)}>
-                    <View style={styles.slot}>
-                    <Text style={styles.text}></Text>
-                    <Text style={styles.text2}></Text>
-                    <Text style={styles.count}></Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.slotbox} onPress={() => setModalVisible(true)}>
-                    <View style={styles.slot}>
-                    <Text style={styles.text}></Text>
-                    <Text style={styles.text2}></Text>
-                    <Text style={styles.count}></Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.slotbox} onPress={() => setModalVisible(true)}>
-                    <View style={styles.slot}>
-                    <Text style={styles.text}></Text>
-                    <Text style={styles.text2}></Text>
-                    <Text style={styles.count}></Text>
-                    </View>
-                </TouchableOpacity>
-                </View>
-                {/*4번째줄*/}
-                <View style={styles.row}>
-                <TouchableOpacity style={styles.slotbox} onPress={() => setModalVisible(true)}>
-                    <View style={styles.slot}>
-                    <Text style={styles.text}></Text>
-                    <Text style={styles.text2}></Text>
-                    <Text style={styles.count}></Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.slotbox} onPress={() => setModalVisible(true)}>
-                    <View style={styles.slot}>
-                    <Text style={styles.text}></Text>
-                    <Text style={styles.text2}></Text>
-                    <Text style={styles.count}></Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.slotbox} onPress={() => setModalVisible(true)}>
-                    <View style={styles.slot}>
-                    <Text style={styles.text}></Text>
-                    <Text style={styles.text2}></Text>
-                    <Text style={styles.count}></Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.slotbox} onPress={() => setModalVisible(true)}>
-                    <View style={styles.slot}>
-                    <Text style={styles.text}></Text>
-                    <Text style={styles.text2}></Text>
-                    <Text style={styles.count}></Text>
-                    </View>
-                </TouchableOpacity>
-                </View>
-                {/* {renderSlots()} */}
+                <View style={styles.row}> 
+        
+
+              {/*재고 입력 박스 16개*/}
+              {slotstate.map((v:any,i:any)=> 
+              <TouchableOpacity style={styles.slot} onPress={() => handlePress(`${v.slotNum}`)}>
+                          <View >
+                          <Text style={styles.text}>{v.menuID}</Text>
+                          <Text style={styles.count}>{v.remainedMenuCount || ''}</Text>
+                          </View>
+                          </TouchableOpacity>
+                          )}
                 </View>
             </View>
-            {/*저장버튼*/}
+            {/*최종 저장 버튼*/}
             <View style={styles.box3}> 
                 <TouchableOpacity 
                 style={styles.savebtn} 
-                onPress={() => handleTruckInfoSave}
+                onPress={openModal}
                 >
                 <Text style={styles.savebtnfont}>Save</Text>
              </TouchableOpacity>
@@ -468,7 +333,6 @@ const TruckInfoScreen = () => {
                       <TouchableOpacity 
                         style={styles.savebtn2} 
                         onPress={handleTruckInfoSave}
-                        // onPress={() => handleSave}
                       >
                       <Text style={styles.savebtnfont2}>Save</Text>
                       </TouchableOpacity>
@@ -479,14 +343,28 @@ const TruckInfoScreen = () => {
               </TouchableOpacity>
             </Modal>
             {/*모달창 끝*/}
-
-            {showModal && (
-            <Modal>
-              {/* 모달 내용 */}
-              Are you sure you want to go to the next step?
-            </Modal>
-            )}
-
+          {/*최종 save 버튼 클릭시 나오는 모달 시작*/}
+          <Modal visible={modalVisible2} animationType="slide">
+              <View style={styles.modalContainer1}>
+                  <View style={styles.modalContainer2}>
+                    <Text style={styles.modalText1}>Are you sure you want to go to the next step?</Text>
+                    <Text style={styles.modalText2}>Not all inventory items have been entered.</Text>
+                    {/*Cancel 클릭시*/}
+                    <TouchableOpacity style={styles.modalbtn1} 
+                    onPress={closeModal}
+                    >
+                    <Text style={styles.modalbtnfont1}>Cancel</Text>
+                    </TouchableOpacity>
+                    {/*Yes 클릭시*/}
+                    <TouchableOpacity style={styles.modalbtn2} 
+                    onPress={handleFinallySave}
+                    >
+                    <Text style={styles.modalbtnfont2}>Yes</Text>
+                    </TouchableOpacity>
+                  </View>
+                  </View>
+                </Modal>
+          {/*최종 save 버튼 클릭시 나오는 모달 끝*/}
         </View>
       );
 };
@@ -513,6 +391,9 @@ const styles = StyleSheet.create({
       },
       row: {
         flexDirection: 'row',
+        // backgroundColor: 'red',
+        flexWrap: 'wrap',
+        top: 25,
       },
       box1: {
         position: 'absolute',
@@ -532,6 +413,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 25,
         width: '100%',
+  
       },
       box3: {
         position: 'absolute',
@@ -598,12 +480,14 @@ const styles = StyleSheet.create({
         height: 42,
       },
       slot: {
-        width: '24.09%',
+        width: '23.84%',
+        //넓이 피그마랑 달라서 수정 필요
         height: 82,
         backgroundColor: '#F1F1F4',
         borderRadius: 9,
         marginRight: 4.13,
         marginBottom: 4.13,
+
       },
       slotbox: {
         width: '24.09%',
@@ -612,6 +496,7 @@ const styles = StyleSheet.create({
         borderRadius: 9,
         marginRight: 4.13,
         marginBottom: 4.13,
+        
       },
       nonmodaltitle1: {
         //fontFamily: 'Poppins-bold',
@@ -779,7 +664,90 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         top: 11,
         left: 170,
-      }
+      },
+      modalContainer1: {
+        backgroundColor: 'rgba(0,0,0,0.9)',
+        height: '100%',
+        width: '100%',
+        position: 'absolute',
+      },
+      modalContainer2: {
+        width: '91.46%',
+        height: 210,
+        top: 295,
+        bottom: 295,
+        borderRadius: 4,
+        zIndex: 99,
+        backgroundColor: '#FFFFFF',
+        position: 'absolute',
+        alignSelf: 'center',
+      },
+      modalText1: {
+        //fontFamily: 'Poppins',
+        color:'#22232B',
+        fontSize: 16,
+        fontWeight: 'bold',
+        padding: 9,
+        alignContent: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+        top: 55,
+      },
+      modalText2: {
+        color: '#838796',
+        top: 59,
+        fontSize: 12,
+        alignContent: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+      },
+      modalbtn1: {
+        backgroundColor: '#FFFFFF',
+        height: 46,
+        borderRadius: 24,
+        left: 10,
+        top: 148,
+        position: 'absolute',
+        width: '45.5%',
+        borderColor: 'black',
+        borderWidth: 1,
+      },
+      modalbtn2: {
+        backgroundColor: '#ED6A2C',
+        height: 46,
+        borderRadius: 24,
+        left: 181,
+        top: 148,
+        position: 'absolute',
+        width: '45.5%',
+
+      },
+      modalbtnfont1: {
+        color: 'black',
+        //fontFamily: 'Poppins',
+        fontSize: 16,
+        fontWeight: 'bold',
+        padding: 13,
+        alignContent: 'center',
+        alignSelf: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+        position: 'absolute',
+      },
+      modalbtnfont2: {
+        color: '#ffffff',
+        //fontFamily: 'Poppins',
+        fontSize: 16,
+        fontWeight: 'bold',
+        padding: 13,
+        alignContent: 'center',
+        alignSelf: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+        position: 'absolute',
+      },
 });
 
 export default TruckInfoScreen;
