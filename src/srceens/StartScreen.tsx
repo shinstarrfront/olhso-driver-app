@@ -31,7 +31,7 @@ return (
       </TouchableOpacity>
       <TouchableOpacity
       style={styles.btn2} 
-      onPress={() => {Linking.openURL('tel:01039598640');}}>
+      onPress={() => {Linking.openURL('tel:0103956325968');}}>
         <Text style={styles.buttonText2}>Get Help</Text>
       </TouchableOpacity>
       </View>

@@ -62,22 +62,22 @@ const AuthStack = () => {
         name="Home"
         component={HomeScreen}
         options={({ navigation }) => ({
-          headerShown: false,
-          // title: '',
-          // headerStyle: {
-          //   backgroundColor: 'transparent', // sets the background color of the header
-          // },
+          headerShown: true,
+          title: '',
+          headerStyle: {
+            backgroundColor: 'transparent', 
+          },
           })}
   />
     <Stack.Screen
         name="Home2"
         component={HomeScreen2}
         options={({ navigation }) => ({
-          headerShown: false,
-          // title: '',
-          // headerStyle: {
-          //   backgroundColor: 'transparent', // sets the background color of the header
-          // },
+          headerShown: true,
+          title: '',
+          headerStyle: {
+            backgroundColor: '#ffff',
+          },
           })}
       />
   <Stack.Screen

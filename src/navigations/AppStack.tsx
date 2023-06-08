@@ -1,5 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+import { TouchableOpacity, Image, StyleSheet } from "react-native";
 import StartScreen from '../srceens/StartScreen';
 import HomeScreen from '../srceens/HomeScreen';
 import HomeScreen2 from '../srceens/HomeScreen2';
@@ -11,6 +12,9 @@ import LeavingWorkScreen from '../srceens/LeavingWorkScreen';
 import OrdersScreen from '../srceens/OrdersScreen';
 import ServiceGuidanceScreen from '../srceens/ServiceGuidanceScreen';
 import ChangePasswordScreen from '../srceens/ChangePasswordScreen';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
+
 
 interface AppStackParamList extends Record<string, object | any> {
   Home: any;
@@ -29,7 +33,8 @@ const AppStack = () => {
         component={StartScreen}
         options={({ navigation }) => ({
           headerShown: false,
-          headerBackTitle: '',
+          // headerBackTitle: '',
+          headerBackTitleVisible: false,
           })}
       />
       <Stack.Screen 
@@ -44,22 +49,35 @@ const AppStack = () => {
         name="Home"
         component={HomeScreen}
         options={({ navigation }) => ({
-          headerShown: false,
-          // title: '',
-          // headerStyle: {
-          //   backgroundColor: 'transparent', // sets the background color of the header
-          // },
+          headerShown: true,
+          title: '',
+          headerBackTitleVisible: false,
+          headerLeft: () => ( 
+            <TouchableOpacity onPress={() => navigation.openDrawer()}>
+              <MaterialCommunityIcons 
+                name="microsoft-xbox-controller-menu" 
+                size={24} 
+                color="black" 
+              />
+            </TouchableOpacity>
+          ),
           })}
       />
       <Stack.Screen
         name="Home2"
         component={HomeScreen2}
         options={({ navigation }) => ({
-          headerShown: false,
-          // title: '',
-          // headerStyle: {
-          //   backgroundColor: 'transparent', // sets the background color of the header
-          // },
+          headerShown: true,
+          title: '',
+          headerLeft: () => ( 
+            <MaterialCommunityIcons 
+            name="microsoft-xbox-controller-menu" 
+            size={24} 
+            color="black" />
+          ),
+          headerStyle: {
+            backgroundColor: 'transparent', 
+          },
           })}
       />
       <Stack.Screen
@@ -124,3 +142,8 @@ const AppStack = () => {
 };
 
 export default AppStack;
+
+
+const styles = StyleSheet.create({
+
+});

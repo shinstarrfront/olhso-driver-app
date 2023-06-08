@@ -59,9 +59,9 @@ const TruckInfoScreen: React.FC<TruckInfoScreenProps> = ({ navigation }) => {
   const [genderOpen, setGenderOpen] = useState(false);
   const [genderValue, setGenderValue] = useState(null);
   const [gender, setGender] = useState([
-    { label: "1234", value: "1234" },
-    { label: "2345", value: "2345" },
-    { label: "3456", value: "3456" },
+    { label: "1234", value: "T1" },
+    { label: "2345", value: "T2" },
+    { label: "3456", value: "T3" },
   ]);
   const [companyOpen, setCompanyOpen] = useState(false);
   const onGenderOpen = useCallback(() => {
@@ -151,6 +151,7 @@ const TruckInfoScreen: React.FC<TruckInfoScreenProps> = ({ navigation }) => {
     console.log('선택한 메뉴 - ', menu);
     console.log('선택한 수량 - ', quantity);
     console.log('모달에 있는 sava 버튼 클릭 여부')
+    AsyncStorage.setItem('truckID', genderValue);
   };
 
 
@@ -182,7 +183,7 @@ const TruckInfoScreen: React.FC<TruckInfoScreenProps> = ({ navigation }) => {
 
   //모달 닫기 
   setModalVisible2(false);
-  
+
   //홈화면으로 이동
   navigation.navigate('Home2');
 
@@ -254,7 +255,6 @@ const handleTruckInfoSave = async () => {
                 </TouchableOpacity>
                 <View style={styles.row}> 
         
-
               {/*재고 입력 박스 16개*/}
               {slotstate.map((v:any,i:any)=> 
               <TouchableOpacity style={styles.slot} onPress={() => handlePress(`${v.slotNum}`)}>
@@ -365,7 +365,7 @@ const handleTruckInfoSave = async () => {
                     </TouchableOpacity>
                   </View>
                   </View>
-                </Modal>
+          </Modal>
           {/*최종 save 버튼 클릭시 나오는 모달 끝*/}
         </View>
       );
@@ -482,7 +482,8 @@ const styles = StyleSheet.create({
         height: 42,
       },
       slot: {
-        width: '23.84%',
+        // width: '23.84%',
+        width: '23.55%',
         //넓이 피그마랑 달라서 수정 필요
         height: 82,
         backgroundColor: '#F1F1F4',

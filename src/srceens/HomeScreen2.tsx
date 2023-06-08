@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Animated, Modal, Button, Image, ActivityIndicator } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Animated, Modal, Button, Image, ActivityIndicator, ScrollView } from "react-native";
 import MapView from 'react-native-maps';
 import { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { Dimensions } from 'react-native';
@@ -16,6 +16,7 @@ import { useUpdateDriverStatusStart } from '../state/mutations';
 import { AsyncStorage } from '@aws-amplify/core';
 import { getPossibleTruckList } from '../state/queries';
 import { getMenuInfo } from '../state/queries';
+import styled from 'styled-components';
 
 interface HomeScreenProps {
     navigation: DrawerNavigationProp<Record<string, object>, string>;
@@ -110,7 +111,7 @@ const handleAttendanceComplete = async () => {
   }
 };
 
-
+const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
 
   return (
     <View style={styles.container}>
@@ -142,27 +143,38 @@ const handleAttendanceComplete = async () => {
       <TouchableOpacity onPress={onNavigatePress} style={styles.navigatebtn}>
           <Text style={styles.navigatebtnfont}>Navigate</Text> 
       </TouchableOpacity>
+        {/*메뉴 아이콘*/}
         <Image
           source={MenuIcon}
           style={styles.menuIcon}
         />
+        {/*비상 아이콘*/}
         <Image
           source={AlertIcon}
           style={styles.alertIcon}
         />
-      <Animated.View style={[styles.nonModal, { height: animation }]}>
+
+    <Animated.View style={[styles.nonModal, { height: animation }]}>
+      <TouchableOpacity onPress={onButtonPress} hitSlop={15} style={[styles.button, { marginTop: 5 }]} />
+        {/*Socket i.o로 갱신되는 주문목록*/} 
+        <View style={styles.modalcontent}>
+            <Text style={styles.orderlists1}>Current Delivery</Text>
+            <Text style={styles.orderlists2}>Finished Cooking</Text>
+            <Text style={styles.orderlists3}>Scheduled Delivery</Text>
+        </View>
       {/*출근하기 버튼*/}
       <SwipeButton 
       title="Slide To Completed"
       onSwipeEnd={handleAttendanceComplete}
       />
-         <TouchableOpacity onPress={onButtonPress} hitSlop={15} style={[styles.button, { marginTop: 5 }]} />
-         <View>
-         {/* {orders.map((orders) => (
-              <Text style={styles.orders}>Orders: {JSON.stringify(orders)}</Text>
-            ))} */}
+        <View>
+        {/* {orders.map((order, index) => (
+            <View key={index}>
+             <Text style={styles.orderlists}>{`Order : ${order}`}</Text>
+            </View>
+        ))} */}
          </View>
-     </Animated.View>   
+    </Animated.View> 
      </View>
   );
 };
@@ -293,6 +305,29 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     position: 'absolute',
   },
+  modalcontent: {
+    position: 'absolute',
+    width: '91.46%',
+    heigth: '100%',
+    top: 38,
+  },
+  orderlists1: {
+    fontSize: 16,
+    color: '#838796',
+    fontWeight: 'bold',
+  },
+  orderlists2: {
+    top: 414,
+    fontSize: 16,
+    color: '#838796',
+    fontWeight: 'bold',
+  },
+  orderlists3: {
+    top: 536,
+    fontSize: 16,
+    color: '#838796',
+    fontWeight: 'bold',
+  }
 });
 
 export default HomeScreen2;
