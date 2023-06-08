@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { AsyncStorage } from "@aws-amplify/core";
 import { Auth } from 'aws-amplify';
 import { useNavigation } from '@react-navigation/native';
+import { getDriverInfo } from "../state/queries";
 
 const EditProfileScreen = () => {
   const [orders, setOrders] = useState([]);
@@ -11,26 +12,55 @@ const EditProfileScreen = () => {
   const [lastName, setLastName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
-
+  const [driverInfo, setDriverInfo] = useState({
+    driverFirstName: '',
+    driverLastName: '',
+    driverMobileNum: ''
+  });
   const navigation = useNavigation();
 
   // AsyncStorage에서 드라이버 정보 가져오기
+  // useEffect(() => {
+  //   const getDriverInfo = async () => {
+  //     try {
+  //       const data = await AsyncStorage.getItem('driverInfo');
+  //       if (data) {
+  //         const driverInfo = JSON.parse(data);
+  //         setFirstName(driverInfo.driverFirstName);
+  //         setLastName(driverInfo.driverLastName);
+  //         setPhoneNumber(driverInfo.driverMobileNum);
+  //         console.log('드라이버 정보', driverInfo.driverFirstName, driverInfo.driverLastName, driverInfo.driverMobileNum );
+  //       }
+  //     } catch (error) {
+  //       console.log('드라이버 정보 가져오기 에러', error);
+  //     }
+  //   };
+
+  //   getDriverInfo();
+  // }, []);
+
   useEffect(() => {
-    const getDriverInfo = async () => {
+    const fetchDriverInfo = async () => {
       try {
-        const data = await AsyncStorage.getItem('driverInfo');
-        if (data) {
-          const driverInfo = JSON.parse(data);
-          setFirstName(driverInfo.driverFirstName);
-          setLastName(driverInfo.driverLastName);
-          setPhoneNumber(driverInfo.driverMobileNum);
+        const driverData = await getDriverInfo();
+        if (driverData && driverData.data && driverData.data.length > 0) {
+          const driverInfoData = driverData.data[0];
+          setDriverInfo({
+            driverFirstName: driverInfoData.driverFirstName,
+            driverLastName: driverInfoData.driverLastName,
+            driverMobileNum: driverInfoData.driverMobileNum
+          });
+          // AsyncStorage에 드라이버 정보 저장
+          await AsyncStorage.setItem('driverFirstName', driverInfoData.driverFirstName);
+          await AsyncStorage.setItem('driverLastName', driverInfoData.driverLastName);
+          await AsyncStorage.setItem('driverMobileNum', driverInfoData.driverMobileNum);
         }
       } catch (error) {
-        console.log('Error retrieving driver info:', error);
+        console.log('드라이버 기본 정보 저장 에러', error);
       }
     };
-
-    getDriverInfo();
+    
+    fetchDriverInfo();
   }, []);
 
   // import 해온 소켓 이벤트 핸들러 등록
@@ -76,19 +106,16 @@ const EditProfileScreen = () => {
           <TouchableOpacity style={styles.firstname}>
             <TextInput
               style={styles.inputfirstname}
-              placeholder="First Name"
-              value={firstName}
-              onChangeText={setFirstName}
+              value={driverInfo.driverFirstName}
               editable={false} // 입력 및 수정 불가 설정
               selectTextOnFocus={false} // 입력 및 수정 불가 설정
-            />
+           />
+
           </TouchableOpacity>
           <TouchableOpacity style={styles.lastname}>
             <TextInput
               style={styles.inputlastname}
-              placeholder="Last Name"
-              value={lastName}
-              onChangeText={setLastName}
+              value={driverInfo.driverLastName}
               editable={false} // 입력 및 수정 불가 설정
               selectTextOnFocus={false} // 입력 및 수정 불가 설정
             />
@@ -99,9 +126,7 @@ const EditProfileScreen = () => {
           <TouchableOpacity style={styles.phonenumber}>
             <TextInput
               style={styles.inputphonenumber}
-              placeholder="+8201012345678"
-              value={phoneNumber}
-              onChangeText={setPhoneNumber}
+              value={driverInfo.driverMobileNum}
               editable={false} // 입력 및 수정 불가 설정
               selectTextOnFocus={false} // 입력 및 수정 불가 설정
             />
@@ -215,7 +240,7 @@ const styles = StyleSheet.create({
     inputfirstname: {
         backgroundColor:'#F1F1F4',
         borderRadius: 23,
-        color: 'black',
+        color: '#9EA1AE',
         padding: 15,
         height: 46,
         fontSize: 14,
@@ -230,10 +255,11 @@ const styles = StyleSheet.create({
     inputlastname: {
         backgroundColor:'#F1F1F4',
         borderRadius: 23,
-        color: 'black',
+        color: '#9EA1AE',
         padding: 15,
         height: 46,
         fontSize: 14,
+        fontWeight: 'solid'
     },
     PN:{
         fontSize: 14,
@@ -251,7 +277,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         backgroundColor:'#F1F1F4',
         borderRadius: 23,
-        color: 'black',
+        color: '#9EA1AE',
         padding: 10,
         paddingLeft: 20,
         height: 46,

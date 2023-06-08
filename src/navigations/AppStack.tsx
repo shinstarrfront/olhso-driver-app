@@ -34,7 +34,8 @@ const AppStack = () => {
         options={({ navigation }) => ({
           headerShown: false,
           // headerBackTitle: '',
-          headerBackTitleVisible: false,
+          // headerBackTitleVisible: false,
+          headerBackTitleVisible: true,
           })}
       />
       <Stack.Screen 
@@ -97,7 +98,7 @@ const AppStack = () => {
           headerBackTitle: '',
           headerBackTitleVisible: true }}
         />
-        <Stack.Screen
+        {/* <Stack.Screen
         name="EditProfile"
         component={EditProfileScreen}
         options={({ navigation }) => ({
@@ -106,6 +107,25 @@ const AppStack = () => {
           headerBackTitle: '', 
           headerBackTitleVisible: false
         })}
+        /> */}
+        <Stack.Screen
+          name="EditProfile"
+          component={EditProfileScreen}
+          options={({ navigation }) => ({
+            headerShown: true,
+            title: 'Edit Profile', 
+            headerBackTitle: '', 
+            headerBackTitleVisible: false,
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+                <MaterialCommunityIcons 
+                  name="arrow-left" 
+                  size={24} 
+                  color="black" 
+                />
+              </TouchableOpacity>
+            ),
+          })}
         />
          <Stack.Screen
         name="Orders"

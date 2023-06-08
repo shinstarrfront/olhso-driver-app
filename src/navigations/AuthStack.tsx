@@ -5,6 +5,9 @@ import ChangePasswordScreen from '../srceens/ChangePasswordScreen';
 import PhoneLoginScreen from '../srceens/PhoneLoginScreen';
 import TruckInfoScreen from '../srceens/TruckInfoScreen';
 import HomeScreen2 from '../srceens/HomeScreen2';
+import EditProfileScreen from '../srceens/EditProfileScreen';
+import { TouchableOpacity, Image, StyleSheet } from "react-native";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 interface AuthStackParamList {
   LogIn: PhoneLoginScreenProps;
@@ -24,7 +27,7 @@ const AuthStack = () => {
     <Stack.Navigator
     initialRouteName="Start"
     screenOptions={{
-        headerBackTitleVisible: false,
+        headerBackTitleVisible: true,
         // headerTitle: ''
     }}
 >
@@ -89,7 +92,26 @@ const AuthStack = () => {
           headerBackTitleVisible: true 
         })}
         />
-    </Stack.Navigator>
+        <Stack.Screen
+          name="EditProfile"
+          component={EditProfileScreen}
+          options={({ navigation }) => ({
+            headerShown: true,
+            title: 'Edit Profile', 
+            headerBackTitle: '', 
+            headerBackTitleVisible: false,
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+                <MaterialCommunityIcons 
+                  name="arrow-left" 
+                  size={24} 
+                  color="black" 
+                />
+              </TouchableOpacity>
+            ),
+          })}
+        />
+      </Stack.Navigator>
   );
 };
 
