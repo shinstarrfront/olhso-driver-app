@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, Button, Modal, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Linking, TouchableWithoutFeedback } from 'react-native';
 
 interface AlertModalScreenProps {
     navigation: any;
@@ -7,8 +7,9 @@ interface AlertModalScreenProps {
 
 const AlertModalScreen: React.FC<AlertModalScreenProps> = ({ navigation }) => {
   return (
+    <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
       <View style={styles.modalcontainer}>
-        <TouchableOpacity style={styles.modalbtn1}>
+        <TouchableOpacity style={styles.modalbtn1}  onPress={() => {Linking.openURL('tel:01056325968')}}>
           <Text style={styles.modalfont}>Emergency Call</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.modalbtn2}>
@@ -21,6 +22,7 @@ const AlertModalScreen: React.FC<AlertModalScreenProps> = ({ navigation }) => {
           <Text style={styles.modalfont}>Back To Work</Text>
         </TouchableOpacity>
       </View>
+      </TouchableWithoutFeedback>
   );
 };
 
