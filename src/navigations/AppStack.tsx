@@ -13,7 +13,7 @@ import OrdersScreen from '../srceens/OrdersScreen';
 import ServiceGuidanceScreen from '../srceens/ServiceGuidanceScreen';
 import ChangePasswordScreen from '../srceens/ChangePasswordScreen';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-
+import AlertModalScreen from '../srceens/AlertModalScreen';
 
 
 interface AppStackParamList extends Record<string, object | any> {
@@ -64,6 +64,15 @@ const AppStack = () => {
           ),
           })}
       />
+      <Stack.Screen
+        name="AlertModal"
+        component={AlertModalScreen}
+        options= {({ navigation }) => ({
+          title: '',
+          headerBackTitle: '',
+          headerBackTitleVisible: false, 
+        })}
+        />
       <Stack.Screen
         name="Home2"
         component={HomeScreen2}

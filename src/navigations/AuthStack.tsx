@@ -8,7 +8,7 @@ import HomeScreen2 from '../srceens/HomeScreen2';
 import EditProfileScreen from '../srceens/EditProfileScreen';
 import { TouchableOpacity, Image, StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-
+import AlertModalScreen from '../srceens/AlertModalScreen';
 
 interface AuthStackParamList {
   LogIn: PhoneLoginScreenProps;
@@ -84,7 +84,7 @@ const AuthStack = () => {
           ),
           headerRight: () => (
               <TouchableOpacity 
-                onPress={() => navigation.openDrawer()}>
+                onPress={() => navigation.navigate('AlertModal')}>
                 <Image 
                 source={require('../assets/alert.png')} 
                 style={{ width: 42, height: 42, marginRight: 14 }} 
@@ -104,7 +104,8 @@ const AuthStack = () => {
           { backgroundColor: 'rgb(163, 191, 244)' },
           // { backgroundColor: 'rgb(233,234,237)' },
           headerLeft: () => ( 
-            <TouchableOpacity onPress={() => navigation.openDrawer()}>
+            <TouchableOpacity 
+              onPress={() => navigation.openDrawer()}>
               <Image 
                 source={require('../assets/menu.png')} 
                 style={{ width: 42, height: 42, marginLeft: 14 }} 
@@ -112,7 +113,8 @@ const AuthStack = () => {
             </TouchableOpacity>
           ),
           headerRight: () => (
-              <TouchableOpacity onPress={() => navigation.openDrawer()}>
+              <TouchableOpacity 
+                onPress={() => navigation.navigate('AlertModal')}>
                 <Image 
                 source={require('../assets/alert.png')} 
                 style={{ width: 42, height: 42, marginRight: 14 }} 
@@ -121,13 +123,21 @@ const AuthStack = () => {
           ),
           })}
       />
-  <Stack.Screen
+      <Stack.Screen
         name="TruckInfo"
         component={TruckInfoScreen}
         options= {({ navigation }) => ({
           title: 'Truck Info',
           headerBackTitle: '',
           headerBackTitleVisible: true 
+        })}
+        />
+      <Stack.Screen
+        name="AlertModal"
+        component={AlertModalScreen}
+        options= {({ navigation }) => ({
+          headerShown: false,
+          headerTitle: '',
         })}
         />
         <Stack.Screen
@@ -149,6 +159,7 @@ const AuthStack = () => {
             ),
           })}
         />
+      
       </Stack.Navigator>
   );
 };
