@@ -9,6 +9,7 @@ import EditProfileScreen from '../srceens/EditProfileScreen';
 import { TouchableOpacity, Image, StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
+
 interface AuthStackParamList {
   LogIn: PhoneLoginScreenProps;
   PhoneLogIn: PhoneLoginScreenProps;
@@ -22,12 +23,13 @@ interface PhoneLoginScreenProps {
 const Stack = createStackNavigator<AuthStackParamList>();
 
 //로그인 전
+//해당 파일에 설정한 것이 적용된다
 const AuthStack = () => {
   return (
     <Stack.Navigator
     initialRouteName="Start"
     screenOptions={{
-        headerBackTitleVisible: true,
+        headerBackTitleVisible: false,
         // headerTitle: ''
     }}
 >
@@ -67,20 +69,56 @@ const AuthStack = () => {
         options={({ navigation }) => ({
           headerShown: true,
           title: '',
-          headerStyle: {
-            backgroundColor: 'transparent', 
-          },
+          headerBackTitleVisible: false,
+          headerStyle: 
+          { backgroundColor: 'rgb(163, 191, 244)' },
+          // { backgroundColor: 'rgb(233,234,237)' },
+          headerLeft: () => ( 
+            <TouchableOpacity 
+              onPress={() => navigation.openDrawer()}>
+              <Image 
+                source={require('../assets/menu.png')} 
+                style={{ width: 42, height: 42, marginLeft: 14 }} 
+              />
+            </TouchableOpacity>
+          ),
+          headerRight: () => (
+              <TouchableOpacity 
+                onPress={() => navigation.openDrawer()}>
+                <Image 
+                source={require('../assets/alert.png')} 
+                style={{ width: 42, height: 42, marginRight: 14 }} 
+              />
+            </TouchableOpacity>
+          ),
           })}
-  />
+      />
     <Stack.Screen
         name="Home2"
         component={HomeScreen2}
         options={({ navigation }) => ({
           headerShown: true,
           title: '',
-          headerStyle: {
-            backgroundColor: '#ffff',
-          },
+          headerBackTitleVisible: false,
+          headerStyle: 
+          { backgroundColor: 'rgb(163, 191, 244)' },
+          // { backgroundColor: 'rgb(233,234,237)' },
+          headerLeft: () => ( 
+            <TouchableOpacity onPress={() => navigation.openDrawer()}>
+              <Image 
+                source={require('../assets/menu.png')} 
+                style={{ width: 42, height: 42, marginLeft: 14 }} 
+              />
+            </TouchableOpacity>
+          ),
+          headerRight: () => (
+              <TouchableOpacity onPress={() => navigation.openDrawer()}>
+                <Image 
+                source={require('../assets/alert.png')} 
+                style={{ width: 42, height: 42, marginRight: 14 }} 
+              />
+            </TouchableOpacity>
+          ),
           })}
       />
   <Stack.Screen

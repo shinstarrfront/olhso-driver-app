@@ -36,7 +36,7 @@ const BASE_URL = 'https://vi7lmzryog.execute-api.us-west-2.amazonaws.com/prod';
 
     //운행 가능한 트럭 리스트 가져오기
     export const getPossibleTruckList = async () => {
-        const url = `${BASE_URL}/trucks?status=active`;
+        const url = `${BASE_URL}/trucks?status='active'`;
         try{
         const response = await axios.get(url);
         const data = response.data;
@@ -74,6 +74,37 @@ const BASE_URL = 'https://vi7lmzryog.execute-api.us-west-2.amazonaws.com/prod';
         console.log('error==', error.response.status, error.response.data.msg); 
         }
     };
+
+
+    // 트럭의 배달완료 목록 가져오기
+    export const getDeliveryList = async (truckID:string, startDate:string, endDate:string) => {
+      const url = `${BASE_URL}/orders`;
+      try{
+          const response = await axios.get(url, {
+              params: {
+                  truckID: truckID,
+                  startDate: startDate,
+                  endDate: endDate,
+                  status: 'completed',
+              }
+          });
+          const data = response.data;
+
+      //서버 응답에 따른 처리
+      if(response.status === 200){
+          console.log(data, '200 ok!');
+      } else if(response.status === 422){
+          console.log('422 error');
+      } else if(response.status === 500){
+        console.log('500 error');
+      }
+      console.log('data==', data);
+      return data;
+      }
+      catch(error){
+          console.log('error야', error); 
+      }
+  };
 
     // React Query의 useMutation 훅을 사용하여 API 요청을 감싸는 커스텀 훅(기본 정보 가져오기)
     export const useGetDriverInfo = (driverID: string) => {

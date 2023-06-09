@@ -21,9 +21,11 @@ const OrdersScreen = () => {
                 <Text style={styles.price}>Price</Text>
                 </View>
                 <View style={styles.box2}>
-                {orders.map((order, index) => (
+                <Text style={styles.datedata}></Text>
+                <Text style={styles.pricedata}></Text>
+                {/* {orders.map((order, index) => (
                         <Text key={index} style={styles.orderscontent}>{order}</Text>
-                    ))}
+                    ))} */}
                 </View>
             </View>
         </View>
@@ -79,6 +81,13 @@ const styles = StyleSheet.create({
     orderscontent: {
 
     },
+    datedata: {
+
+    },
+    pricedata: {
+
+    },
 });
 
 export default OrdersScreen;
+
