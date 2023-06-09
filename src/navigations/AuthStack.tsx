@@ -9,6 +9,7 @@ import EditProfileScreen from '../srceens/EditProfileScreen';
 import { TouchableOpacity, Image, StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import AlertModalScreen from '../srceens/AlertModalScreen';
+import SideScreen from '../srceens/SideScreen';
 
 interface AuthStackParamList {
   LogIn: PhoneLoginScreenProps;
@@ -75,7 +76,7 @@ const AuthStack = () => {
           // { backgroundColor: 'rgb(233,234,237)' },
           headerLeft: () => ( 
             <TouchableOpacity 
-              onPress={() => navigation.openDrawer()}>
+              onPress={() => navigation.navigate('Side')}>
               <Image 
                 source={require('../assets/menu.png')} 
                 style={{ width: 42, height: 42, marginLeft: 14 }} 
@@ -159,7 +160,14 @@ const AuthStack = () => {
             ),
           })}
         />
-      
+      <Stack.Screen 
+        name="Side" 
+        component={SideScreen}
+        options={({ navigation }) => ({
+        headerShown: true,
+        headerTitle: '',
+        })}
+      />
       </Stack.Navigator>
   );
 };
