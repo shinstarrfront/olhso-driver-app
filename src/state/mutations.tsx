@@ -84,6 +84,29 @@ export const updateDriverStatusChange = async () => {
   }
 };
 
+//트럭의 운행 상태 변경
+export const updateTruckStatusChange = async (status: 'start' | 'finish') => {
+  const truckID = await AsyncStorage.getItem('truckID'); 
+  const url = `${BASE_URL}/trucks/${truckID}/status`;
+  try {
+    // API 요청에서 body의 "type" 필드를 입력받은 status로 설정
+    const response = await axios.patch(url, {"type": status});
+    const data = response.data;
+    if(response.status === 200 && data.msg === 'ok'){
+      console.log(data, '트럭의 운행 상태 변경');
+      return data;
+    } else if(response.status === 422) {
+      console.log('error', '필요한 데이터가 입력되지 않았습니다.');
+    }
+    console.log('data:', data);
+    return data;
+    }
+  catch (error:any) {
+    console.log('트럭의 운행 상태 변경 error 상황', error.code, error.message);
+  }
+};
+
+
 // React Query's useMutation hook wrapping the API request (출근하기)
 export const useUpdateDriverStatusStart = () => {
   console.log('useUpdateDriverStatusStart 함수 실행');

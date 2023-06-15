@@ -10,6 +10,9 @@ import { TouchableOpacity, Image, StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import AlertModalScreen from '../srceens/AlertModalScreen';
 import SideScreen from '../srceens/SideScreen';
+import OrdersScreen from '../srceens/OrdersScreen';
+import TermsOfServiceScreen from '../srceens/TermsOfServiceScreen';
+import TruckInfoEditScreen from '../srceens/TruckInfoEditScreen';
 
 interface AuthStackParamList {
   LogIn: PhoneLoginScreenProps;
@@ -102,11 +105,12 @@ const AuthStack = () => {
           title: '',
           headerBackTitleVisible: false,
           headerStyle: 
+          // { backgroundColor: 'transparent' },
           { backgroundColor: 'rgb(163, 191, 244)' },
           // { backgroundColor: 'rgb(233,234,237)' },
           headerLeft: () => ( 
             <TouchableOpacity 
-              onPress={() => navigation.openDrawer()}>
+              onPress={() => navigation.navigate('Side')}>
               <Image 
                 source={require('../assets/menu.png')} 
                 style={{ width: 42, height: 42, marginLeft: 14 }} 
@@ -133,6 +137,14 @@ const AuthStack = () => {
           headerBackTitleVisible: true 
         })}
         />
+        <Stack.Screen
+        name="TruckInfoEdit"
+        component={TruckInfoEditScreen}
+        options= {{ 
+          title: 'Truck Info',
+          headerBackTitle: '',
+          headerBackTitleVisible: true }}
+        />
       <Stack.Screen
         name="AlertModal"
         component={AlertModalScreen}
@@ -150,7 +162,7 @@ const AuthStack = () => {
             headerBackTitle: '', 
             headerBackTitleVisible: false,
             headerLeft: () => (
-              <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+              <TouchableOpacity onPress={() => navigation.navigate("Side")}>
                 <MaterialCommunityIcons 
                   name="arrow-left" 
                   size={24} 
@@ -166,6 +178,26 @@ const AuthStack = () => {
         options={({ navigation }) => ({
         headerShown: true,
         headerTitle: '',
+        })}
+      />
+      <Stack.Screen
+        name="Orders"
+        component={OrdersScreen}
+        options={({ navigation }) => ({
+          headerShown: true,
+          title: 'Orders', 
+          headerBackTitle: '', 
+          headerBackTitleVisible: false
+        })}
+        />
+      <Stack.Screen 
+        name="TermsOfService" 
+        component={TermsOfServiceScreen}
+        options={({ navigation }) => ({
+          headerShown: true,
+          title: 'Terms Of Service', 
+          headerBackTitle: '', 
+          headerBackTitleVisible: false
         })}
       />
       </Stack.Navigator>

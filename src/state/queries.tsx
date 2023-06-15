@@ -56,7 +56,6 @@ const BASE_URL = 'https://vi7lmzryog.execute-api.us-west-2.amazonaws.com/prod';
 
     //메뉴 정보 확인
     export const getMenuInfo = async () => {
-        //아직 미정으로 수정 예정(api 작업 전)
         const url = `${BASE_URL}/menus?type=AutoWok`;
         try{
         const response = await axios.get(url);
@@ -105,6 +104,36 @@ const BASE_URL = 'https://vi7lmzryog.execute-api.us-west-2.amazonaws.com/prod';
           console.log('error야', error); 
       }
   };
+
+    // 트럭의 재고 정보 확인
+    export const getInventoryInfo = async () => {
+      try {
+      const truckID = await AsyncStorage.getItem('truckID');
+      const url = `${BASE_URL}/trucks/${truckID}/stock`;  
+      // const url = `${BASE_URL}/trucks/T1/stock`;  
+      console.log('truckID를 확인하고 싶어', truckID);
+        console.log('axios start!')
+        const response = await axios.get(url);
+        console.log('axios success!')
+        console.log('status', typeof(response.status))
+        const { code, msg, data } = response?.data
+       if(code === 200 && msg === 'ok'){
+          console.log(data, '트럭의 재고 정보 확인');
+          return {type: 'success', data, msg: 'ok'}
+        } else if(code === 200 && msg === '데이터가 존재하지 않습니다') {
+          console.log('error', '트럭의 재고 정보 확인, 데이터가 존재하지 않습니다');
+          return {type: 'error', data: null, msg}
+        } else {
+          console.error('error', '트럭의 재고 정보 확인, 서버 오류');
+          return{type: 'error', data: null, msg}
+        }
+     }
+      catch (error:any) {
+        console.error('드라이버 앱 getInventoryInfo Error', error);
+        return {type: 'error', data: null, msg: error.message}
+      }
+    };
+
 
     // React Query의 useMutation 훅을 사용하여 API 요청을 감싸는 커스텀 훅(기본 정보 가져오기)
     export const useGetDriverInfo = (driverID: string) => {

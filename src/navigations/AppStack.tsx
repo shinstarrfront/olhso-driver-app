@@ -14,7 +14,8 @@ import ServiceGuidanceScreen from '../srceens/ServiceGuidanceScreen';
 import ChangePasswordScreen from '../srceens/ChangePasswordScreen';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import AlertModalScreen from '../srceens/AlertModalScreen';
-
+import SideScreen from '../srceens/SideScreen';
+import TermsOfServiceScreen from '../srceens/TermsOfServiceScreen';
 
 interface AppStackParamList extends Record<string, object | any> {
   Home: any;
@@ -46,19 +47,62 @@ const AppStack = () => {
           headerBackTitle: '',
           headerBackTitleVisible: true }}
       />
-      <Stack.Screen
+    <Stack.Screen
         name="Home"
         component={HomeScreen}
         options={({ navigation }) => ({
           headerShown: true,
           title: '',
           headerBackTitleVisible: false,
+          headerStyle: 
+          { backgroundColor: 'rgb(163, 191, 244)' },
+          // { backgroundColor: 'rgb(233,234,237)' },
           headerLeft: () => ( 
-            <TouchableOpacity onPress={() => navigation.openDrawer()}>
-              <MaterialCommunityIcons 
-                name="microsoft-xbox-controller-menu" 
-                size={24} 
-                color="black" 
+            <TouchableOpacity 
+              onPress={() => navigation.navigate('Side')}>
+              <Image 
+                source={require('../assets/menu.png')} 
+                style={{ width: 42, height: 42, marginLeft: 14 }} 
+              />
+            </TouchableOpacity>
+          ),
+          headerRight: () => (
+              <TouchableOpacity 
+                onPress={() => navigation.navigate('AlertModal')}>
+                <Image 
+                source={require('../assets/alert.png')} 
+                style={{ width: 42, height: 42, marginRight: 14 }} 
+              />
+            </TouchableOpacity>
+          ),
+          })}
+      />
+    <Stack.Screen
+        name="Home2"
+        component={HomeScreen2}
+        options={({ navigation }) => ({
+          headerShown: true,
+          title: '',
+          headerBackTitleVisible: false,
+          headerStyle: 
+          // { backgroundColor: 'transparent' },
+          { backgroundColor: 'rgb(163, 191, 244)' },
+          // { backgroundColor: 'rgb(233,234,237)' },
+          headerLeft: () => ( 
+            <TouchableOpacity 
+              onPress={() => navigation.navigate('Side')}>
+              <Image 
+                source={require('../assets/menu.png')} 
+                style={{ width: 42, height: 42, marginLeft: 14 }} 
+              />
+            </TouchableOpacity>
+          ),
+          headerRight: () => (
+              <TouchableOpacity 
+                onPress={() => navigation.navigate('AlertModal')}>
+                <Image 
+                source={require('../assets/alert.png')} 
+                style={{ width: 42, height: 42, marginRight: 14 }} 
               />
             </TouchableOpacity>
           ),
@@ -73,23 +117,7 @@ const AppStack = () => {
           headerBackTitleVisible: false, 
         })}
         />
-      <Stack.Screen
-        name="Home2"
-        component={HomeScreen2}
-        options={({ navigation }) => ({
-          headerShown: true,
-          title: '',
-          headerLeft: () => ( 
-            <MaterialCommunityIcons 
-            name="microsoft-xbox-controller-menu" 
-            size={24} 
-            color="black" />
-          ),
-          headerStyle: {
-            backgroundColor: 'transparent', 
-          },
-          })}
-      />
+     
       <Stack.Screen
         name="TruckInfo"
         component={TruckInfoScreen}  
@@ -166,6 +194,24 @@ const AppStack = () => {
           headerBackTitleVisible: false
         })}
         />
+        <Stack.Screen 
+        name="Side" 
+        component={SideScreen}
+        options={({ navigation }) => ({
+        headerShown: true,
+        headerTitle: '',
+        })}
+      />
+      <Stack.Screen 
+        name="TermsOfService" 
+        component={TermsOfServiceScreen}
+        options={({ navigation }) => ({
+          headerShown: true,
+          title: 'Terms Of Service', 
+          headerBackTitle: '', 
+          headerBackTitleVisible: false
+        })}
+      />
     </Stack.Navigator>
   );
 };

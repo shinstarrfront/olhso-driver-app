@@ -9,16 +9,31 @@ const AlertModalScreen: React.FC<AlertModalScreenProps> = ({ navigation }) => {
   return (
     <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
       <View style={styles.modalcontainer}>
-        <TouchableOpacity style={styles.modalbtn1}  onPress={() => {Linking.openURL('tel:01056325968')}}>
+        <TouchableOpacity 
+          style={styles.modalbtn1}  
+          onPress={() => {Linking.openURL('tel:01056325968')}}>
           <Text style={styles.modalfont}>Emergency Call</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.modalbtn2}>
-          <Text style={styles.modalfont}>Pause Delivery 10min</Text>
+        <TouchableOpacity 
+          style={styles.modalbtn2}
+          onPress={() => {}}
+        >
+        <Text 
+          style={styles.modalfont}
+          >Pause Delivery 10min</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.modalbtn3}>
-          <Text style={styles.modalfont}>Pause Delivery 20min</Text>
+        <TouchableOpacity 
+          style={styles.modalbtn3}
+          onPress={() => {}}
+        >
+        <Text style={styles.modalfont}>
+            Pause Delivery 20min
+        </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.modalbtn4}>
+        <TouchableOpacity 
+          style={styles.modalbtn4}
+          onPress={() => {}}
+        >
           <Text style={styles.modalfont}>Back To Work</Text>
         </TouchableOpacity>
       </View>

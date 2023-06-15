@@ -25,7 +25,7 @@ interface TruckInfoScreenProps {
   navigation: any;
 }
 
-const TruckInfoScreen: React.FC<TruckInfoScreenProps> = ({ navigation }) => {
+const TruckInfoScreen= ({ navigation }: TruckInfoScreenProps) => {
   const [orders, setOrders] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);

@@ -1,8 +1,15 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import socket from '../utils/socket.io';
 import React, { useEffect, useState } from 'react';
+import { getInventoryInfo } from '../state/queries'; 
 
-const SideScreen = () => { 
+
+interface SideScreenProps {
+    navigation: any;
+};
+
+
+const SideScreen: React.FC<SideScreenProps> = ({ navigation }) => {
     const [orders, setOrders] = useState([]);
 
      //import 해온 소켓 이벤트 핸들러 등록
@@ -11,24 +18,48 @@ const SideScreen = () => {
           setOrders(data);
         });
       }, []);
+
+      //등록된 재고 불러오고, 스크린 이동하기 
+      const handleInventoryCheck = async () => {
+        await getInventoryInfo(); 
+        navigation.navigate('TruckInfoEdit');
+    }
+  
   
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={[styles.sidemenu1, styles.border]}>
-                <Text style={styles.sidefont11}>Jay Shin</Text> 
-                <Text style={styles.sidefont12}>+8201012345678</Text>
+            <TouchableOpacity 
+                style={[styles.sidemenu1, styles.border]}
+                onPress={() => navigation.navigate('EditProfile')}
+                >
+                <Text style={styles.sidefont11}>Lee EGENIE</Text> 
+                <Text style={styles.sidefont12}>+8201089793432</Text>
                 {/* <Text style={styles.sidefont13}>></Text> */}
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.sidemenu2, styles.border]}>
-            <Text style={styles.sidefont}>delivery history</Text>
+            <TouchableOpacity 
+                style={[styles.sidemenu2, styles.border]}
+                onPress={() => navigation.navigate('Orders')}
+            >
+            <Text 
+                style={styles.sidefont}
+                >delivery history</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.sidemenu3, styles.border]}>
+            <TouchableOpacity 
+                style={[styles.sidemenu3, styles.border]}
+                onPress={handleInventoryCheck} 
+            >
             <Text style={styles.sidefont}>Modify & confirm the inventory</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.sidemenu4, styles.border]}>
+            <TouchableOpacity 
+                style={[styles.sidemenu4, styles.border]}
+                onPress={() => navigation.navigate('TermsOfService')}
+            >
             <Text style={styles.sidefont}>Terms of service</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.sidemenu5, styles.border]}>
+            <TouchableOpacity 
+                style={[styles.sidemenu5, styles.border]}
+                
+                >
             <Text style={styles.sidefont}>End shift</Text>
             </TouchableOpacity>
         </View>

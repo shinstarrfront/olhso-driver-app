@@ -3,7 +3,7 @@ import socket from '../utils/socket.io';
 import React, { useEffect, useState } from 'react';
 
 
-const OrdersScreen = () => {
+const TermsOfServiceScreen = () => {
     const [orders, setOrders] = useState([]);
 
     //import 해온 소켓 이벤트 핸들러 등록
@@ -13,20 +13,10 @@ const OrdersScreen = () => {
         });
       }, []);
       
-    return (
+    return ( 
         <View style={styles.container}>
             <View style={styles.boxcolumn}>
-                <View style={styles.box1}>
-                <Text style={styles.date}>Date</Text>
-                <Text style={styles.price}>Price</Text>
-                </View>
-                <View style={styles.box2}>
-                <Text style={styles.datedata}></Text>
-                <Text style={styles.pricedata}></Text>
-                {/* {orders.map((order, index) => (
-                        <Text key={index} style={styles.orderscontent}>{order}</Text>
-                    ))} */}
-                </View>
+                <Text style={styles.font}>no data</Text>
             </View>
         </View>
     );
@@ -87,7 +77,13 @@ const styles = StyleSheet.create({
     pricedata: {
 
     },
+    font: {
+        textAlign: 'center',
+        alignContent: 'center',
+        justifyContent: 'center',
+        top: '50%',
+    }
 });
 
-export default OrdersScreen;
+export default TermsOfServiceScreen;
 
