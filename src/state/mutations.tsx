@@ -8,7 +8,7 @@ import { Alert } from 'react-native';
 
 const BASE_URL = 'https://vi7lmzryog.execute-api.us-west-2.amazonaws.com/prod';
 
-// 출근하기
+// 드라이버의 출퇴근 정보 변경하기
 export const updateDriverStatusStart = async () => {
   const driverMobileNum = await AsyncStorage.getItem('phoneNumber');
   const url = `${BASE_URL}/drivers/${driverMobileNum}/status`;
@@ -105,6 +105,7 @@ export const updateTruckStatusChange = async (status: 'start' | 'finish') => {
     console.log('트럭의 운행 상태 변경 error 상황', error.code, error.message);
   }
 };
+
 
 
 // React Query's useMutation hook wrapping the API request (출근하기)

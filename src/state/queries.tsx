@@ -15,7 +15,7 @@ const BASE_URL = 'https://vi7lmzryog.execute-api.us-west-2.amazonaws.com/prod';
         const driverMobileNum = await AsyncStorage.getItem('phoneNumber');
         const url = `${BASE_URL}/drivers/${driverMobileNum}`;
         // const url = `${BASE_URL}/drivers/+8201039598640`;
-        console.log('driverMobileNum:',driverMobileNum);
+        // console.log('driverMobileNum:',driverMobileNum);
         try{
         const response = await axios.get(url);
         const data = response.data;
@@ -88,7 +88,6 @@ const BASE_URL = 'https://vi7lmzryog.execute-api.us-west-2.amazonaws.com/prod';
               }
           });
           const data = response.data;
-
       //서버 응답에 따른 처리
       if(response.status === 200){
           console.log(data, '200 ok!');
@@ -112,9 +111,7 @@ const BASE_URL = 'https://vi7lmzryog.execute-api.us-west-2.amazonaws.com/prod';
       const url = `${BASE_URL}/trucks/${truckID}/stock`;  
       // const url = `${BASE_URL}/trucks/T1/stock`;  
       console.log('truckID를 확인하고 싶어', truckID);
-        console.log('axios start!')
         const response = await axios.get(url);
-        console.log('axios success!')
         console.log('status', typeof(response.status))
         const { code, msg, data } = response?.data
        if(code === 200 && msg === 'ok'){
@@ -133,6 +130,7 @@ const BASE_URL = 'https://vi7lmzryog.execute-api.us-west-2.amazonaws.com/prod';
         return {type: 'error', data: null, msg: error.message}
       }
     };
+
 
 
     // React Query의 useMutation 훅을 사용하여 API 요청을 감싸는 커스텀 훅(기본 정보 가져오기)

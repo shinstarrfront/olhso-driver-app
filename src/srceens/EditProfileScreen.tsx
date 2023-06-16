@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { getDriverInfo } from "../state/queries";
 
 const EditProfileScreen = () => {
+  const [loading, setLoading] = useState(true);
   const [orders, setOrders] = useState([]);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -39,8 +40,11 @@ const EditProfileScreen = () => {
   //   getDriverInfo();
   // }, []);
 
+
+
   useEffect(() => {
     const fetchDriverInfo = async () => {
+      setLoading(true);
       try {
         const driverData = await getDriverInfo();
         if (driverData && driverData.data && driverData.data.length > 0) {
@@ -55,8 +59,10 @@ const EditProfileScreen = () => {
           await AsyncStorage.setItem('driverLastName', driverInfoData.driverLastName);
           await AsyncStorage.setItem('driverMobileNum', driverInfoData.driverMobileNum);
         }
+        setLoading(false);
       } catch (error) {
         console.log('드라이버 기본 정보 저장 에러', error);
+        setLoading(false);
       }
     };
     
@@ -106,7 +112,7 @@ const EditProfileScreen = () => {
           <TouchableOpacity style={styles.firstname}>
             <TextInput
               style={styles.inputfirstname}
-              value={driverInfo.driverFirstName}
+              value={loading ? 'Loading...' : driverInfo.driverFirstName} 
               editable={false} // 입력 및 수정 불가 설정
               selectTextOnFocus={false} // 입력 및 수정 불가 설정
            />
@@ -115,7 +121,7 @@ const EditProfileScreen = () => {
           <TouchableOpacity style={styles.lastname}>
             <TextInput
               style={styles.inputlastname}
-              value={driverInfo.driverLastName}
+              value={loading ? 'Loading...' : driverInfo.driverLastName} 
               editable={false} // 입력 및 수정 불가 설정
               selectTextOnFocus={false} // 입력 및 수정 불가 설정
             />
@@ -126,7 +132,7 @@ const EditProfileScreen = () => {
           <TouchableOpacity style={styles.phonenumber}>
             <TextInput
               style={styles.inputphonenumber}
-              value={driverInfo.driverMobileNum}
+              value={loading ? 'Loading...' : driverInfo.driverMobileNum} 
               editable={false} // 입력 및 수정 불가 설정
               selectTextOnFocus={false} // 입력 및 수정 불가 설정
             />

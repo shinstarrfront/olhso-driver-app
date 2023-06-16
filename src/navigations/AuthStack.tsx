@@ -13,6 +13,7 @@ import SideScreen from '../srceens/SideScreen';
 import OrdersScreen from '../srceens/OrdersScreen';
 import TermsOfServiceScreen from '../srceens/TermsOfServiceScreen';
 import TruckInfoEditScreen from '../srceens/TruckInfoEditScreen';
+import { getDriverInfo } from '../state/queries';
 
 interface AuthStackParamList {
   LogIn: PhoneLoginScreenProps;
@@ -79,7 +80,11 @@ const AuthStack = () => {
           // { backgroundColor: 'rgb(233,234,237)' },
           headerLeft: () => ( 
             <TouchableOpacity 
-              onPress={() => navigation.navigate('Side')}>
+            onPress={async () => {
+              await getDriverInfo(); 
+              navigation.navigate('Side');
+            }}
+            >
               <Image 
                 source={require('../assets/menu.png')} 
                 style={{ width: 42, height: 42, marginLeft: 14 }} 
