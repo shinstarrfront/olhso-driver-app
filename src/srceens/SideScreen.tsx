@@ -31,15 +31,20 @@ const SideScreen: React.FC<SideScreenProps> = ({ navigation }) => {
         });
       }, []);
 
-      useEffect(() => {
+
+    //드라이버의 정보를 불러오는 이벤트 핸들러 등록 
+    useEffect(() => {
         const fetchDriverInfo = async () => {
-            const info = await AsyncStorage.getItem('driverInfo');
-            if (info) {
-                setDriverInfo(JSON.parse(info));
+            const savedDriverInfo = await AsyncStorage.getItem('driverInfo');  // Here is the modification
+            console.log('저장된 드라이버 정보', savedDriverInfo);
+            if (savedDriverInfo) {
+                setDriverInfo(JSON.parse(savedDriverInfo));
             }
         };
         fetchDriverInfo();
     }, []);
+
+
 
 
     //등록된 재고 불러오고, 스크린 이동하기 
@@ -67,8 +72,7 @@ const SideScreen: React.FC<SideScreenProps> = ({ navigation }) => {
                 onPress={() => navigation.navigate('EditProfile')}
                 >
                 <Text style={styles.sidefont11}>{driverInfo ? `${driverInfo.driverFirstName} ${driverInfo.driverLastName}` : 'Name'}</Text>
-                <Text style={styles.sidefont12}>{driverInfo ? `${driverInfo.driverMobileNum}`  : 'phonenumber'}</Text>
-                {/* <Text style={styles.sidefont13}>></Text> */}
+                <Text style={styles.sidefont12}>{driverInfo ? `${driverInfo.driverMobileNum}`  : 'PhoneNumber'}</Text>
             </TouchableOpacity>
             <TouchableOpacity 
                 style={[styles.sidemenu2, styles.border]}
