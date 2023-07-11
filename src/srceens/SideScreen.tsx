@@ -45,25 +45,20 @@ const SideScreen: React.FC<SideScreenProps> = ({ navigation }) => {
     }, []);
 
 
-
-
     //등록된 재고 불러오고, 스크린 이동하기 
       const handleInventoryCheck = async () => {
         await getInventoryInfo(); 
         navigation.navigate('TruckInfoEdit');
     }
 
-    //트럭의 배달완료 목록 불러오고, 스크린 이동하기
-        // const handleDeliveryListCheck = async () => {
-        // await getDeliveryList();
-        // navigation.navigate('Orders');
-        // }
 
     //퇴근하고, 스크린 이동하기
     const handleEndShift = async () => {
         await updateDriverStatusStart();
         navigation.navigate('Home');
     }
+
+
   
     return (
         <View style={styles.container}>

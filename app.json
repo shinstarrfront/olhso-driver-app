@@ -21,7 +21,9 @@
         "NSLocationWhenInUseUsageDescription": "This app needs access to location services to function properly.",
         "NSAppTransportSecurity": {
           "NSAllowsArbitraryLoads": true
-        }
+        },
+        "NSCameraUsageDescription": "Allow the app to access your camera",
+        "NSPhotoLibraryUsageDescription": "Allow the app to access your photo library"
       }
     },
     "android": {
@@ -44,6 +46,10 @@
     },
     "extra": {
       "googleMapsApiKey": "REACT_APP_GOOGLE_MAP_API_KEY"
-    }
+    },
+    "permissions": [
+      "CAMERA",
+      "CAMERA_ROLL"
+    ]
   }
 }

@@ -21,8 +21,9 @@ const OrdersScreen = () => {
                 <Text style={styles.price}>Price</Text>
                 </View>
                 <View style={styles.box2}>
-                <Text style={styles.datedata}></Text>
-                <Text style={styles.pricedata}></Text>
+                <Text style={styles.datedata}>0525 Thu 15:12</Text>
+                <Text style={styles.pricedata}>18.63$</Text>
+           
                 {/* {orders.map((order, index) => (
                         <Text key={index} style={styles.orderscontent}>{order}</Text>
                     ))} */}
@@ -60,7 +61,8 @@ const styles = StyleSheet.create({
         flex: 90.84,
         width: '100%',
         top: 68,
-        backgroundColor: 'gray',
+        display: 'flex',
+        flexDirection: 'row',
     },
     date: {
         color: '#838796',
@@ -82,10 +84,10 @@ const styles = StyleSheet.create({
 
     },
     datedata: {
-
+        left: '5%',
     },
     pricedata: {
-
+        left: '20%',
     },
 });
 

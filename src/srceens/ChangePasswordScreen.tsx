@@ -129,6 +129,7 @@ const changePassword = async () => {
         placeholder="Enter the new Password"
         defaultValue={newPassword}
         onChangeText={handlePasswordChange}
+        secureTextEntry //입력 내용을 숨김 처리해줌
      />
       </TouchableOpacity>
       <TouchableOpacity style={styles.confirmpassword}>

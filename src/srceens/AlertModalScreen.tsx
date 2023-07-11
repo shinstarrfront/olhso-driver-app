@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Linking, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Linking, TouchableWithoutFeedback,Alert } from 'react-native';
 
 interface AlertModalScreenProps {
     navigation: any;
@@ -20,19 +20,23 @@ const AlertModalScreen: React.FC<AlertModalScreenProps> = ({ navigation }) => {
         >
         <Text 
           style={styles.modalfont}
-          >Pause Delivery 10min</Text>
+          //눌렀을 때 Alert이 뜨도록
+          onPress={() => {Alert.alert('Pause Delivery 10min')}}
+          >
+          Pause Delivery 10min</Text>
         </TouchableOpacity>
         <TouchableOpacity 
           style={styles.modalbtn3}
           onPress={() => {}}
         >
-        <Text style={styles.modalfont}>
+        <Text style={styles.modalfont}
+         onPress={() => {Alert.alert('Pause Delivery 20min')}}>
             Pause Delivery 20min
         </Text>
         </TouchableOpacity>
         <TouchableOpacity 
           style={styles.modalbtn4}
-          onPress={() => {}}
+          onPress={() => {Alert.alert('Back To Work')}}
         >
           <Text style={styles.modalfont}>Back To Work</Text>
         </TouchableOpacity>

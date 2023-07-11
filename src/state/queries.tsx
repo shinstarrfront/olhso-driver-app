@@ -79,30 +79,40 @@ const BASE_URL = 'https://vi7lmzryog.execute-api.us-west-2.amazonaws.com/prod';
     export const getDeliveryList = async (truckID:string, startDate:string, endDate:string) => {
       const url = `${BASE_URL}/orders`;
       try{
-          const response = await axios.get(url, {
-              params: {
-                  truckID: truckID,
-                  startDate: startDate,
-                  endDate: endDate,
-                  status: 'completed',
-              }
-          });
-          const data = response.data;
-      //서버 응답에 따른 처리
-      if(response.status === 200){
-          console.log(data, '200 ok!');
-      } else if(response.status === 422){
-          console.log('422 error');
-      } else if(response.status === 500){
-        console.log('500 error');
-      }
-      console.log('data==', data);
-      return data;
+        const response = await axios.get(url, {
+            params: {
+                truckID: truckID,
+                startDate: startDate,
+                endDate: endDate,
+                status: 'completed',
+            }
+        });
+        const data = response.data;
+        // 서버 응답에 따른 처리
+        if(response.status === 200){
+            console.log(data, '200 ok!');
+        } else if(response.status === 422){
+            console.log(data, '422 error');
+        } else if(response.status === 500){
+          console.log(data, '500 error');
+        }
+        // 필요한 데이터만 AsyncStorage에 저장하기 위한 조건
+        if(response.status === 200 && data && data.data && Array.isArray(data.data)){
+            try {
+                await AsyncStorage.setItem('DeliveryData', JSON.stringify(data.data));
+            } catch (error) {
+                // 저장 에러
+                console.error('Failed to save the data to the storage', error);
+            }
+        }
+        console.log('data==', data);
+        return data;
       }
       catch(error){
           console.log('error야', error); 
       }
-  };
+    };
+
 
     // 트럭의 재고 정보 확인
     export const getInventoryInfo = async () => {

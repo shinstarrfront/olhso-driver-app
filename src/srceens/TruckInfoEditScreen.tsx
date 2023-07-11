@@ -507,11 +507,14 @@ const handleTruckInfoSave = async () => {
                       setOpen={setGenderOpen}
                       setValue={setGenderValue}
                       setItems={setGender}
-                      placeholder="Select Truck"
+                      // placeholder="Select Truck"
+                      placeholder="1234"
                       placeholderStyle={styles.placeholderStyles}
                       onOpen={onGenderOpen}
                       onChangeValue={onChange}
                       dropDownContainerStyle={styles.dropDownContainer}
+                      //클릭되지 않도록
+                      disabled={true}
                     />
                   ) : (
                     <Text>No trucks available</Text> // 또는 다른 처리
