@@ -68,6 +68,7 @@ const AuthStack = () => {
       headerTintColor: 'black', 
     }} 
   />
+
   <Stack.Screen
         name="Home"
         component={HomeScreen}
@@ -76,7 +77,8 @@ const AuthStack = () => {
           title: '',
           headerBackTitleVisible: false,
           headerStyle: 
-          { backgroundColor: 'rgb(163, 191, 244)' },
+          {backgroundColor: '#ffffff'},
+          // { backgroundColor: 'rgb(163, 191, 244)' },
           // { backgroundColor: 'rgb(233,234,237)' },
           headerLeft: () => ( 
             <TouchableOpacity 
@@ -101,7 +103,8 @@ const AuthStack = () => {
             </TouchableOpacity>
           ),
           })}
-      />
+  />
+
     <Stack.Screen
         name="Home2"
         component={HomeScreen2}
@@ -111,17 +114,27 @@ const AuthStack = () => {
           headerBackTitleVisible: false,
           headerStyle: 
           // { backgroundColor: 'transparent' },
-          { backgroundColor: 'rgb(163, 191, 244)' },
-          // { backgroundColor: 'rgb(233,234,237)' },
+          // { backgroundColor: 'rgb(163, 191, 244)' },
+          {backgroundColor: '#ffffff'},
           headerLeft: () => ( 
             <TouchableOpacity 
               onPress={() => navigation.navigate('Side')}>
               <Image 
-                source={require('../assets/menu.png')} 
+                source={require('../assets/logotop.png')} 
                 style={{ width: 42, height: 42, marginLeft: 14 }} 
               />
             </TouchableOpacity>
           ),
+          // headerTitle: () => (
+          //   <Image
+          //     source={require('../assets/logotop.png')}
+          //     style={{ width: 42, height: 42, backgroundColor: 'red' }}
+          //     resizeMode="contain"
+              
+          //   />
+          // ),
+ 
+      
           headerRight: () => (
               <TouchableOpacity 
                 onPress={() => navigation.navigate('AlertModal')}>

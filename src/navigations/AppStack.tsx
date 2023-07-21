@@ -55,7 +55,8 @@ const AppStack = () => {
           title: '',
           headerBackTitleVisible: false,
           headerStyle: 
-          { backgroundColor: 'rgb(163, 191, 244)' },
+          {backgroundColor: '#FFFFFF'},
+          // { backgroundColor: 'rgb(163, 191, 244)' },
           // { backgroundColor: 'rgb(233,234,237)' },
           headerLeft: () => ( 
             <TouchableOpacity 

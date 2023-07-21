@@ -38,7 +38,7 @@ const AlertModalScreen: React.FC<AlertModalScreenProps> = ({ navigation }) => {
           style={styles.modalbtn4}
           onPress={() => {Alert.alert('Back To Work')}}
         >
-          <Text style={styles.modalfont}>Back To Work</Text>
+          <Text style={styles.modalfont}>Take a Break</Text>
         </TouchableOpacity>
       </View>
       </TouchableWithoutFeedback>
